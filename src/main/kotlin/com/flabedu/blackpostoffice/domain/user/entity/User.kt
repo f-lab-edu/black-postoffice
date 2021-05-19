@@ -7,7 +7,7 @@ import javax.persistence.GenerationType
 import javax.persistence.Id
 
 @Entity
-open class User(
+class User(
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
