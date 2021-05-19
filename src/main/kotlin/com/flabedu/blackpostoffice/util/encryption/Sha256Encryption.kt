@@ -9,7 +9,9 @@ import com.flabedu.blackpostoffice.util.encryption.EncryptionContants.Companion.
 import com.flabedu.blackpostoffice.util.encryption.EncryptionContants.Companion.SHA_256_ALGORITHM
 import org.springframework.stereotype.Component
 import java.lang.StringBuilder
+import java.security.DigestException
 import java.security.MessageDigest
+import java.security.NoSuchAlgorithmException
 import java.util.Random
 import kotlin.experimental.and
 
@@ -56,8 +58,8 @@ class Sha256Encryption : Encryption {
 
             result = encryptionBuilder.toString()
 
-        } catch (e: Exception) {
-            println(e)
+        } catch (e: NoSuchAlgorithmException) {
+            throw RuntimeException("알고리즘 MD5가 요구되었지만, 현재의 환경에서는 사용 가능하지 않습니다.", e)
         }
 
         return result
