@@ -1,7 +1,7 @@
 package com.flabedu.blackpostoffice.controller.dto
 
-import com.flabedu.blackpostoffice.domain.user.entity.User
-import com.flabedu.blackpostoffice.util.encryption.Sha256Encryption
+
+import com.flabedu.blackpostoffice.domain.model.User
 import java.time.LocalDateTime
 import javax.validation.constraints.*
 
@@ -26,18 +26,19 @@ data class UserDto(
     @field:Pattern(regexp = "010-[0-9]{3,4}-[0-9]{4}", message = "올바른 휴대폰 번호를 입력해주세요.")
     val phone: String,
 
-    ) {
+    val createdAt: LocalDateTime = LocalDateTime.now()
 
-    fun toUserEntity(sha256Encryption: Sha256Encryption): User {
+) {
 
+    fun toUserEntity(): User {
         return User(
             email = email,
-            password = sha256Encryption.encryption(password),
+            password = password,
             nickName = nickName,
             address = address,
             phone = phone,
-            createdAt = LocalDateTime.now()
+            createdAt = createdAt
         )
-
     }
+
 }

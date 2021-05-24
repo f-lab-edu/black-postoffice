@@ -9,9 +9,7 @@ import javax.validation.Valid
 @RestController
 @RequestMapping("/users")
 class UserController(
-
     private val userService: UserService
-
 ) {
 
     @PostMapping

@@ -1,8 +1,5 @@
 .gradle
 build/
-gradle/
-gradlew
-gradlew.bat
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
@@ -28,7 +25,6 @@ bin/
 out/
 !**/src/main/**/out/
 !**/src/test/**/out/
-src/main/resources/application.yml
 
 ### NetBeans ###
 /nbproject/private/
