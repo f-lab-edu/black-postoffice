@@ -3,11 +3,13 @@ package com.flabedu.blackpostoffice.controller
 import com.fasterxml.jackson.core.JsonProcessingException
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.flabedu.blackpostoffice.controller.dto.UserDto
+import com.flabedu.blackpostoffice.exception.user.EmailDuplicateException
 import com.flabedu.blackpostoffice.service.UserService
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito.*
+import org.mockito.Mockito.doNothing
+import org.mockito.Mockito.doThrow
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.boot.test.mock.mockito.MockBean
@@ -41,11 +43,11 @@ internal class UserControllerTest @Autowired constructor(
     @DisplayName("회원가입 성공")
     fun createUser() {
         val userDto = UserDto(
-            email = "abcasd@naver.com",
-            password = "a123123aaaa",
+            email = "1234test@gmail.com",
+            password = "1234test@@",
             nickName = "형일",
             address = "서울",
-            phone = "010-8865-8860",
+            phone = "010-1234-1234",
             createdAt = LocalDateTime.now()
         )
 
@@ -59,6 +61,29 @@ internal class UserControllerTest @Autowired constructor(
         )
             .andExpect(status().isCreated)
             .andDo(MockMvcResultHandlers.print())
+    }
+
+    @Test
+    @DisplayName("중복된 이메일로 회원가입 실패")
+    fun createUserWithVaildEmail() {
+        val userDto = UserDto(
+            email = "test123@gmail.com",
+            password = "testtest123",
+            nickName = "형일",
+            address = "서울",
+            phone = "010-4321-4321",
+            createdAt = LocalDateTime.now()
+        )
+
+        doThrow(EmailDuplicateException::class.java).`when`(userService).saveUser(userDto)
+
+        mockMvc.perform(
+            MockMvcRequestBuilders.post("/users")
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content(toJsonString(userDto))
+        )
+            .andDo(MockMvcResultHandlers.print())
+            .andExpect(status().isConflict)
     }
 
     @Throws(JsonProcessingException::class)
