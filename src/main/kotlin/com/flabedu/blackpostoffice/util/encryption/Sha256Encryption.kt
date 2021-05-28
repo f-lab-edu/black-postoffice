@@ -34,7 +34,6 @@ class Sha256Encryption : Encryption {
             }
 
             result = encryptionBuilder.toString()
-
         } catch (e: NoSuchAlgorithmException) {
             throw RuntimeException("알고리즘 MD5가 요구되었지만, 현재의 환경에서는 사용 가능하지 않습니다.", e)
         }
@@ -57,9 +56,5 @@ class Sha256Encryption : Encryption {
         return saltBuilder.toString()
     }
 
-    override fun encryption(plainText: String): String {
-
-        return getEncryption(plainText, getSalt())
-
-    }
+    override fun encryption(plainText: String): String = getEncryption(plainText, getSalt())
 }

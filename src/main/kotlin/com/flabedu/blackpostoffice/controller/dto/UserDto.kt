@@ -1,9 +1,11 @@
 package com.flabedu.blackpostoffice.controller.dto
 
-
 import com.flabedu.blackpostoffice.domain.model.User
 import java.time.LocalDateTime
-import javax.validation.constraints.*
+import javax.validation.constraints.Email
+import javax.validation.constraints.NotBlank
+import javax.validation.constraints.Pattern
+import javax.validation.constraints.Size
 
 data class UserDto(
 
@@ -30,8 +32,8 @@ data class UserDto(
 
 ) {
 
-    fun toUserEntity(): User {
-        return User(
+    fun toUserEntity() =
+        User(
             email = email,
             password = password,
             nickName = nickName,
@@ -39,6 +41,4 @@ data class UserDto(
             phone = phone,
             createdAt = createdAt
         )
-    }
-
 }

@@ -9,5 +9,4 @@ class BlackPostofficeApplication
 fun main(args: Array<String>) {
 
     runApplication<BlackPostofficeApplication>(*args)
-
 }

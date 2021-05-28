@@ -17,5 +17,4 @@ class UserController(
     fun createUser(@Valid @RequestBody userDto: UserDto) {
         userService.saveUser(userDto)
     }
-
 }
