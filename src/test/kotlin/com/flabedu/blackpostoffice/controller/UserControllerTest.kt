@@ -3,7 +3,7 @@ package com.flabedu.blackpostoffice.controller
 import com.fasterxml.jackson.core.JsonProcessingException
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.flabedu.blackpostoffice.controller.dto.UserDto
-import com.flabedu.blackpostoffice.exception.user.EmailDuplicateException
+import com.flabedu.blackpostoffice.exception.user.DuplicateEmailException
 import com.flabedu.blackpostoffice.service.UserService
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
@@ -75,7 +75,7 @@ internal class UserControllerTest @Autowired constructor(
             createdAt = LocalDateTime.now()
         )
 
-        doThrow(EmailDuplicateException::class.java).`when`(userService).saveUser(userDto)
+        doThrow(DuplicateEmailException::class.java).`when`(userService).saveUser(userDto)
 
         mockMvc.perform(
             MockMvcRequestBuilders.post("/users")
