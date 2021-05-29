@@ -17,7 +17,7 @@ class UserExceptionHandler {
 
     @ExceptionHandler(value = [EmailDuplicateException::class])
     fun handleEmailDuplicateException(): ResponseEntity<String> {
-        logger.error("이미 존재하는 이메일 입니다.")
+        logger.debug("이미 존재하는 이메일 입니다.")
         return ResponseEntity.status(HttpStatus.CONFLICT).body("이미 존재하는 이메일 입니다.")
     }
 }
