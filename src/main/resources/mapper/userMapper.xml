@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.flabedu.blackpostoffice.domain.mapper.UserMapper">
+
+    <insert id="save" parameterType="com.flabedu.blackpostoffice.domain.model.User">
+        INSERT INTO user
+        VALUES (#{address}, #{createdAt}, #{email}, #{nickName}, #{password}, #{phone});
+    </insert>
+
+    <select id="isExistsByEmail" resultType="boolean">
+        SELECT EXISTS
+                   (SELECT email FROM user WHERE email = #{email});
+    </select>
+
+</mapper>
