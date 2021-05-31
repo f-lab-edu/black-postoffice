@@ -32,6 +32,13 @@ internal class UserLoginControllerTest @Autowired constructor(
     @MockBean
     lateinit var sessionLoginService: SessionLoginService
 
+    @BeforeEach
+    fun setUp() {
+        this.mockMvc = MockMvcBuilders
+            .webAppContextSetup(webApplicationContext)
+            .build()
+    }
+
     @Test
     @DisplayName("로그인 성공")
     fun successLogin() {
@@ -90,13 +97,6 @@ internal class UserLoginControllerTest @Autowired constructor(
         )
             .andExpect(MockMvcResultMatchers.status().isUnauthorized)
             .andDo(MockMvcResultHandlers.print())
-    }
-
-    @BeforeEach
-    fun setUp() {
-        this.mockMvc = MockMvcBuilders
-            .webAppContextSetup(webApplicationContext)
-            .build()
     }
 
     @Throws(JsonProcessingException::class)
