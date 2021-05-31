@@ -10,13 +10,4 @@ class BlackPostofficeApplication
 
 fun main(args: Array<String>) {
     runApplication<BlackPostofficeApplication>(*args)
-
-    val userDao = UserDao()
-    val user = User("dudrnxps", "박영환", "1234")
-
-    userDao.add(user)
-
-    val result = userDao.get("dudrnxps")
-
-    print(result.toString())
 }

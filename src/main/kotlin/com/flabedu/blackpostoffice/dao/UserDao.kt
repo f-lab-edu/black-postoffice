@@ -6,15 +6,17 @@ import kotlin.jvm.Throws
 
 class UserDao {
 
+    val connectionMaker: ConnectionMaker
+
+    constructor(connectionMaker: ConnectionMaker) {
+        this.connectionMaker = connectionMaker
+    }
+
     @Throws
-    fun add(user: User): Unit {
-        Class.forName("org.h2.Driver")
+    fun add(user: User) {
+        val c: Connection = connectionMaker.makeConnection()
+        val ps: PreparedStatement = c.prepareStatement("INSERT INTO USERS(id, name, password) VALUES(?, ?, ?)")
 
-        val conn = DriverManager.getConnection("jdbc:h2:mem:test", "SA", "")
-        var ps: PreparedStatement = conn.prepareStatement("CREATE TABLE USERS(id varchar(10) primary key, name varchar(20) not null, password varchar(10) not null)")
-        ps.executeUpdate()
-
-        ps = conn.prepareStatement("INSERT INTO USERS(id, name, password) VALUES(?, ?, ?)")
         ps.setString(1, user.id)
         ps.setString(2, user.name)
         ps.setString(3, user.password)
@@ -22,14 +24,13 @@ class UserDao {
         ps.executeUpdate()
 
         ps.close()
-        conn.close()
+        c.close()
     }
 
     @Throws
     fun get(id: String): User {
-        Class.forName("org.h2.Driver")
 
-        val c: Connection = DriverManager.getConnection("jdbc:h2:mem:test", "SA", "")
+        val c: Connection = connectionMaker.makeConnection()
         val ps: PreparedStatement = c.prepareStatement("SELECT * FROM USERS WHERE id = ?")
         ps.setString(1, id)
 
