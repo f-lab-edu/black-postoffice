@@ -7,4 +7,6 @@ import org.apache.ibatis.annotations.Mapper
 interface UserMapper {
     fun isExistsByEmail(email: String): Boolean
     fun save(user: User)
+    fun getUserByEmail(email: String): User?
+    fun getPasswordByEmail(email: String): String
 }

@@ -10,6 +10,8 @@ import kotlin.experimental.and
 @Component
 class Sha256Encryption : Encryption {
 
+    override fun encryption(plainText: String): String = getEncryption(plainText, getSalt())
+
     private fun getEncryption(password: String, salt: String): String {
 
         val saltByte = salt.toByteArray()
@@ -55,6 +57,4 @@ class Sha256Encryption : Encryption {
 
         return saltBuilder.toString()
     }
-
-    override fun encryption(plainText: String): String = getEncryption(plainText, getSalt())
 }
