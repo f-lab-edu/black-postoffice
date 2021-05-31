@@ -5,8 +5,10 @@ import com.flabedu.blackpostoffice.domain.mapper.UserMapper
 import com.flabedu.blackpostoffice.exception.user.EmailNotExistsException
 import com.flabedu.blackpostoffice.exception.user.WrongPasswordException
 import com.flabedu.blackpostoffice.util.encryption.Sha256Encryption
+import com.flabedu.blackpostoffice.util.interceptor.SESSION_KEY
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import javax.servlet.http.HttpSession
 
 @Service
@@ -18,7 +20,7 @@ class SessionLoginService @Autowired constructor(
 
     override fun login(userLoginDto: UserLoginDto) {
         loginEmailCheck(userLoginDto).loginPasswordCheck(userLoginDto)
-        session.setAttribute("loginUser", userLoginDto.email)
+        session.setAttribute(SESSION_KEY, userLoginDto.email)
     }
 
     fun loginEmailCheck(userLoginDto: UserLoginDto) {
