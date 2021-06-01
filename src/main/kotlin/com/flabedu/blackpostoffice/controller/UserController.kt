@@ -19,6 +19,5 @@ class UserController(
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    @LoginCheck
     fun createUser(@Valid @RequestBody userDto: UserDto) = userService.saveUser(userDto)
 }
