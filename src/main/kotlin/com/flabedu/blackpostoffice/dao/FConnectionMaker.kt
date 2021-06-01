@@ -10,8 +10,6 @@ class FConnectionMaker: ConnectionMaker {
     override fun makeConnection(): Connection {
         Class.forName("org.h2.Driver")
 
-        val c: Connection = DriverManager.getConnection("jdbc:h2:mem:test", "sa", "")
-
-        return c
+        return DriverManager.getConnection("jdbc:h2:mem:test", "sa", "")
     }
 }

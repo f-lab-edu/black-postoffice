@@ -13,10 +13,7 @@ class UserDaoTest {
 
     @Test
     fun `유저 등록 테스드`() {
-        val connectionMaker: ConnectionMaker = FConnectionMaker()
-
-        val dao = UserDao(connectionMaker)
-
+        val dao: UserDao = DaoFactory().userDao()
         val user = User()
 
         user.id = "dudrnxps"
