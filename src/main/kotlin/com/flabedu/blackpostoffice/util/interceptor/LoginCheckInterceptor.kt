@@ -22,7 +22,7 @@ class LoginCheckInterceptor(
             return true
         }
 
-        if (session.getAttribute(SESSION_KEY) == null) {
+        if (session.getAttribute(LOGIN_MY_EMAIL) == null) {
             throw UserNotLoginException()
         }
 

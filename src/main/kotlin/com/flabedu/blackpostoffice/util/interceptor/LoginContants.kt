@@ -1,3 +1,3 @@
 package com.flabedu.blackpostoffice.util.interceptor
 
-const val SESSION_KEY = "loginUser"
+const val LOGIN_MY_EMAIL = "email"
