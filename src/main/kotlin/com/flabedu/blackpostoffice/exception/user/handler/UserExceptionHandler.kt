@@ -25,8 +25,8 @@ class UserExceptionHandler {
 
     @ExceptionHandler(UnauthorizedLoginException::class)
     fun handleEmailNotExistsException(): ResponseEntity<String> {
-        logger.debug("가입되지 않은 이메일입니다.")
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("아이디가 존재하지 않거나 비밀번호가 알치하지 않습니다.")
+        logger.debug("아이디가 존재하지 않거나 비밀번호가 일치하지 않습니다.")
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("아이디가 혹은 비밀번호가 틀렸습니다.")
     }
 
     @ExceptionHandler(UserNotLoginException::class)
