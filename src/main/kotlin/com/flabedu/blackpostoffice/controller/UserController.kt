@@ -2,7 +2,6 @@ package com.flabedu.blackpostoffice.controller
 
 import com.flabedu.blackpostoffice.controller.dto.UserDto
 import com.flabedu.blackpostoffice.service.UserService
-import com.flabedu.blackpostoffice.util.annotation.LoginCheck
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
