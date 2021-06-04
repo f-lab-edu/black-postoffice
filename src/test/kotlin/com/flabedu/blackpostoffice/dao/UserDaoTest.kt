@@ -5,15 +5,22 @@ import junit.framework.Assert.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.runner.RunWith
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.context.ApplicationContext
+import org.springframework.context.annotation.AnnotationConfigApplicationContext
+import org.springframework.test.context.ContextConfiguration
+import org.springframework.test.context.TestPropertySource
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner
 
 @RunWith(SpringJUnit4ClassRunner::class)
-@SpringBootTest(properties = ["classpath:application.properties"])
+@ContextConfiguration
+@TestPropertySource("/application.yml")
 class UserDaoTest {
 
     @Test
     fun `유저 등록 테스드`() {
-        val dao: UserDao = DaoFactory().userDao()
+        val context: ApplicationContext = AnnotationConfigApplicationContext(DaoFactory::class.java)
+        val dao: UserDao = context.getBean("userDao", UserDao::class.java)
+
         val user = User()
 
         user.id = "dudrnxps"

@@ -2,37 +2,40 @@ package com.flabedu.blackpostoffice.dao
 
 import com.flabedu.blackpostoffice.domain.User
 import java.sql.*
+import javax.sql.DataSource
 import kotlin.jvm.Throws
 
 class UserDao {
 
-    val connectionMaker: ConnectionMaker
+    private lateinit var dataSource: DataSource
+    private lateinit var c: Connection
+    private lateinit var ps: PreparedStatement
 
-    constructor(connectionMaker: ConnectionMaker) {
-        this.connectionMaker = connectionMaker
+    fun setDataSource(dataSource: DataSource) {
+        this.dataSource = dataSource
     }
 
     @Throws
     fun add(user: User) {
-        val c: Connection = connectionMaker.makeConnection()
-        val ps: PreparedStatement = c.prepareStatement("INSERT INTO USERS(id, name, password) VALUES(?, ?, ?)")
+        this.c = dataSource.connection
+        this.ps = this.c.prepareStatement("INSERT INTO USERS(id, name, password) VALUES(?, ?, ?)")
 
-        ps.setString(1, user.id)
-        ps.setString(2, user.name)
-        ps.setString(3, user.password)
+        this.ps.setString(1, user.id)
+        this.ps.setString(2, user.name)
+        this.ps.setString(3, user.password)
 
-        ps.executeUpdate()
+        this.ps.executeUpdate()
 
-        ps.close()
-        c.close()
+        this.ps.close()
+        this.c.close()
     }
 
     @Throws
     fun get(id: String): User {
+        this.c = dataSource.connection
+        this.ps = this.c.prepareStatement("SELECT * FROM USERS WHERE id = ?")
 
-        val c: Connection = connectionMaker.makeConnection()
-        val ps: PreparedStatement = c.prepareStatement("SELECT * FROM USERS WHERE id = ?")
-        ps.setString(1, id)
+        this.ps.setString(1, id)
 
         val rs: ResultSet = ps.executeQuery()
         rs.next()
@@ -43,8 +46,8 @@ class UserDao {
         user.password = rs.getString("password")
 
         rs.close()
-        ps.close()
-        c.close()
+        this.ps.close()
+        this.c.close()
 
         return user
     }
