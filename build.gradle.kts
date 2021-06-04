@@ -23,7 +23,7 @@ dependencies {
     implementation("junit:junit:4.12")
     implementation("org.springframework.boot:spring-boot-starter-jdbc")
 
-    implementation("com.h2database:h2")
+    runtimeOnly("com.h2database:h2")
 
     providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
 

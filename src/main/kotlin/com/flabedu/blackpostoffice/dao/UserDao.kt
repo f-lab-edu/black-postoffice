@@ -1,50 +1,52 @@
 package com.flabedu.blackpostoffice.dao
 
 import com.flabedu.blackpostoffice.domain.User
-import java.sql.*
-import kotlin.jvm.Throws
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.stereotype.Repository
+import java.sql.Connection
+import java.sql.PreparedStatement
+import java.sql.ResultSet
+import javax.sql.DataSource
 
+@Repository
 class UserDao {
 
-    val connectionMaker: ConnectionMaker
-
-    constructor(connectionMaker: ConnectionMaker) {
-        this.connectionMaker = connectionMaker
-    }
+    @Autowired
+    private lateinit var dataSource: DataSource
+    private lateinit var user: User
 
     @Throws
     fun add(user: User) {
-        val c: Connection = connectionMaker.makeConnection()
-        val ps: PreparedStatement = c.prepareStatement("INSERT INTO USERS(id, name, password) VALUES(?, ?, ?)")
+        val connection: Connection = dataSource.connection
+        val ps: PreparedStatement = connection.prepareStatement("INSERT INTO USERS(id, name, password) VALUES(?, ?, ?)")
 
-        ps.setString(1, user.id)
+        ps.setInt(1, user.id)
         ps.setString(2, user.name)
         ps.setString(3, user.password)
 
         ps.executeUpdate()
 
         ps.close()
-        c.close()
+        connection.close()
     }
 
     @Throws
-    fun get(id: String): User {
-
-        val c: Connection = connectionMaker.makeConnection()
-        val ps: PreparedStatement = c.prepareStatement("SELECT * FROM USERS WHERE id = ?")
-        ps.setString(1, id)
+    fun get(id: Int): User {
+        val connection: Connection = dataSource.connection
+        val ps: PreparedStatement = connection.prepareStatement("SELECT * FROM USERS WHERE id = ?")
+        ps.setInt(1, id)
 
         val rs: ResultSet = ps.executeQuery()
         rs.next()
 
-        val user = User()
-        user.id = rs.getString("id")
+        this.user = User()
+        user.id = rs.getInt("id")
         user.name = rs.getString("name")
         user.password = rs.getString("password")
 
         rs.close()
         ps.close()
-        c.close()
+        connection.close()
 
         return user
     }

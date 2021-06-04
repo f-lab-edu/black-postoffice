@@ -1,7 +1,5 @@
 package com.flabedu.blackpostoffice
 
-import com.flabedu.blackpostoffice.dao.UserDao
-import com.flabedu.blackpostoffice.domain.User
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
