@@ -4,12 +4,11 @@ import com.flabedu.blackpostoffice.controller.dto.UserDto
 import com.flabedu.blackpostoffice.domain.mapper.UserMapper
 import com.flabedu.blackpostoffice.exception.user.DuplicateEmailException
 import com.flabedu.blackpostoffice.util.encryption.Sha256Encryption
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
-class UserService @Autowired constructor(
+class UserService(
     private val userMapper: UserMapper,
     private val sha256Encryption: Sha256Encryption
 ) {

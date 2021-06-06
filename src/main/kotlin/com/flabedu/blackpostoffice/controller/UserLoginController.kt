@@ -1,7 +1,7 @@
 package com.flabedu.blackpostoffice.controller
 
-import com.flabedu.blackpostoffice.controller.dto.UserDto
-import com.flabedu.blackpostoffice.service.UserService
+import com.flabedu.blackpostoffice.controller.dto.UserLoginDto
+import com.flabedu.blackpostoffice.service.SessionLoginService
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -12,11 +12,11 @@ import javax.validation.Valid
 
 @RestController
 @RequestMapping("/users")
-class UserController(
-    private val userService: UserService
+class UserLoginController(
+    private val sessionLoginService: SessionLoginService
 ) {
 
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    fun createUser(@Valid @RequestBody userDto: UserDto) = userService.saveUser(userDto)
+    @PostMapping("/login")
+    @ResponseStatus(HttpStatus.OK)
+    fun login(@Valid @RequestBody userLoginDto: UserLoginDto) = sessionLoginService.login(userLoginDto)
 }
