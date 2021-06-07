@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository
 import java.sql.Connection
 import java.sql.PreparedStatement
 import java.sql.ResultSet
+import java.sql.SQLException
 import javax.sql.DataSource
 
 @Repository
@@ -15,8 +16,9 @@ class UserDao {
     private lateinit var dataSource: DataSource
     private lateinit var user: User
 
-    @Throws
     fun add(user: User) {
+        throw Exception()
+
         val connection: Connection = dataSource.connection
         val ps: PreparedStatement = connection.prepareStatement("INSERT INTO USERS(id, name, password) VALUES(?, ?, ?)")
 
@@ -30,8 +32,9 @@ class UserDao {
         connection.close()
     }
 
-    @Throws
     fun get(id: Int): User {
+        throw Exception()
+
         val connection: Connection = dataSource.connection
         val ps: PreparedStatement = connection.prepareStatement("SELECT * FROM USERS WHERE id = ?")
         ps.setInt(1, id)
