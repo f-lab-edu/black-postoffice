@@ -17,7 +17,7 @@ class UserDaoTest {
 
     @Test
     fun `유저 등록 테스드`() {
-        val user = User(1, "parkyounghwan", "1234")
+        val user = User(1, "parkyounghwan", "dudrnxps@gmail.com", "1234")
 
         userDao.add(user)
 
