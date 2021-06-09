@@ -7,5 +7,6 @@ import org.springframework.boot.runApplication
 class BlackPostofficeApplication
 
 fun main(args: Array<String>) {
+
     runApplication<BlackPostofficeApplication>(*args)
 }
