@@ -1,5 +1,6 @@
 package com.flabedu.blackpostoffice.domain.model
 
+import com.flabedu.blackpostoffice.domain.UserRole
 import java.time.LocalDateTime
 
 class User(
@@ -13,5 +14,8 @@ class User(
 
     val password: String,
 
-    val phone: String
+    val phone: String,
+
+    val userRole: UserRole
+
 )
