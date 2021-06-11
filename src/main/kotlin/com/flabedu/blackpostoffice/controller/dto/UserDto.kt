@@ -41,6 +41,6 @@ data class UserDto(
             address = address,
             phone = phone,
             createdAt = createdAt,
-            userRole = UserRole.USER_ROLE
+            userRole = UserRole.USER
         )
 }
