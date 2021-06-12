@@ -42,7 +42,7 @@ internal class UserControllerTest @Autowired constructor(
     @Test
     @DisplayName("회원가입 성공")
     fun createUser() {
-        val userDto = UserDto(
+        val userDto = UserDto.of(
             email = "1234test@gmail.com",
             password = "1234test@@",
             nickName = "형일",
@@ -66,7 +66,7 @@ internal class UserControllerTest @Autowired constructor(
     @Test
     @DisplayName("중복된 이메일로 회원가입 실패")
     fun createUserWithVaildEmail() {
-        val userDto = UserDto(
+        val userDto = UserDto.of(
             email = "test123@gmail.com",
             password = "testtest123",
             nickName = "형일",
