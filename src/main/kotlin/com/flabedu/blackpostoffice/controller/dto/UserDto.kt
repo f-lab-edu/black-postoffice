@@ -8,7 +8,7 @@ import javax.validation.constraints.NotBlank
 import javax.validation.constraints.Pattern
 import javax.validation.constraints.Size
 
-data class UserDto private constructor(
+data class UserDto(
 
     @field:Email(message = "올바른 이메일 주소를 입력해주세요.")
     @field:NotBlank(message = "이메일은 필수 입력입니다.")
@@ -32,16 +32,6 @@ data class UserDto private constructor(
     val createdAt: LocalDateTime = LocalDateTime.now()
 
 ) {
-    companion object {
-        fun of(
-            email: String,
-            password: String,
-            nickName: String,
-            address: String,
-            phone: String,
-            createdAt: LocalDateTime
-        ) = UserDto(email, password, nickName, address, phone, createdAt)
-    }
 
     fun toUserEntity(password: String) =
         User(
