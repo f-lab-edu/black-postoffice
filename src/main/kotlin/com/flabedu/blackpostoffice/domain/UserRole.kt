@@ -1,5 +1,5 @@
-package com.flabedu.blackpostoffice.domain
-
-enum class UserRole {
-    NONE, USER, ADMIN
-}
+//package com.flabedu.blackpostoffice.domain
+//
+//enum class UserRole {
+//    NONE, USER, ADMIN
+//}

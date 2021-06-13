@@ -1,6 +1,5 @@
 package com.flabedu.blackpostoffice.controller.dto
 
-import com.flabedu.blackpostoffice.domain.UserRole
 import com.flabedu.blackpostoffice.domain.model.User
 import java.time.LocalDateTime
 import javax.validation.constraints.Email
@@ -32,6 +31,9 @@ data class UserDto(
     val createdAt: LocalDateTime = LocalDateTime.now()
 
 ) {
+    enum class UserRole{
+        NONE, USER, ADMIN
+    }
 
     fun toUserEntity(password: String) =
         User(
