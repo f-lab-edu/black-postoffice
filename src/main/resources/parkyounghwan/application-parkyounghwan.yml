@@ -1,0 +1,14 @@
+logging:
+  level:
+    root: WARN
+    sample:
+      mybatis:
+        xml:
+          mapper: TRACE
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/black-postoffice?serverTimeZone=UTC$CharacterEncoding=UTF-8
+    username: root
+    password: 123Zkfltmak@

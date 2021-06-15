@@ -23,6 +23,9 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-jdbc")
     implementation("junit:junit:4.12")
 
+    implementation("mysql:mysql-connector-java")
+    implementation("org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.0")
+
     runtimeOnly("com.h2database:h2")
 
     providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")

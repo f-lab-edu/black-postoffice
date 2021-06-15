@@ -1,4 +1,4 @@
-package com.flabedu.blackpostoffice.dao
+package com.flabedu.blackpostoffice.parkyounghwan.dao
 
 import com.flabedu.blackpostoffice.domain.User
 import junit.framework.Assert.assertEquals

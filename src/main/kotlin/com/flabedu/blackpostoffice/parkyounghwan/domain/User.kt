@@ -1,7 +1,10 @@
-package com.flabedu.blackpostoffice.domain
+package com.flabedu.blackpostoffice.parkyounghwan.domain
 
 import java.lang.IllegalArgumentException
 
+data class User (val id: Long, val name: String, val email: String, val password: String)
+
+/*
 class User() {
     var id: Int = 0
 
@@ -64,3 +67,4 @@ class User() {
         this.password = password
     }
 }
+ */
