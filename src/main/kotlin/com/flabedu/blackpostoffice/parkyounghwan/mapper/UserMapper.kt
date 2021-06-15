@@ -2,10 +2,12 @@ package com.flabedu.blackpostoffice.parkyounghwan.mapper
 
 import com.flabedu.blackpostoffice.parkyounghwan.domain.User
 import org.apache.ibatis.annotations.Mapper
-import org.springframework.beans.factory.annotation.Qualifier
+import org.springframework.stereotype.Component
 
 @Mapper
-@Qualifier("pUserMapper")
+@Component("parkyounghwan.UserMapper")
 interface UserMapper {
-    fun selectUserById(id: Int): User
+    fun selectUserByEmail(email: String): User
+    fun insertUser(user: User): Int
+    fun deleteAllUser(): Int
 }

@@ -4,7 +4,16 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.flabedu.blackpostoffice.parkyounghwan.mapper.UserMapper">
-    <select id="selectUserById" resultType="com.flabedu.blackpostoffice.parkyounghwan.domain.User">
-        select * from user where id = #{id}
+    <select id="selectUserByEmail" resultType="com.flabedu.blackpostoffice.parkyounghwan.domain.User">
+        SELECT * FROM USER WHERE email = #{email}
     </select>
+
+    <insert id="insertUser" parameterType="com.flabedu.blackpostoffice.parkyounghwan.domain.User" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO USER (name, email, password)
+        VALUES (#{name}, #{email}, #{password})
+    </insert>
+
+    <delete id="deleteAllUser">
+        DELETE FROM USER
+    </delete>
 </mapper>

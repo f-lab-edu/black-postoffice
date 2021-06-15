@@ -1,5 +1,7 @@
 package com.flabedu.blackpostoffice.parkyounghwan.mapper
 
+import com.flabedu.blackpostoffice.parkyounghwan.domain.User
+import junit.framework.Assert.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
@@ -12,16 +14,19 @@ import org.springframework.test.context.junit4.SpringRunner
 class UserMapperTest {
 
     @Autowired
-    @Qualifier("pUserMapper")
+    @Qualifier("parkyounghwan.UserMapper")
     lateinit var userMapper: UserMapper
 
     @Test
-    fun `UserMapperTest 클래스 호출 테스트`() {
-        println("hello `UserMapperTest`")
-    }
+    fun `회원 정보 저장 테스트`() {
+        val user = User(0, "홍길동", "honggildong@korea.com", "1234")
 
-    @Test
-    fun `UserMapper 저장 된 유저 ID 로 불러오기`() {
-        print(userMapper.selectUserById(1))
+        assertEquals(0, userMapper.deleteAllUser())
+        assertEquals(1, userMapper.insertUser(user))
+
+        val result: User = userMapper.selectUserByEmail("honggildong@korea.com")
+
+        assertEquals("홍길동", result.name)
+        assertEquals(1, userMapper.deleteAllUser())
     }
 }

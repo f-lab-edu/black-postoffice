@@ -9,7 +9,10 @@ import org.springframework.core.env.Environment
 import javax.sql.DataSource
 
 @Configuration
-@PropertySource("classpath:parkyounghwan/application-parkyounghwan.yml")
+@PropertySource(
+    "classpath:parkyounghwan/application-parkyounghwan.properties",
+    "classpath:parkyounghwan/application-password.properties"
+)
 class CustomDataSourceConfig {
 
     val env: Environment
@@ -19,12 +22,12 @@ class CustomDataSourceConfig {
         this.env = env
     }
 
-    @Bean("dataSource")
+    @Bean
     fun customDataSource(): DataSource =
         DataSourceBuilder.create()
-            .driverClassName(this.env.getProperty("spring.datasource.driver-class-name"))
-            .url(this.env.getProperty("spring.datasource.url"))
-            .username(this.env.getProperty("spring.datasource.username"))
-            .password(this.env.getProperty("spring.datasource.password"))
+            .driverClassName(env.getProperty("spring.datasource.driver-class-name"))
+            .url(env.getProperty("spring.datasource.url"))
+            .username(env.getProperty("spring.datasource.username"))
+            .password(env.getProperty("spring.datasource.password"))
             .build()
 }
