@@ -1,12 +1,11 @@
 package com.flabedu.blackpostoffice.domain.model
 
-import com.flabedu.blackpostoffice.controller.dto.UserDto
 import java.time.LocalDateTime
 
 class User(
     val address: String,
 
-    val createdAt: LocalDateTime,
+    val createdAt: LocalDateTime = LocalDateTime.now(),
 
     val email: String,
 
@@ -16,6 +15,10 @@ class User(
 
     val phone: String,
 
-    val userRole: UserDto.UserRole
+    val userRole: UserRole = UserRole.USER
 
-)
+) {
+    enum class UserRole {
+        NONE, USER, ADMIN
+    }
+}
