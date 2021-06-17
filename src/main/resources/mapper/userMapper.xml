@@ -14,7 +14,7 @@
     </select>
 
     <select id="getUserByEmail" parameterType="String" resultType="com.flabedu.blackpostoffice.domain.model.User">
-        SELECT address, created_at, email, nick_name, password, phone, user_role
+        SELECT address, email, nick_name, password, phone
         FROM user
         WHERE email = #{email}
     </select>

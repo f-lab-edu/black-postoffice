@@ -2,7 +2,7 @@ package com.flabedu.blackpostoffice.domain.model
 
 import java.time.LocalDateTime
 
-class User(
+class User @JvmOverloads constructor(
     val address: String,
 
     val createdAt: LocalDateTime = LocalDateTime.now(),
