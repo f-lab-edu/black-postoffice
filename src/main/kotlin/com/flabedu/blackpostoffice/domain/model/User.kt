@@ -2,7 +2,7 @@ package com.flabedu.blackpostoffice.domain.model
 
 import java.time.LocalDateTime
 
-class User @JvmOverloads constructor(
+class User(
     val address: String,
 
     val createdAt: LocalDateTime = LocalDateTime.now(),
@@ -18,6 +18,8 @@ class User @JvmOverloads constructor(
     val userRole: UserRole = UserRole.USER
 
 ) {
+    private constructor() : this(address = "", email = "", nickName = "", password = "", phone = "")
+
     enum class UserRole {
         NONE, USER, ADMIN
     }
