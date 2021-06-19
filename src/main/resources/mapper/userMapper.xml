@@ -25,4 +25,10 @@
         WHERE email = #{email}
     </select>
 
+    <select id="getUserRoleByEmail" parameterType="String" resultType="String">
+        SELECT user_role
+        FROM user
+        WHERE email = #{email}
+    </select>
+
 </mapper>
