@@ -1,5 +1,6 @@
 package com.flabedu.blackpostoffice.exception.user.handler
 
+import com.flabedu.blackpostoffice.exception.user.AccessRejectedException
 import com.flabedu.blackpostoffice.exception.user.DuplicateEmailException
 import com.flabedu.blackpostoffice.exception.user.UnauthorizedLoginException
 import com.flabedu.blackpostoffice.exception.user.UserNotLoginException
@@ -33,5 +34,11 @@ class UserExceptionHandler {
     fun handleUserNotLoginException(): ResponseEntity<String> {
         logger.debug("로그인 후에 이용 가능합니다.")
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인 후에 이용 가능합니다.")
+    }
+
+    @ExceptionHandler(AccessRejectedException::class)
+    fun handleAccessRejectedException(): ResponseEntity<String> {
+        logger.debug("이 페이지에 엑세스 하는데 필요한 권한이 존재하지 않습니다.")
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("이 페이지에 엑세스 하는데 필요한 권한이 존재하지 않습니다.")
     }
 }
