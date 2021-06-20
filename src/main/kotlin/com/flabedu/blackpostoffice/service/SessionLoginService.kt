@@ -15,7 +15,7 @@ import javax.servlet.http.HttpSession
 class SessionLoginService(
     private val userMapper: UserMapper,
     private val sha256Encryption: Sha256Encryption,
-    private val session: HttpSession,
+    private val session: HttpSession
 ) : LoginService {
 
     override fun login(userLoginDto: UserLoginDto) {
