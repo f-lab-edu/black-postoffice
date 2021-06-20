@@ -6,7 +6,6 @@ import com.flabedu.blackpostoffice.controller.dto.UserDto
 import com.flabedu.blackpostoffice.exception.user.DuplicateEmailException
 import com.flabedu.blackpostoffice.service.UserService
 import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito.doNothing
 import org.mockito.Mockito.doThrow
@@ -20,7 +19,6 @@ import org.springframework.test.web.servlet.result.MockMvcResultHandlers
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import org.springframework.web.context.WebApplicationContext
-import java.time.LocalDateTime
 
 @WebMvcTest(UserController::class)
 internal class UserControllerTest @Autowired constructor(
@@ -40,15 +38,13 @@ internal class UserControllerTest @Autowired constructor(
     }
 
     @Test
-    @DisplayName("회원가입 성공")
-    fun createUser() {
+    fun `회원가입 성공`() {
         val userDto = UserDto(
             email = "1234test@gmail.com",
             password = "1234test@@",
             nickName = "형일",
             address = "서울",
             phone = "010-1234-1234",
-            createdAt = LocalDateTime.now()
         )
 
         doNothing().`when`(userService)?.saveUser(userDto)
@@ -64,15 +60,13 @@ internal class UserControllerTest @Autowired constructor(
     }
 
     @Test
-    @DisplayName("중복된 이메일로 회원가입 실패")
-    fun createUserWithVaildEmail() {
+    fun `중복된 이메일로 회원가입 실패`() {
         val userDto = UserDto(
             email = "test123@gmail.com",
             password = "testtest123",
             nickName = "형일",
             address = "서울",
             phone = "010-4321-4321",
-            createdAt = LocalDateTime.now()
         )
 
         doThrow(DuplicateEmailException::class.java).`when`(userService).saveUser(userDto)
