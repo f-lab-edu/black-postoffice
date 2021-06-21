@@ -4,8 +4,8 @@
 <mapper namespace="com.flabedu.blackpostoffice.domain.mapper.UserMapper">
 
     <insert id="save" parameterType="com.flabedu.blackpostoffice.domain.model.User">
-        INSERT INTO user
-        VALUES (#{address}, #{createdAt}, #{email}, #{nickName}, #{password}, #{phone});
+        INSERT INTO user (address, created_at, email, nick_name, password, phone, user_role)
+        VALUES (#{address}, #{createdAt}, #{email}, #{nickName}, #{password}, #{phone}, #{role});
     </insert>
 
     <select id="isExistsByEmail" resultType="boolean">
@@ -14,7 +14,7 @@
     </select>
 
     <select id="getUserByEmail" parameterType="String" resultType="com.flabedu.blackpostoffice.domain.model.User">
-        SELECT *
+        SELECT address, email, nick_name, password, phone
         FROM user
         WHERE email = #{email}
     </select>
