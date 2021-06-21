@@ -2,8 +2,8 @@ package com.flabedu.blackpostoffice.service
 
 import com.flabedu.blackpostoffice.controller.dto.UserLoginDto
 import com.flabedu.blackpostoffice.domain.mapper.UserMapper
-import com.flabedu.blackpostoffice.domain.model.User.UserRole.ADMIN
-import com.flabedu.blackpostoffice.domain.model.User.UserRole.USER
+import com.flabedu.blackpostoffice.domain.model.User.Role.ADMIN
+import com.flabedu.blackpostoffice.domain.model.User.Role.USER
 import com.flabedu.blackpostoffice.exception.user.UnauthorizedLoginException
 import com.flabedu.blackpostoffice.util.encryption.Sha256Encryption
 import com.flabedu.blackpostoffice.util.interceptor.LOGIN_MY_EMAIL
@@ -31,7 +31,7 @@ class SessionLoginService(
         }
     }
 
-    override fun setSessionAttribute(userLoginDto: UserLoginDto) {
+    private fun setSessionAttribute(userLoginDto: UserLoginDto) {
         val userRole = userMapper.getUserRoleByEmail(userLoginDto.email)
 
         session.setAttribute(LOGIN_MY_EMAIL, userLoginDto.email)
