@@ -1,44 +1,31 @@
 package com.flabedu.blackpostoffice.exception.user.handler
 
+import com.flabedu.blackpostoffice.exception.dto.ErrorResponseDto
 import com.flabedu.blackpostoffice.exception.user.AccessRejectedException
 import com.flabedu.blackpostoffice.exception.user.DuplicateEmailException
 import com.flabedu.blackpostoffice.exception.user.UnauthorizedLoginException
 import com.flabedu.blackpostoffice.exception.user.UserNotLoginException
-import org.apache.logging.log4j.LogManager
-import org.apache.logging.log4j.Logger
 import org.springframework.http.HttpStatus
-import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
+import org.springframework.web.bind.annotation.ResponseStatus
+import org.springframework.web.bind.annotation.RestControllerAdvice
 
-@ControllerAdvice
+@RestControllerAdvice
 class UserExceptionHandler {
 
-    companion object {
-        val logger: Logger = LogManager.getLogger(UserExceptionHandler::class)
-    }
-
+    @ResponseStatus(HttpStatus.CONFLICT)
     @ExceptionHandler(DuplicateEmailException::class)
-    fun handleDuplicateEmailException(): ResponseEntity<String> {
-        logger.debug("이미 존재하는 이메일 입니다.")
-        return ResponseEntity.status(HttpStatus.CONFLICT).body("이미 존재하는 이메일 입니다.")
-    }
+    fun handleDuplicateEmailException(exception: DuplicateEmailException) = ErrorResponseDto(exception.message!!)
 
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(UnauthorizedLoginException::class)
-    fun handleEmailNotExistsException(): ResponseEntity<String> {
-        logger.debug("아이디가 존재하지 않거나 비밀번호가 일치하지 않습니다.")
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("아이디가 혹은 비밀번호가 틀렸습니다.")
-    }
+    fun handleEmailNotExistsException(exception: UnauthorizedLoginException) = ErrorResponseDto(exception.message!!)
 
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(UserNotLoginException::class)
-    fun handleUserNotLoginException(): ResponseEntity<String> {
-        logger.debug("로그인 후에 이용 가능합니다.")
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인 후에 이용 가능합니다.")
-    }
+    fun handleUserNotLoginException(exception: UserNotLoginException) = ErrorResponseDto(exception.message!!)
 
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(AccessRejectedException::class)
-    fun handleAccessRejectedException(): ResponseEntity<String> {
-        logger.debug("이 페이지에 엑세스 하는데 필요한 권한이 존재하지 않습니다.")
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("이 페이지에 엑세스 하는데 필요한 권한이 존재하지 않습니다.")
-    }
+    fun handleAccessRejectedException(exception: AccessRejectedException) = ErrorResponseDto(exception.message!!)
 }
