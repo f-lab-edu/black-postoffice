@@ -19,14 +19,14 @@ class LoginCheckInterceptor : HandlerInterceptor {
 
         loginCheck ?: return true
 
-        notLoginUser(request)
+        validateNotLoginUser(request)
 
-        adminLevel(request, loginCheck)
+        validateAdminLevel(request, loginCheck)
 
         return true
     }
 
-    private fun adminLevel(request: HttpServletRequest, loginCheck: LoginCheck) {
+    private fun validateAdminLevel(request: HttpServletRequest, loginCheck: LoginCheck) {
         if (loginCheck.authority == ADMIN) {
             val getUserRole = request.session.getAttribute(MY_ROLE)
 
@@ -36,7 +36,7 @@ class LoginCheckInterceptor : HandlerInterceptor {
         }
     }
 
-    private fun notLoginUser(request: HttpServletRequest) {
+    private fun validateNotLoginUser(request: HttpServletRequest) {
         val getLoginUser = request.session.getAttribute(LOGIN_MY_EMAIL)
         getLoginUser ?: throw UserNotLoginException()
     }
