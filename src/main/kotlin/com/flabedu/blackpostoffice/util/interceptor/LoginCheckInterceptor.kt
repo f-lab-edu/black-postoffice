@@ -1,6 +1,6 @@
 package com.flabedu.blackpostoffice.util.interceptor
 
-import com.flabedu.blackpostoffice.domain.model.User.UserRole.ADMIN
+import com.flabedu.blackpostoffice.domain.model.User.Role.ADMIN
 import com.flabedu.blackpostoffice.exception.user.AccessRejectedException
 import com.flabedu.blackpostoffice.exception.user.UserNotLoginException
 import com.flabedu.blackpostoffice.util.annotation.LoginCheck

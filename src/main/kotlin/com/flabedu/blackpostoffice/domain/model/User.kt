@@ -15,10 +15,10 @@ class User(
 
     val phone: String = "",
 
-    val userRole: UserRole = UserRole.USER
+    val role: Role = Role.USER
 
 ) {
-    enum class UserRole {
+    enum class Role {
         NONE, USER, ADMIN
     }
 }

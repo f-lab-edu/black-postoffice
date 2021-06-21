@@ -1,9 +1,10 @@
 package com.flabedu.blackpostoffice.util.annotation
 
-import com.flabedu.blackpostoffice.domain.model.User
+import com.flabedu.blackpostoffice.domain.model.User.Role
+import com.flabedu.blackpostoffice.domain.model.User.Role.NONE
 
 @Retention(AnnotationRetention.RUNTIME)
 @Target(AnnotationTarget.FUNCTION)
 annotation class LoginCheck(
-    val authority: User.UserRole = User.UserRole.NONE
+    val authority: Role = NONE
 )
