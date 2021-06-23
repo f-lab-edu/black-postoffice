@@ -9,18 +9,16 @@ import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
 @Component
-class LoginCheckInterceptor: HandlerInterceptor {
+class LoginCheckInterceptor : HandlerInterceptor {
 
     override fun preHandle(request: HttpServletRequest, response: HttpServletResponse, handler: Any): Boolean {
         val handlerMethod: HandlerMethod = handler as HandlerMethod
+        val loginCheck = handlerMethod.getMethodAnnotation(LoginCheck::class.java)
+        val getLoginUser = request.session.getAttribute(LOGIN_MY_EMAIL)
 
-        if (handlerMethod.getMethodAnnotation(LoginCheck::class.java) == null) {
-            return true
-        }
+        loginCheck ?: return true
 
-        if (request.session.getAttribute(LOGIN_MY_EMAIL) == null) {
-            throw UserNotLoginException()
-        }
+        getLoginUser ?: throw UserNotLoginException()
 
         return true
     }
