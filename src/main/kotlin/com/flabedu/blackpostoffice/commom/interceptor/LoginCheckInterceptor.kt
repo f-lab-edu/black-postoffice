@@ -1,9 +1,10 @@
-package com.flabedu.blackpostoffice.util.interceptor
+package com.flabedu.blackpostoffice.commom.interceptor
 
 import com.flabedu.blackpostoffice.domain.model.User.Role.ADMIN
 import com.flabedu.blackpostoffice.exception.user.AccessRejectedException
-import com.flabedu.blackpostoffice.exception.user.UserNotLoginException
-import com.flabedu.blackpostoffice.util.annotation.LoginCheck
+import com.flabedu.blackpostoffice.commom.annotation.LoginCheck
+import com.flabedu.blackpostoffice.commom.utils.constants.LOGIN_MY_EMAIL
+import com.flabedu.blackpostoffice.commom.utils.constants.MY_ROLE
 import org.springframework.stereotype.Component
 import org.springframework.web.method.HandlerMethod
 import org.springframework.web.servlet.HandlerInterceptor
@@ -38,6 +39,6 @@ class LoginCheckInterceptor : HandlerInterceptor {
 
     private fun validateNotLoginUser(request: HttpServletRequest) {
         val getLoginUser = request.session.getAttribute(LOGIN_MY_EMAIL)
-        getLoginUser ?: throw UserNotLoginException()
+        getLoginUser ?: throw AccessRejectedException()
     }
 }

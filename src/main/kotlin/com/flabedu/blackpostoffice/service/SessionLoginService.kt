@@ -5,9 +5,9 @@ import com.flabedu.blackpostoffice.domain.mapper.UserMapper
 import com.flabedu.blackpostoffice.domain.model.User.Role.ADMIN
 import com.flabedu.blackpostoffice.domain.model.User.Role.USER
 import com.flabedu.blackpostoffice.exception.user.UnauthorizedLoginException
-import com.flabedu.blackpostoffice.util.encryption.Sha256Encryption
-import com.flabedu.blackpostoffice.util.interceptor.LOGIN_MY_EMAIL
-import com.flabedu.blackpostoffice.util.interceptor.MY_ROLE
+import com.flabedu.blackpostoffice.commom.utils.constants.LOGIN_MY_EMAIL
+import com.flabedu.blackpostoffice.commom.utils.constants.MY_ROLE
+import com.flabedu.blackpostoffice.commom.encryption.Sha256Encryption
 import org.springframework.stereotype.Service
 import javax.servlet.http.HttpSession
 
