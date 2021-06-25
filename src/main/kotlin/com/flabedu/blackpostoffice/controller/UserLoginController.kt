@@ -1,5 +1,6 @@
 package com.flabedu.blackpostoffice.controller
 
+import com.flabedu.blackpostoffice.commom.annotation.LoginCheck
 import com.flabedu.blackpostoffice.controller.dto.UserLoginDto
 import com.flabedu.blackpostoffice.service.SessionLoginService
 import org.springframework.http.HttpStatus
@@ -19,4 +20,9 @@ class UserLoginController(
     @PostMapping("/login")
     @ResponseStatus(HttpStatus.OK)
     fun login(@Valid @RequestBody userLoginDto: UserLoginDto) = sessionLoginService.login(userLoginDto)
+
+    @LoginCheck
+    @PostMapping("/logout")
+    fun logout() = sessionLoginService.logout()
 }
+

@@ -27,4 +27,6 @@ class SessionLoginService(
             throw UnauthorizedLoginException()
         }
     }
+
+    override fun logout() = session.invalidate()
 }
