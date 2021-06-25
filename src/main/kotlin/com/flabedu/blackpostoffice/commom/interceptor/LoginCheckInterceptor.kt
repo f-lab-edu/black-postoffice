@@ -1,10 +1,10 @@
 package com.flabedu.blackpostoffice.commom.interceptor
 
-import com.flabedu.blackpostoffice.domain.model.User.Role.ADMIN
-import com.flabedu.blackpostoffice.exception.UnauthorizedAccessException
 import com.flabedu.blackpostoffice.commom.annotation.LoginCheck
 import com.flabedu.blackpostoffice.commom.utils.constants.LOGIN_MY_EMAIL
 import com.flabedu.blackpostoffice.commom.utils.constants.MY_ROLE
+import com.flabedu.blackpostoffice.domain.model.User.Role.ADMIN
+import com.flabedu.blackpostoffice.exception.UnauthorizedAccessException
 import org.springframework.stereotype.Component
 import org.springframework.web.method.HandlerMethod
 import org.springframework.web.servlet.HandlerInterceptor

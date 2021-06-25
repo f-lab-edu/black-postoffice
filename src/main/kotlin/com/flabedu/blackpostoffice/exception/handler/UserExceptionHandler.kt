@@ -1,10 +1,10 @@
 package com.flabedu.blackpostoffice.exception.handler
 
-import com.flabedu.blackpostoffice.exception.dto.ErrorResponseDto
-import com.flabedu.blackpostoffice.exception.UnauthorizedAccessException
-import com.flabedu.blackpostoffice.exception.InvalidRequestException
 import com.flabedu.blackpostoffice.commom.logging.logger
 import com.flabedu.blackpostoffice.exception.DuplicateRequestException
+import com.flabedu.blackpostoffice.exception.InvalidRequestException
+import com.flabedu.blackpostoffice.exception.UnauthorizedAccessException
+import com.flabedu.blackpostoffice.exception.dto.ErrorResponseDto
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.ResponseStatus
@@ -30,7 +30,7 @@ class UserExceptionHandler {
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(UnauthorizedAccessException::class)
     fun handleUnauthorizedAccessException(exception: UnauthorizedAccessException): ErrorResponseDto {
-        logger.debug(exception.message)
+        logger.debug(exception.message, exception)
         return ErrorResponseDto(exception.message!!)
     }
 }
