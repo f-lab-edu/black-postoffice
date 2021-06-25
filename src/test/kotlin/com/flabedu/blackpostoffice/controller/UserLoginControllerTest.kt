@@ -3,8 +3,9 @@ package com.flabedu.blackpostoffice.controller
 import com.fasterxml.jackson.core.JsonProcessingException
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.flabedu.blackpostoffice.controller.dto.UserLoginDto
-import com.flabedu.blackpostoffice.exception.user.UnauthorizedLoginException
+import com.flabedu.blackpostoffice.exception.InvalidRequestException
 import com.flabedu.blackpostoffice.service.SessionLoginService
+import org.hamcrest.Matchers.notNullValue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito
@@ -13,12 +14,16 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.http.MediaType
+import org.springframework.mock.web.MockHttpSession
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers.request
+import org.springframework.test.web.servlet.setup.DefaultMockMvcBuilder
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import org.springframework.web.context.WebApplicationContext
+import org.springframework.web.filter.CharacterEncodingFilter
 
 @WebMvcTest(UserLoginController::class)
 internal class UserLoginControllerTest @Autowired constructor(
@@ -30,49 +35,57 @@ internal class UserLoginControllerTest @Autowired constructor(
     @MockBean
     lateinit var sessionLoginService: SessionLoginService
 
+    lateinit var session: MockHttpSession
+
+    lateinit var userLoginDto: UserLoginDto
+
     @BeforeEach
     fun setUp() {
+
+        session = MockHttpSession()
+
+        userLoginDto = UserLoginDto(
+            email = "test10@gmail.com",
+            password = "1234test@@"
+        )
+
         this.mockMvc = MockMvcBuilders
             .webAppContextSetup(webApplicationContext)
+            .alwaysDo<DefaultMockMvcBuilder>(MockMvcResultHandlers.print())
+            .addFilter<DefaultMockMvcBuilder>(CharacterEncodingFilter("UTF-8", true))
             .build()
     }
 
     @Test
     fun `로그인 성공`() {
-        val userLoginDto = UserLoginDto(
-            email = "1234test@gmail.com",
-            password = "1234test@@",
-        )
+
+        session.setAttribute("email", userLoginDto.email)
 
         doNothing().`when`(sessionLoginService).login(userLoginDto)
 
         mockMvc.perform(
             MockMvcRequestBuilders.post("/users/login")
-                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .contentType(MediaType.APPLICATION_JSON)
                 .content(toJsonString(userLoginDto))
-
+                .session(session)
         )
-            .andExpect(MockMvcResultMatchers.status().isOk)
-            .andDo(MockMvcResultHandlers.print())
+
+            .andExpect(request().sessionAttribute("email", notNullValue()))
+            .andExpect(status().isOk)
     }
 
     @Test
-    fun `가입되지 않은 이메일로 또는 일치하지 않는 비밀번호로 인해 가입 실패`() {
-        val userLoginDto = UserLoginDto(
-            email = "1234test@gmail.com",
-            password = "1234test@@",
-        )
+    fun `가입되지 않은 이메일로 또는 일치하지 않는 비밀번호로 인해 로그인 실패`() {
 
-        Mockito.doThrow(UnauthorizedLoginException::class.java).`when`(sessionLoginService).login(userLoginDto)
+        Mockito.doThrow(InvalidRequestException("아이디가 존재하지 않거나 비밀번호가 일치하지 않습니다.")).`when`(sessionLoginService).login(userLoginDto)
 
         mockMvc.perform(
             MockMvcRequestBuilders.post("/users/login")
-                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .contentType(MediaType.APPLICATION_JSON)
                 .content(toJsonString(userLoginDto))
-
         )
-            .andExpect(MockMvcResultMatchers.status().isUnauthorized)
-            .andDo(MockMvcResultHandlers.print())
+
+            .andExpect(status().isUnauthorized)
     }
 
     @Throws(JsonProcessingException::class)

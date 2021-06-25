@@ -3,7 +3,7 @@ package com.flabedu.blackpostoffice.controller
 import com.fasterxml.jackson.core.JsonProcessingException
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.flabedu.blackpostoffice.controller.dto.UserDto
-import com.flabedu.blackpostoffice.exception.user.DuplicateEmailException
+import com.flabedu.blackpostoffice.exception.DuplicateRequestException
 import com.flabedu.blackpostoffice.service.UserService
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -17,8 +17,10 @@ import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
+import org.springframework.test.web.servlet.setup.DefaultMockMvcBuilder
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import org.springframework.web.context.WebApplicationContext
+import org.springframework.web.filter.CharacterEncodingFilter
 
 @WebMvcTest(UserController::class)
 internal class UserControllerTest @Autowired constructor(
@@ -30,16 +32,12 @@ internal class UserControllerTest @Autowired constructor(
     @MockBean
     lateinit var userService: UserService
 
+    lateinit var userDto: UserDto
+
     @BeforeEach
     fun setUp() {
-        this.mockMvc = MockMvcBuilders
-            .webAppContextSetup(webApplicationContext)
-            .build()
-    }
 
-    @Test
-    fun `회원가입 성공`() {
-        val userDto = UserDto(
+        userDto = UserDto(
             email = "1234test@gmail.com",
             password = "1234test@@",
             nickName = "형일",
@@ -47,36 +45,38 @@ internal class UserControllerTest @Autowired constructor(
             phone = "010-1234-1234",
         )
 
+        this.mockMvc = MockMvcBuilders
+            .webAppContextSetup(webApplicationContext)
+            .alwaysDo<DefaultMockMvcBuilder>(MockMvcResultHandlers.print())
+            .addFilter<DefaultMockMvcBuilder>(CharacterEncodingFilter("UTF-8", true))
+            .build()
+    }
+
+    @Test
+    fun `회원가입 성공`() {
+
         doNothing().`when`(userService)?.saveUser(userDto)
 
         mockMvc.perform(
             MockMvcRequestBuilders.post("/users")
-                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .contentType(MediaType.APPLICATION_JSON)
                 .content(toJsonString(userDto))
-
         )
+
             .andExpect(status().isCreated)
-            .andDo(MockMvcResultHandlers.print())
     }
 
     @Test
     fun `중복된 이메일로 회원가입 실패`() {
-        val userDto = UserDto(
-            email = "test123@gmail.com",
-            password = "testtest123",
-            nickName = "형일",
-            address = "서울",
-            phone = "010-4321-4321",
-        )
 
-        doThrow(DuplicateEmailException::class.java).`when`(userService).saveUser(userDto)
+        doThrow(DuplicateRequestException("이미 존재하는 이메일 입니다.")).`when`(userService).saveUser(userDto)
 
         mockMvc.perform(
             MockMvcRequestBuilders.post("/users")
-                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .contentType(MediaType.APPLICATION_JSON)
                 .content(toJsonString(userDto))
         )
-            .andDo(MockMvcResultHandlers.print())
+
             .andExpect(status().isConflict)
     }
 

@@ -4,7 +4,7 @@ import com.flabedu.blackpostoffice.controller.dto.UserLoginDto
 import com.flabedu.blackpostoffice.domain.mapper.UserMapper
 import com.flabedu.blackpostoffice.domain.model.User.Role.ADMIN
 import com.flabedu.blackpostoffice.domain.model.User.Role.USER
-import com.flabedu.blackpostoffice.exception.user.UnauthorizedLoginException
+import com.flabedu.blackpostoffice.exception.InvalidRequestException
 import com.flabedu.blackpostoffice.commom.utils.constants.LOGIN_MY_EMAIL
 import com.flabedu.blackpostoffice.commom.utils.constants.MY_ROLE
 import com.flabedu.blackpostoffice.commom.encryption.Sha256Encryption
@@ -27,7 +27,7 @@ class SessionLoginService(
         if (userMapper.getUserByEmail(userLoginDto.email) == null ||
             sha256Encryption.encryption(userLoginDto.password) != userMapper.getPasswordByEmail(userLoginDto.email)
         ) {
-            throw UnauthorizedLoginException()
+            throw InvalidRequestException("아이디가 존재하지 않거나 비밀번호가 일치하지 않습니다.")
         }
     }
 
