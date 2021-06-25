@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.flabedu.blackpostoffice.controller.dto.UserLoginDto
 import com.flabedu.blackpostoffice.exception.user.UnauthorizedLoginException
 import com.flabedu.blackpostoffice.service.SessionLoginService
+import org.hamcrest.Matchers.notNullValue
+import org.hamcrest.Matchers.nullValue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -76,6 +78,24 @@ internal class UserLoginControllerTest @Autowired constructor(
         )
             .andExpect(MockMvcResultMatchers.status().isUnauthorized)
             .andDo(MockMvcResultHandlers.print())
+    }
+
+    @Test
+    fun `로그아웃과 동시에 세션을 완전히 삭제`() {
+
+        doNothing().`when`(sessionLoginService).logout()
+
+        session.setAttribute("email", userLoginDto.email)
+
+        mockMvc.perform(
+            MockMvcRequestBuilders.post("/users/logout")
+                .contentType(MediaType.APPLICATION_JSON)
+                .session(session)
+        )
+
+            .andDo { session.invalidate() }
+            .andExpect(request().sessionAttribute("email", nullValue()))
+            .andExpect(status().isOk)
     }
 
     @Throws(JsonProcessingException::class)
