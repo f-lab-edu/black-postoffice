@@ -15,7 +15,7 @@ import javax.servlet.http.HttpSession
 class SessionLoginService(
     private val userMapper: UserMapper,
     private val sha256Encryption: Sha256Encryption,
-    private val session: HttpSession
+    private val session: HttpSession,
 ) : LoginService {
 
     override fun login(userLoginDto: UserLoginDto) {
@@ -24,9 +24,11 @@ class SessionLoginService(
     }
 
     override fun loginCheck(userLoginDto: UserLoginDto) {
-        if (userMapper.getUserByEmail(userLoginDto.email) == null ||
-            sha256Encryption.encryption(userLoginDto.password) != userMapper.getPasswordByEmail(userLoginDto.email)
-        ) {
+        val loginCheckEmail = userMapper.getUserByEmail(userLoginDto.email)
+        val loginCheckPassword = sha256Encryption.encryption(userLoginDto.password)
+        val myPassword = userMapper.getPasswordByEmail(userLoginDto.email)
+
+        if (loginCheckEmail == null || (loginCheckPassword != myPassword)) {
             throw InvalidRequestException("아이디가 존재하지 않거나 비밀번호가 일치하지 않습니다.")
         }
     }
