@@ -4,9 +4,16 @@ import com.flabedu.blackpostoffice.domain.model.User
 import org.apache.ibatis.annotations.Mapper
 
 @Mapper
-interface UserMapper {
+interface UserMapper{
+
     fun isExistsByEmail(email: String): Boolean
-    fun save(user: User)
+
+    fun join(user: User)
+
     fun getUserByEmail(email: String): User?
+
     fun getPasswordByEmail(email: String): String
+
+    fun getUserRoleByEmail(email: String): String
+
 }
