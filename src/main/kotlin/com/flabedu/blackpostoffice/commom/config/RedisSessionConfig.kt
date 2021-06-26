@@ -3,9 +3,11 @@ package com.flabedu.blackpostoffice.commom.config
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.data.redis.connection.RedisConnectionFactory
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory
-import org.springframework.data.redis.core.StringRedisTemplate
+import org.springframework.data.redis.core.RedisTemplate
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer
+import org.springframework.data.redis.serializer.StringRedisSerializer
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession
 
 @Configuration
@@ -16,7 +18,7 @@ class RedisConfig(
     private val redisHost: String,
 
     @Value("\${spring.redis.port}")
-    private val redisPort: Int
+    private val redisPort: Int,
 
     ) {
 
@@ -24,11 +26,14 @@ class RedisConfig(
     fun redisConnectionFactory() = LettuceConnectionFactory(redisHost, redisPort)
 
     @Bean
-    fun stringRedisTemplate(): StringRedisTemplate {
-        val stringRedisTemplate = StringRedisTemplate()
+    fun redisTemplate(): RedisTemplate<String, Any> {
+        val redisTemplate = RedisTemplate<String, Any>()
 
-        stringRedisTemplate.valueSerializer = GenericJackson2JsonRedisSerializer()
+        redisTemplate.setConnectionFactory(redisConnectionFactory())
 
-        return StringRedisTemplate(redisConnectionFactory())
+        redisTemplate.keySerializer = StringRedisSerializer()
+        redisTemplate.valueSerializer = GenericJackson2JsonRedisSerializer()
+
+        return redisTemplate
     }
 }
