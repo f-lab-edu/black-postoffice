@@ -15,22 +15,22 @@ class UserExceptionHandler {
 
     @ResponseStatus(HttpStatus.CONFLICT)
     @ExceptionHandler(DuplicateRequestException::class)
-    fun handleDuplicateEmailException(exception: DuplicateRequestException): ErrorResponseDto {
+    fun handleDuplicateEmailException(exception: DuplicateRequestException): ErrorResponseDto? {
         logger.debug(exception.message, exception)
-        return ErrorResponseDto(exception.message!!)
+        return exception.message?.let { ErrorResponseDto(it) }
     }
 
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(InvalidRequestException::class)
-    fun handleInvalidRequestException(exception: InvalidRequestException): ErrorResponseDto {
+    fun handleInvalidRequestException(exception: InvalidRequestException): ErrorResponseDto? {
         logger.debug(exception.message, exception)
-        return ErrorResponseDto(exception.message!!)
+        return exception.message?.let { ErrorResponseDto(it) }
     }
 
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(UnauthorizedAccessException::class)
-    fun handleUnauthorizedAccessException(exception: UnauthorizedAccessException): ErrorResponseDto {
+    fun handleUnauthorizedAccessException(exception: UnauthorizedAccessException): ErrorResponseDto? {
         logger.debug(exception.message, exception)
-        return ErrorResponseDto(exception.message!!)
+        return exception.message?.let { ErrorResponseDto(it) }
     }
 }
