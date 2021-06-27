@@ -17,22 +17,24 @@ class RedisConfig(
     private val redisHost: String,
 
     @Value("\${spring.redis.port}")
-    private val redisPort: Int
+    private val redisPort: Int,
 
-) {
+    ) {
 
     @Bean
     fun redisConnectionFactory() = LettuceConnectionFactory(redisHost, redisPort)
 
     @Bean
     fun redisTemplate(): RedisTemplate<String, Any> {
+
         val redisTemplate = RedisTemplate<String, Any>()
 
-        redisTemplate.setConnectionFactory(redisConnectionFactory())
-
-        redisTemplate.keySerializer = StringRedisSerializer()
-        redisTemplate.valueSerializer = GenericJackson2JsonRedisSerializer()
-
-        return redisTemplate
+        return redisTemplate.apply {
+            setConnectionFactory(redisConnectionFactory())
+            setEnableTransactionSupport(true)
+            keySerializer = StringRedisSerializer()
+            valueSerializer = GenericJackson2JsonRedisSerializer()
+        }
     }
+
 }
