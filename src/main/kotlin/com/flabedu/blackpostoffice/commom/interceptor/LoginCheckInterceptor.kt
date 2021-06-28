@@ -29,16 +29,13 @@ class LoginCheckInterceptor : HandlerInterceptor {
 
     private fun validateAdminLevel(request: HttpServletRequest, loginCheck: LoginCheck) {
         if (loginCheck.authority == ADMIN) {
-            getMyRole(request) ?: throw UnauthorizedAccessException("이 페이지에 엑세스 하는데 필요한 권한이 존재하지 않습니다.")
+            request.session.getAttribute(MY_ROLE)
+                ?: throw UnauthorizedAccessException("이 페이지에 엑세스 하는데 필요한 권한이 존재하지 않습니다.")
         }
     }
 
     private fun validateNotLoginUser(request: HttpServletRequest) {
-        getMyEmail(request) ?: throw UnauthorizedAccessException("로그인 후에 이용 가능합니다.")
+        request.session.getAttribute(LOGIN_MY_EMAIL) ?: throw UnauthorizedAccessException("로그인 후에 이용 가능합니다.")
     }
-
-    private fun getMyRole(request: HttpServletRequest) = request.session.getAttribute(MY_ROLE)
-
-    private fun getMyEmail(request: HttpServletRequest) = request.session.getAttribute(LOGIN_MY_EMAIL)
 
 }
