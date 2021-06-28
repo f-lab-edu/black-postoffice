@@ -3,6 +3,8 @@ package com.flabedu.blackpostoffice.domain.model
 import java.time.LocalDateTime
 
 class User(
+    val userId: Long = 0L,
+
     val address: String = "",
 
     val createdAt: LocalDateTime = LocalDateTime.now(),

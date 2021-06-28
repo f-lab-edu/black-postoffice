@@ -3,9 +3,9 @@
 
 <mapper namespace="com.flabedu.blackpostoffice.domain.mapper.UserMapper">
 
-    <insert id="save" parameterType="com.flabedu.blackpostoffice.domain.model.User">
-        INSERT INTO user (address, created_at, email, nick_name, password, phone, user_role)
-        VALUES (#{address}, #{createdAt}, #{email}, #{nickName}, #{password}, #{phone}, #{role});
+    <insert id="save" parameterType="com.flabedu.blackpostoffice.domain.model.User" useGeneratedKeys="true" keyProperty="userId">
+        INSERT INTO user (user_id, address, created_at, email, nick_name, password, phone, user_role)
+        VALUES (#{userId}, #{address}, #{createdAt}, #{email}, #{nickName}, #{password}, #{phone}, #{role});
     </insert>
 
     <select id="isExistsByEmail" resultType="boolean">
