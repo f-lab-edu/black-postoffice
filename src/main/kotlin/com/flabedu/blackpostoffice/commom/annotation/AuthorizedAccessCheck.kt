@@ -5,6 +5,6 @@ import com.flabedu.blackpostoffice.domain.model.User.Role.NONE
 
 @Retention(AnnotationRetention.RUNTIME)
 @Target(AnnotationTarget.FUNCTION)
-annotation class LoginCheck(
+annotation class AuthorizedAccessCheck(
     val authority: Role = NONE
 )

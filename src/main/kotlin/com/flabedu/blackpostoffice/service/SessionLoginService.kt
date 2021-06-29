@@ -19,11 +19,11 @@ class SessionLoginService(
 ) : LoginService {
 
     override fun login(userLoginDto: UserLoginDto) {
-        loginCheck(userLoginDto)
+        invalidLoginCheck(userLoginDto)
         setSessionAttribute(userLoginDto)
     }
 
-    override fun loginCheck(userLoginDto: UserLoginDto) {
+    override fun invalidLoginCheck(userLoginDto: UserLoginDto) {
         val loginCheckEmail = userMapper.getUserByEmail(userLoginDto.email)
         val loginCheckPassword = sha256Encryption.encryption(userLoginDto.password)
         val myPassword = userMapper.getPasswordByEmail(userLoginDto.email)
