@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice
 @RestControllerAdvice
 class UserExceptionHandler : Logger {
 
-    companion object : Logger
-
     @ResponseStatus(HttpStatus.CONFLICT)
     @ExceptionHandler(DuplicateRequestException::class)
     fun handleDuplicateEmailException(exception: DuplicateRequestException): ErrorResponseDto? {
