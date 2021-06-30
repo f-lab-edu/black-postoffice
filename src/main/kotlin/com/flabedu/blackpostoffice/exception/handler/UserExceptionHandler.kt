@@ -18,7 +18,7 @@ class UserExceptionHandler : Logger {
     @ResponseStatus(HttpStatus.CONFLICT)
     @ExceptionHandler(DuplicateRequestException::class)
     fun handleDuplicateEmailException(exception: DuplicateRequestException): ErrorResponseDto? {
-        logger.error(exception.message)
+        logger.debug(exception.message)
         return exception.message?.let { ErrorResponseDto(it) }
     }
 
