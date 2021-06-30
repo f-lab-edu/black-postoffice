@@ -1,14 +1,23 @@
 # black-postoffice
 - 위치 기반의 남이 올려주는 인스타그램 텍스트 버전
-- 여러 사람이 볼 수 있는 피드에 올릴 글(편지, 텍스트)을 본인이 직접 올리는 것이 아니라, 
-  나만 볼 수 있는 피드(우체통)에 올라온 글(편지, 텍스트)를 올려주는 형식
 
 ### WIKI
 해당 프로젝트의 모든 정보는 [WIKI](https://github.com/f-lab-edu/shoe-auction/wiki) 를 참고하실 수 있습니다.
 
 - [프로젝트 소개 및 기능정의](https://github.com/f-lab-edu/black-postoffice/wiki/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EC%86%8C%EA%B0%9C)
+- [프로토 타입 - 카카오 오븐을 활용해서 작성하였습니다.](https://github.com/f-lab-edu/black-postoffice/wiki/%ED%94%84%EB%A1%9C%ED%86%A0%ED%83%80%EC%9E%85)
+- [ERD](https://github.com/f-lab-edu/black-postoffice/wiki/ERD)  
 - [issue, pull Request, commit Template](https://github.com/f-lab-edu/black-postoffice/wiki/issue,-pull-Request,-commit-Template)
+- [브렌치 관리 전략](https://github.com/f-lab-edu/black-postoffice/wiki/%EB%B8%8C%EB%A0%8C%EC%B9%98-%EA%B4%80%EB%A6%AC-%EC%A0%84%EB%9E%B5)  
 - [Issue및 trouble shooting Posting](https://github.com/f-lab-edu/black-postoffice/wiki/Issue%EB%B0%8F-trouble-shooting-Posting)
+- [이펙티브 코틀린, 이펙티브 자바를 기반으로](https://github.com/f-lab-edu/black-postoffice/wiki/%EC%9D%B4%ED%8E%99%ED%8B%B0%EB%B8%8C-%EC%BD%94%ED%8B%80%EB%A6%B0,-%EC%9D%B4%ED%8E%99%ED%8B%B0%EB%B8%8C-%EC%9E%90%EB%B0%94%EB%A5%BC-%EA%B8%B0%EB%B0%98%EC%9C%BC%EB%A1%9C)
+
+### 사용기술
+`kotlin`, `springboot`, `gradle`, `mybatis`, `redis`, `mysql` + 추가 예정
+
+### 기능 명세
+
+### 전체 아키텍처
 
 ### 코틀린 사용 이유
 - **코틀린**의 가장 큰 장점은 간결성과 효율성이다. 형식을 맞추기 위한 코드나 무의미하고 반복적인 코드들을 제거해 간결하고
@@ -22,20 +31,7 @@
 ### 프로젝트 주요 관심사
 - 이유와 근거가 명확한 기술의 사용
 - 실제 현업으로 가정했을때, 신입 개발자가 출근 첫 날에 코드를 보더라도 이해하기 쉬운 코드란 뭘까에 관한 끝없는 고민
-- 유지보수 하기 쉬운 코드 및 커뮤니케이션을 위한 코드에 관한 끝없는 고민
+- 이해, 유지보수하기 쉬운 코드 및 커뮤니케이션을 위한 코드에 관한 끝없는 고민
 - 대용량 트래픽의 상황에서 지속적인 서버 개선을 위한 성능 튜닝
 - 책과 도큐먼트를 통해 얻은 깊은 이론을 통해 깊은 설계 지향
-
-### 브렌치 관리 전략
-&nbsp;&nbsp;&nbsp;&nbsp; Git-Flow 를 이용하여 브랜치를 관리하였습니다.
-
-<p align="center">
-  <img src="https://user-images.githubusercontent.com/54772162/101170794-45d27180-3682-11eb-8c42-6f4bf8ec73c9.PNG?raw=true" alt="Sublime's custom image"/>
-</p>
-
-✔️ master : 배포시 사용할 브랜치. 초기 시행착오에 의하여 몇몇 기능이 merge 되어 있으나, 원래 사용 용도는 완벽히 배포가 가능한 상태에만 merge가 되어야만 합니다.        
-✔️ develop : 다음 버전을 개발하는 브랜치, 완전히 배포가 가능하다고 생각되면 master 브랜치에 merge 합니다.    
-✔️ feature : 기능을 개발하는 브랜치    
-✔️ release : 배포를 준비할 때 사용할 브랜치    
-✔️ hotfix : 배포 후에 발생한 버그를 수정 하는 브랜치
 
