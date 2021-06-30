@@ -1,6 +1,6 @@
 package com.flabedu.blackpostoffice.exception.handler
 
-import com.flabedu.blackpostoffice.commom.utils.constants.logger
+import com.flabedu.blackpostoffice.commom.utils.constants.Logger
 import com.flabedu.blackpostoffice.exception.DuplicateRequestException
 import com.flabedu.blackpostoffice.exception.InvalidRequestException
 import com.flabedu.blackpostoffice.exception.UnauthorizedAccessException
@@ -11,12 +11,14 @@ import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestControllerAdvice
 
 @RestControllerAdvice
-class UserExceptionHandler {
+class UserExceptionHandler : Logger {
+
+    companion object : Logger
 
     @ResponseStatus(HttpStatus.CONFLICT)
     @ExceptionHandler(DuplicateRequestException::class)
     fun handleDuplicateEmailException(exception: DuplicateRequestException): ErrorResponseDto? {
-        logger.debug(exception.message, exception)
+        logger.error(exception.message)
         return exception.message?.let { ErrorResponseDto(it) }
     }
 
