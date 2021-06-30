@@ -1,6 +1,6 @@
 package com.flabedu.blackpostoffice.exception.handler
 
-import com.flabedu.blackpostoffice.commom.utils.constants.Logger
+import com.flabedu.blackpostoffice.commom.logging.Logger
 import com.flabedu.blackpostoffice.exception.DuplicateRequestException
 import com.flabedu.blackpostoffice.exception.InvalidRequestException
 import com.flabedu.blackpostoffice.exception.UnauthorizedAccessException
