@@ -40,7 +40,6 @@ class AmazonS3Service(
     }
 
     private fun putS3(file: MultipartFile, convertFileName: String) {
-
         try {
             amazonS3Client.putObject(
                 PutObjectRequest(bucket, PROFILE_IMAGE_DIR.plus(convertFileName), file.inputStream, metadata(file))
@@ -51,7 +50,6 @@ class AmazonS3Service(
     }
 
     private fun metadata(file: MultipartFile) = ObjectMetadata().apply {
-
         contentType = file.contentType
         contentLength = file.size
     }
@@ -59,7 +57,6 @@ class AmazonS3Service(
     private fun getUuid() = UUID.randomUUID().toString().replace("-", "")
 
     private fun delete(getMyProfileImage: String) {
-
         val key = PROFILE_IMAGE_DIR.plus(getMyProfileImage.substring(baseUrl.length))
 
         try {
@@ -68,4 +65,5 @@ class AmazonS3Service(
             throw AmazonServiceException("파일 삭제에 실패하였습니다.")
         }
     }
+
 }
