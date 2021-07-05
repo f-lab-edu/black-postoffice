@@ -1,17 +1,22 @@
 package com.flabedu.blackpostoffice.exception.handler
 
-import com.flabedu.blackpostoffice.commom.logging.Logger
 import com.flabedu.blackpostoffice.exception.DuplicateRequestException
 import com.flabedu.blackpostoffice.exception.InvalidRequestException
 import com.flabedu.blackpostoffice.exception.UnauthorizedAccessException
 import com.flabedu.blackpostoffice.exception.dto.ErrorResponseDto
+import org.apache.logging.log4j.LogManager
+import org.apache.logging.log4j.Logger
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestControllerAdvice
 
 @RestControllerAdvice
-class UserExceptionHandler : Logger {
+class UserExceptionHandler {
+
+    companion object {
+        private val logger: Logger = LogManager.getLogger(this)
+    }
 
     @ResponseStatus(HttpStatus.CONFLICT)
     @ExceptionHandler(DuplicateRequestException::class)
