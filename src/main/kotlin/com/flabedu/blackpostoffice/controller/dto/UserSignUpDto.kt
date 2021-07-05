@@ -6,7 +6,7 @@ import javax.validation.constraints.NotBlank
 import javax.validation.constraints.Pattern
 import javax.validation.constraints.Size
 
-data class UserDto(
+data class UserSignUpDto(
 
     @field:Email(message = "올바른 이메일 주소를 입력해주세요.")
     @field:NotBlank(message = "이메일은 필수 입력입니다.")
@@ -25,7 +25,9 @@ data class UserDto(
 
     @field:NotBlank(message = "휴대폰 번호는 필수 입력입니다.")
     @field:Pattern(regexp = "010-[0-9]{3,4}-[0-9]{4}", message = "올바른 휴대폰 번호를 입력해주세요.")
-    val phone: String
+    val phone: String,
+
+    val profileImagePath: String?
 
 ) {
     fun toUserEntity(password: String) =
@@ -34,6 +36,7 @@ data class UserDto(
             password = password,
             nickName = nickName,
             address = address,
-            phone = phone
+            phone = phone,
+            profileImagePath = profileImagePath
         )
 }

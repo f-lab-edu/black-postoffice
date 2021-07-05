@@ -4,7 +4,7 @@ import com.flabedu.blackpostoffice.domain.model.User
 import org.apache.ibatis.annotations.Mapper
 
 @Mapper
-interface UserMapper{
+interface UserMapper {
 
     fun isExistsByEmail(email: String): Boolean
 
@@ -16,4 +16,9 @@ interface UserMapper{
 
     fun getUserRoleByEmail(email: String): String
 
+    fun getProfileImage(email: String): String?
+
+    fun updateUserInfo(user: User)
+
+    fun updateNullProfileImage(email: String)
 }

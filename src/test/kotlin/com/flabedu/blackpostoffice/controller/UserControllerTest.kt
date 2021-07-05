@@ -2,7 +2,7 @@ package com.flabedu.blackpostoffice.controller
 
 import com.fasterxml.jackson.core.JsonProcessingException
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.flabedu.blackpostoffice.controller.dto.UserDto
+import com.flabedu.blackpostoffice.controller.dto.UserSignUpDto
 import com.flabedu.blackpostoffice.exception.DuplicateRequestException
 import com.flabedu.blackpostoffice.service.UserService
 import org.junit.jupiter.api.BeforeEach
@@ -32,17 +32,18 @@ internal class UserControllerTest @Autowired constructor(
     @MockBean
     lateinit var userService: UserService
 
-    lateinit var userDto: UserDto
+    lateinit var userSignUpDto: UserSignUpDto
 
     @BeforeEach
     fun setUp() {
 
-        userDto = UserDto(
+        userSignUpDto = UserSignUpDto(
             email = "1234test@gmail.com",
             password = "1234test@@",
             nickName = "형일",
             address = "서울",
             phone = "010-1234-1234",
+            profileImagePath = ""
         )
 
         this.mockMvc = MockMvcBuilders
@@ -55,12 +56,12 @@ internal class UserControllerTest @Autowired constructor(
     @Test
     fun `회원가입 성공`() {
 
-        doNothing().`when`(userService)?.saveUser(userDto)
+        doNothing().`when`(userService)?.saveUser(userSignUpDto)
 
         mockMvc.perform(
             MockMvcRequestBuilders.post("/users")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(toJsonString(userDto))
+                .content(toJsonString(userSignUpDto))
         )
 
             .andExpect(status().isCreated)
@@ -69,19 +70,19 @@ internal class UserControllerTest @Autowired constructor(
     @Test
     fun `중복된 이메일로 회원가입 실패`() {
 
-        doThrow(DuplicateRequestException("이미 존재하는 이메일 입니다.")).`when`(userService).saveUser(userDto)
+        doThrow(DuplicateRequestException("이미 존재하는 이메일 입니다.")).`when`(userService).saveUser(userSignUpDto)
 
         mockMvc.perform(
             MockMvcRequestBuilders.post("/users")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(toJsonString(userDto))
+                .content(toJsonString(userSignUpDto))
         )
 
             .andExpect(status().isConflict)
     }
 
     @Throws(JsonProcessingException::class)
-    private fun toJsonString(userDto: UserDto): String {
-        return objectMapper.writeValueAsString(userDto)
+    private fun toJsonString(userSignUpDto: UserSignUpDto): String {
+        return objectMapper.writeValueAsString(userSignUpDto)
     }
 }

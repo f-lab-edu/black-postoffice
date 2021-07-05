@@ -3,9 +3,9 @@
 
 <mapper namespace="com.flabedu.blackpostoffice.domain.mapper.UserMapper">
 
-    <insert id="save" parameterType="com.flabedu.blackpostoffice.domain.model.User">
-        INSERT INTO user (address, created_at, email, nick_name, password, phone, user_role)
-        VALUES (#{address}, #{createdAt}, #{email}, #{nickName}, #{password}, #{phone}, #{role});
+    <insert id="join" parameterType="com.flabedu.blackpostoffice.domain.model.User">
+        INSERT INTO user (address, created_at, email, nick_name, password, phone, user_role, profile_image)
+        VALUES (#{address}, #{createdAt}, #{email}, #{nickName}, #{password}, #{phone}, #{role}, #{profileImagePath});
     </insert>
 
     <select id="isExistsByEmail" resultType="boolean">
@@ -14,7 +14,7 @@
     </select>
 
     <select id="getUserByEmail" parameterType="String" resultType="com.flabedu.blackpostoffice.domain.model.User">
-        SELECT address, email, nick_name, password, phone
+        SELECT address, email, nick_name, password, phone, profile_image
         FROM user
         WHERE email = #{email}
     </select>
@@ -30,5 +30,23 @@
         FROM user
         WHERE email = #{email}
     </select>
+
+    <select id="getProfileImage" parameterType="String" resultType="String">
+        SELECT profile_image
+        FROM user
+        WHERE email = #{email}
+    </select>
+
+    <update id="updateUserInfo" parameterType="com.flabedu.blackpostoffice.domain.model.User">
+        UPDATE user
+        SET profile_image = #{profileImagePath}
+        WHERE email = #{email}
+    </update>
+
+    <update id="updateNullProfileImage" parameterType="String">
+        UPDATE user
+        SET profile_image = null
+        WHERE email = #{email}
+    </update>
 
 </mapper>

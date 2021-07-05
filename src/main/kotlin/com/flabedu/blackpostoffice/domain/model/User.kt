@@ -15,7 +15,9 @@ class User(
 
     val phone: String = "",
 
-    val role: Role = Role.USER
+    val role: Role = Role.USER,
+
+    val profileImagePath: String? = ""
 
 ) {
     enum class Role {
