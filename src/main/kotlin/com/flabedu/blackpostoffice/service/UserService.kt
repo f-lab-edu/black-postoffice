@@ -29,10 +29,8 @@ class UserService(
     }
 
     @Transactional
-    fun userInfoUpdate(multipartFile: MultipartFile) {
+    fun userInfoUpdate(multipartFile: MultipartFile) = profileImageUpdate(multipartFile)
 
-        profileImageUpdate(multipartFile)
-    }
 
     @Transactional
     fun deleteProfileImage() {
