@@ -2,18 +2,25 @@ package com.flabedu.blackpostoffice.controller
 
 import com.fasterxml.jackson.core.JsonProcessingException
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.flabedu.blackpostoffice.controller.dto.UserInfoUpdateDto
+import com.flabedu.blackpostoffice.controller.dto.UserLoginDto
 import com.flabedu.blackpostoffice.controller.dto.UserSignUpDto
+import com.flabedu.blackpostoffice.domain.mapper.UserMapper
 import com.flabedu.blackpostoffice.exception.DuplicateRequestException
+import com.flabedu.blackpostoffice.service.SessionLoginService
 import com.flabedu.blackpostoffice.service.UserService
+import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito.doNothing
-import org.mockito.Mockito.doThrow
+import org.mockito.Mockito.*
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.http.MediaType
+import org.springframework.mock.web.MockHttpSession
+import org.springframework.mock.web.MockMultipartFile
 import org.springframework.test.web.servlet.MockMvc
+import org.springframework.test.web.servlet.request.MockMultipartHttpServletRequestBuilder
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
@@ -21,6 +28,7 @@ import org.springframework.test.web.servlet.setup.DefaultMockMvcBuilder
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import org.springframework.web.context.WebApplicationContext
 import org.springframework.web.filter.CharacterEncodingFilter
+
 
 @WebMvcTest(UserController::class)
 internal class UserControllerTest @Autowired constructor(
@@ -32,10 +40,26 @@ internal class UserControllerTest @Autowired constructor(
     @MockBean
     lateinit var userService: UserService
 
+    @MockBean
+    lateinit var sessionLoginService: SessionLoginService
+
     lateinit var userSignUpDto: UserSignUpDto
+
+    lateinit var userInfoUpdateDto: UserInfoUpdateDto
+
+    lateinit var session: MockHttpSession
+
+    private lateinit var userLoginDto: UserLoginDto
 
     @BeforeEach
     fun setUp() {
+
+        session = MockHttpSession()
+
+        userLoginDto = UserLoginDto(
+            email = "test10@gmail.com",
+            password = "1234test@@"
+        )
 
         userSignUpDto = UserSignUpDto(
             email = "1234test@gmail.com",
@@ -44,6 +68,10 @@ internal class UserControllerTest @Autowired constructor(
             address = "서울",
             phone = "010-1234-1234",
             profileImagePath = ""
+        )
+
+        userInfoUpdateDto = UserInfoUpdateDto(
+            profileImagePath = multipartFile()
         )
 
         this.mockMvc = MockMvcBuilders
@@ -80,6 +108,42 @@ internal class UserControllerTest @Autowired constructor(
 
             .andExpect(status().isConflict)
     }
+
+    @Test
+    fun `회원정보 수정 성공`() {
+
+
+        val builder: MockMultipartHttpServletRequestBuilder = MockMvcRequestBuilders.multipart("/users/my-info/update")
+        builder.with { request ->
+            request.method = "PATCH"
+            request
+        }
+
+        doNothing().`when`(userService)?.userInfoUpdate(multipartFile())
+
+        mockMvc.perform(
+            builder
+                .file(userInfoUpdateDto.profileImagePath as MockMultipartFile)
+                .contentType(MediaType.APPLICATION_JSON)
+        )
+            .andDo { println() }
+            .andExpect(status().isOk)
+    }
+
+    @Test
+    fun `프로필 사진 삭제 성공`() {
+
+        doNothing().`when`(userService)?.deleteProfileImage()
+
+        mockMvc.perform(
+            MockMvcRequestBuilders.put("/users/profile-image/delete")
+                .contentType(MediaType.APPLICATION_JSON)
+        )
+            .andExpect(status().isOk)
+    }
+
+    private fun multipartFile() =
+        MockMultipartFile("profileImage", "profileImage", "image/png", "profileImage".toByteArray())
 
     @Throws(JsonProcessingException::class)
     private fun toJsonString(userSignUpDto: UserSignUpDto): String {
