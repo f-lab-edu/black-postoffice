@@ -22,6 +22,7 @@ class UserService(
 
     @Transactional
     fun saveUser(userSignUpDto: UserSignUpDto) {
+
         duplicateEmailCheck(userSignUpDto.email)
         userMapper.join(userSignUpDto.toUserEntity(sha256Encryption.encryption(userSignUpDto.password)))
     }
@@ -32,6 +33,7 @@ class UserService(
 
     @Transactional
     fun deleteProfileImage() {
+
         val getCurrentUserEmail = sessionLoginService.getCurrentUserEmail()
         val getMyProfileImage = userMapper.getProfileImage(getCurrentUserEmail)
 
@@ -42,6 +44,7 @@ class UserService(
     }
 
     private fun profileImageUpdate(multipartFile: MultipartFile) {
+
         imageTypeCheck(multipartFile)
 
         val getCurrentUserEmail = sessionLoginService.getCurrentUserEmail()
@@ -53,6 +56,7 @@ class UserService(
     }
 
     private fun imageTypeCheck(multipartFile: MultipartFile) {
+
         val imageType = multipartFile.contentType
 
         if (imageType != PNG && imageType != JPEG) {
@@ -61,6 +65,7 @@ class UserService(
     }
 
     private fun duplicateEmailCheck(email: String) {
+
         if (userMapper.isExistsByEmail(email)) {
             throw DuplicateRequestException("이미 존재하는 이메일 입니다.")
         }

@@ -31,9 +31,10 @@ class AmazonS3Service(
     fun deleteProfileImage(getMyProfileImage: String?) = getMyProfileImage?.let { delete(it) }
 
     private fun upload(file: MultipartFile): String {
+
         val fileName: String? = file.originalFilename
         val noExtensionFileName = fileName?.let { fileName.run { substring(it.lastIndexOf('.')) } }
-        val convertFileName = getUuid().plus(noExtensionFileName)
+        val convertFileName = StringBuilder().append(getUuid()).append(noExtensionFileName).toString()
 
         putS3(file, convertFileName)
 
@@ -41,16 +42,15 @@ class AmazonS3Service(
     }
 
     private fun putS3(file: MultipartFile, convertFileName: String) {
-        try {
-            amazonS3Client.putObject(
-                PutObjectRequest(bucket, PROFILE_IMAGE_DIR.plus(convertFileName), file.inputStream, metadata(file))
-            )
-        } catch (e: IOException) {
-            throw AmazonServiceException("파일 업로드에 실패 하였습니다.")
-        }
+
+        val key = StringBuilder().append(PROFILE_IMAGE_DIR).append(convertFileName).toString()
+
+        try { amazonS3Client.putObject(PutObjectRequest(bucket, key, file.inputStream, metadata(file))) }
+        catch (e: IOException) { throw AmazonServiceException("파일 업로드에 실패 하였습니다.") }
     }
 
     private fun metadata(file: MultipartFile) = ObjectMetadata().apply {
+
         contentType = file.contentType
         contentLength = file.size
     }
@@ -59,13 +59,10 @@ class AmazonS3Service(
 
     private fun delete(getMyProfileImage: String) {
 
-        val key = StringBuilder(PROFILE_IMAGE_DIR).append(getMyProfileImage.substring(baseUrl.length)).toString()
+        val key = StringBuilder().append(PROFILE_IMAGE_DIR).append(getMyProfileImage.substring(baseUrl.length)).toString()
 
-        try {
-            amazonS3Client.deleteObject(DeleteObjectRequest(bucket, key))
-        } catch (e: IOException) {
-            throw AmazonServiceException("파일 삭제에 실패하였습니다.")
-        }
+        try { amazonS3Client.deleteObject(DeleteObjectRequest(bucket, key)) }
+        catch (e: IOException) { throw AmazonServiceException("파일 삭제에 실패하였습니다.") }
     }
 
 }
