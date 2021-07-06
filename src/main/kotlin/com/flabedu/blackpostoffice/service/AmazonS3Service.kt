@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 import org.springframework.web.multipart.MultipartFile
 import java.io.IOException
+import java.lang.StringBuilder
 import java.util.UUID
 
 @Service
@@ -57,7 +58,8 @@ class AmazonS3Service(
     private fun getUuid() = UUID.randomUUID().toString().replace("-", "")
 
     private fun delete(getMyProfileImage: String) {
-        val key = PROFILE_IMAGE_DIR.plus(getMyProfileImage.substring(baseUrl.length))
+
+        val key = StringBuilder(PROFILE_IMAGE_DIR).append(getMyProfileImage.substring(baseUrl.length)).toString()
 
         try {
             amazonS3Client.deleteObject(DeleteObjectRequest(bucket, key))
