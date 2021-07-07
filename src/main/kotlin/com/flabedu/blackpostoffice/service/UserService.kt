@@ -16,17 +16,9 @@ class UserService(
     @Transactional
     fun saveUser(userDto: UserDto) {
 
-        val user = UserDto(
-            userDto.email,
-            sha256Encryption.encryption(userDto.password),
-            userDto.nickName,
-            userDto.address,
-            userDto.phone,
-            userDto.createdAt
-        )
-
         duplicateEmailCheck(userDto.email)
-        userMapper.save(user.toUserEntity())
+
+        userMapper.save(userDto.toUserEntity(sha256Encryption.encryption(userDto.password)))
     }
 
     fun duplicateEmailCheck(email: String) {

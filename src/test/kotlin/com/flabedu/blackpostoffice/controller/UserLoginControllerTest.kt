@@ -88,6 +88,24 @@ internal class UserLoginControllerTest @Autowired constructor(
             .andExpect(status().isUnauthorized)
     }
 
+    @Test
+    fun `로그아웃과 동시에 세션을 완전히 삭제`() {
+
+        doNothing().`when`(sessionLoginService).logout()
+
+        session.setAttribute("email", userLoginDto.email)
+
+        mockMvc.perform(
+            MockMvcRequestBuilders.post("/users/logout")
+                .contentType(MediaType.APPLICATION_JSON)
+                .session(session)
+        )
+
+            .andDo { session.invalidate() }
+            .andExpect(request().sessionAttribute("email", nullValue()))
+            .andExpect(status().isOk)
+    }
+
     @Throws(JsonProcessingException::class)
     private fun toJsonString(userLoginDto: UserLoginDto): String {
         return objectMapper.writeValueAsString(userLoginDto)

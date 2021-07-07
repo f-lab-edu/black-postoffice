@@ -7,4 +7,6 @@ interface LoginService {
     fun login(userLoginDto: UserLoginDto)
 
     fun invalidLoginCheck(userLoginDto: UserLoginDto)
+
+    fun logout()
 }

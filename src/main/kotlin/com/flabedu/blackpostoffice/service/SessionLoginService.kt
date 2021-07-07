@@ -43,4 +43,6 @@ class SessionLoginService(
             ADMIN.name -> session.setAttribute(MY_ROLE, ADMIN)
         }
     }
+
+    override fun logout() = session.invalidate()
 }
