@@ -1,4 +1,4 @@
-package com.flabedu.blackpostoffice.util.encryption
+package com.flabedu.blackpostoffice.commom.utils.constants
 
 const val SALT_LENGTH = 10
 const val HEX_VALUE = "%02x"

@@ -1,6 +1,6 @@
-package com.flabedu.blackpostoffice.util.config
+package com.flabedu.blackpostoffice.commom.config
 
-import com.flabedu.blackpostoffice.util.interceptor.LoginCheckInterceptor
+import com.flabedu.blackpostoffice.commom.interceptor.LoginCheckInterceptor
 import org.springframework.context.annotation.Configuration
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer

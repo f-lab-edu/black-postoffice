@@ -9,4 +9,5 @@ interface UserMapper {
     fun save(user: User)
     fun getUserByEmail(email: String): User?
     fun getPasswordByEmail(email: String): String
+    fun getUserRoleByEmail(email: String): String
 }
