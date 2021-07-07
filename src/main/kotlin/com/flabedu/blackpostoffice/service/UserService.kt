@@ -18,7 +18,8 @@ class UserService(
 
         duplicateEmailCheck(userDto.email)
 
-        userMapper.save(userDto.toUserEntity(sha256Encryption.encryption(userDto.password)))
+        userMapper.join(userDto.toUserEntity(sha256Encryption.encryption(userDto.password)))
+
     }
 
     fun duplicateEmailCheck(email: String) {
