@@ -34,7 +34,6 @@ class LoginCheckInterceptor : HandlerInterceptor {
         }
     }
 
-
     private fun validateNotLoginUser(request: HttpServletRequest) {
         request.session.getAttribute(LOGIN_MY_EMAIL) ?: throw UnauthorizedAccessException("로그인 후에 이용 가능합니다.")
     }
