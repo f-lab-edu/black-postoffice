@@ -16,4 +16,6 @@ interface UserMapper{
 
     fun getUserRoleByEmail(email: String): String
 
+    fun getUserRoleByEmail(email: String): String
+
 }

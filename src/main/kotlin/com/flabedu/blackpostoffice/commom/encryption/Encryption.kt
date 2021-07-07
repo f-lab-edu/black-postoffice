@@ -1,4 +1,4 @@
-package com.flabedu.blackpostoffice.util.encryption
+package com.flabedu.blackpostoffice.commom.encryption
 
 interface Encryption {
 

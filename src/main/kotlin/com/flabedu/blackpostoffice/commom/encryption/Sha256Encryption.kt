@@ -1,5 +1,12 @@
-package com.flabedu.blackpostoffice.util.encryption
+package com.flabedu.blackpostoffice.commom.encryption
 
+import com.flabedu.blackpostoffice.commom.utils.constants.DIGEST_BYTE_EXTRACT
+import com.flabedu.blackpostoffice.commom.utils.constants.HASH_VALUE_SIZE
+import com.flabedu.blackpostoffice.commom.utils.constants.HEXA_DECIMAL
+import com.flabedu.blackpostoffice.commom.utils.constants.HEXA_DECIMAL_EXPRESSION
+import com.flabedu.blackpostoffice.commom.utils.constants.HEX_VALUE
+import com.flabedu.blackpostoffice.commom.utils.constants.SALT_LENGTH
+import com.flabedu.blackpostoffice.commom.utils.constants.SHA_256_ALGORITHM
 import org.springframework.stereotype.Component
 import java.lang.StringBuilder
 import java.security.MessageDigest
