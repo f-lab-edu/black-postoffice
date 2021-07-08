@@ -34,6 +34,8 @@ dependencies {
     implementation("org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.3")
     implementation("com.amazonaws:aws-java-sdk-s3:1.12.17")
 
+    annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
+
     runtimeOnly("mysql:mysql-connector-java")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")

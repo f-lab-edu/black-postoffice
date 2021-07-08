@@ -4,9 +4,9 @@ import com.amazonaws.services.s3.AmazonS3Client
 import com.amazonaws.services.s3.model.DeleteObjectRequest
 import com.amazonaws.services.s3.model.ObjectMetadata
 import com.amazonaws.services.s3.model.PutObjectRequest
+import com.flabedu.blackpostoffice.commom.property.AwsProperties
 import com.flabedu.blackpostoffice.commom.utils.constants.PROFILE_IMAGE_DIR
 import com.flabedu.blackpostoffice.exception.FileRequestException
-import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 import org.springframework.web.multipart.MultipartFile
 import java.io.IOException
@@ -16,12 +16,7 @@ import java.util.UUID
 @Service
 class AmazonS3Service(
 
-    @Value("\${cloud.aws.s3.bucket}")
-    private val bucket: String,
-
-    @Value("\${cloud.aws.base.url}")
-    private val baseUrl: String,
-
+    private val awsProperties: AwsProperties,
     private val amazonS3Client: AmazonS3Client
 
 ) : FileUploadService {
@@ -40,7 +35,7 @@ class AmazonS3Service(
 
         putS3(file, convertFileName)
 
-        return amazonS3Client.getUrl(bucket, convertFileName).toString()
+        return amazonS3Client.getUrl(awsProperties.s3.bucket, convertFileName).toString()
     }
 
     private fun putS3(file: MultipartFile, convertFileName: String) {
@@ -48,7 +43,7 @@ class AmazonS3Service(
         val key = StringBuilder().append(PROFILE_IMAGE_DIR).append(convertFileName).toString()
 
         try {
-            amazonS3Client.putObject(PutObjectRequest(bucket, key, file.inputStream, metadata(file)))
+            amazonS3Client.putObject(PutObjectRequest(awsProperties.s3.bucket, key, file.inputStream, metadata(file)))
         } catch (e: IOException) {
             throw FileRequestException("파일 업로드에 실패 하였습니다.", e)
         }
@@ -65,10 +60,11 @@ class AmazonS3Service(
     private fun delete(getMyProfileImage: String) {
 
         val key =
-            StringBuilder().append(PROFILE_IMAGE_DIR).append(getMyProfileImage.substring(baseUrl.length)).toString()
+            StringBuilder().append(PROFILE_IMAGE_DIR)
+                .append(getMyProfileImage.substring(awsProperties.base.url.length)).toString()
 
         try {
-            amazonS3Client.deleteObject(DeleteObjectRequest(bucket, key))
+            amazonS3Client.deleteObject(DeleteObjectRequest(awsProperties.s3.bucket, key))
         } catch (e: IOException) {
             throw FileRequestException("파일 삭제에 실패하였습니다.", e)
         }
