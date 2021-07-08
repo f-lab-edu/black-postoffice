@@ -19,7 +19,7 @@ class RedisConfig(
     @Value("\${spring.redis.port}")
     private val redisPort: Int,
 
-    ) {
+) {
 
     @Bean
     fun redisConnectionFactory() = LettuceConnectionFactory(redisHost, redisPort)
@@ -36,5 +36,4 @@ class RedisConfig(
             valueSerializer = GenericJackson2JsonRedisSerializer()
         }
     }
-
 }

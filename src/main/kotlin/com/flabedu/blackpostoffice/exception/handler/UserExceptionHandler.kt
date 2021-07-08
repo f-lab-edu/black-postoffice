@@ -1,8 +1,6 @@
 package com.flabedu.blackpostoffice.exception.handler
 
-import com.flabedu.blackpostoffice.exception.DuplicateRequestException
-import com.flabedu.blackpostoffice.exception.InvalidRequestException
-import com.flabedu.blackpostoffice.exception.UnauthorizedAccessException
+import com.flabedu.blackpostoffice.exception.*
 import com.flabedu.blackpostoffice.exception.dto.ErrorResponseDto
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
@@ -38,4 +36,12 @@ class UserExceptionHandler {
         logger.debug(exception.message, exception)
         return exception.message?.let { ErrorResponseDto(it) }
     }
+
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(FileRequestException::class)
+    fun handleFileRequestException(exception: FileRequestException): ErrorResponseDto? {
+        logger.debug(exception.message, exception)
+        return exception.message?.let { ErrorResponseDto(it) }
+    }
+
 }

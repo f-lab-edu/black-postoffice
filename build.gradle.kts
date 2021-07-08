@@ -32,6 +32,7 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.3")
+    implementation("com.amazonaws:aws-java-sdk-s3:1.12.17")
 
     runtimeOnly("mysql:mysql-connector-java")
 
