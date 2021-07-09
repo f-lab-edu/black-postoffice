@@ -4,7 +4,6 @@ pipeline {
     environment {
         PATH = "/opt/gradle/gradle-6.8/bin:$PATH"
         SLACK_CHANNEL = '#jenkins'
-        TEAM_DIMAIN
     }
 
     stages {
