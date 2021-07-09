@@ -8,7 +8,7 @@ import org.springframework.boot.runApplication
 @ConfigurationPropertiesScan("com.flabedu.blackpostoffice.commom.property")
 class BlackPostofficeApplication
 
-fun main(args: Array<String>) {
-
-    runApplication<BlackPostofficeApplication>(*args)
-}
+//fun main(args: Array<String>) {
+//
+//    runApplication<BlackPostofficeApplication>(*args)
+//}
