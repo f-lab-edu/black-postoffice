@@ -12,6 +12,21 @@ spring:
 mybatis:
   mapper-locations: classpath:mapper/*.xml
 
+cloud:
+  aws:
+    credentials:
+      accessKey:
+      secretKey:
+    s3:
+      bucket: blackpostoffice-profile
+    region:
+      static: ap-northeast-2
+    base:
+      url : "https://blackpostoffice-profile.s3.ap-northeast-2.amazonaws.com/"
+    stack:
+      auto : false
+
+
 logging:
   level:
     root: debug

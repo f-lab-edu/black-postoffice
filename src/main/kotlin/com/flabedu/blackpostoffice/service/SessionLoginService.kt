@@ -5,9 +5,11 @@ import com.flabedu.blackpostoffice.commom.utils.constants.LOGIN_MY_EMAIL
 import com.flabedu.blackpostoffice.commom.utils.constants.MY_ROLE
 import com.flabedu.blackpostoffice.controller.dto.UserLoginDto
 import com.flabedu.blackpostoffice.domain.mapper.UserMapper
+import com.flabedu.blackpostoffice.domain.model.User
 import com.flabedu.blackpostoffice.domain.model.User.Role.ADMIN
 import com.flabedu.blackpostoffice.domain.model.User.Role.USER
 import com.flabedu.blackpostoffice.exception.InvalidRequestException
+import com.flabedu.blackpostoffice.exception.UnauthorizedAccessException
 import org.springframework.stereotype.Service
 import javax.servlet.http.HttpSession
 
@@ -33,6 +35,13 @@ class SessionLoginService(
         }
     }
 
+    override fun logout() = session.invalidate()
+
+    override fun getCurrentUserEmail() =
+        (session.getAttribute(LOGIN_MY_EMAIL) ?: throw UnauthorizedAccessException("로그인 후에 이용 가능합니다.")) as String
+
+    override fun getCurrentUserRole() = session.getAttribute(MY_ROLE) as User.Role
+
     private fun setSessionAttribute(userLoginDto: UserLoginDto) {
         val userRole = userMapper.getUserRoleByEmail(userLoginDto.email)
 
@@ -43,6 +52,4 @@ class SessionLoginService(
             ADMIN.name -> session.setAttribute(MY_ROLE, ADMIN)
         }
     }
-
-    override fun logout() = session.invalidate()
 }

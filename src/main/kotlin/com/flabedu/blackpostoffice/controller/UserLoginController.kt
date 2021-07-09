@@ -1,7 +1,8 @@
 package com.flabedu.blackpostoffice.controller
 
-import com.flabedu.blackpostoffice.commom.annotation.LoginCheck
+import com.flabedu.blackpostoffice.commom.annotation.AuthorizedAccessCheck
 import com.flabedu.blackpostoffice.controller.dto.UserLoginDto
+import com.flabedu.blackpostoffice.domain.model.User.Role.USER
 import com.flabedu.blackpostoffice.service.SessionLoginService
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -16,10 +17,13 @@ class UserLoginController(
 ) {
 
     @PostMapping("/login")
-    fun login(@Valid @RequestBody userLoginDto: UserLoginDto) = sessionLoginService.login(userLoginDto)
+    fun login(@Valid @RequestBody userLoginDto: UserLoginDto) {
+        sessionLoginService.login(userLoginDto)
+    }
 
-    @LoginCheck
+    @AuthorizedAccessCheck(authority = USER)
     @PostMapping("/logout")
-    fun logout() = sessionLoginService.logout()
+    fun logout() {
+        sessionLoginService.logout()
+    }
 }
-

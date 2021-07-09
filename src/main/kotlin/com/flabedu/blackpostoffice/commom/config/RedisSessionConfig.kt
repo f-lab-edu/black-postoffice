@@ -1,6 +1,6 @@
 package com.flabedu.blackpostoffice.commom.config
 
-import org.springframework.beans.factory.annotation.Value
+import com.flabedu.blackpostoffice.commom.property.RedisProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory
@@ -13,16 +13,12 @@ import org.springframework.session.data.redis.config.annotation.web.http.EnableR
 @EnableRedisHttpSession
 class RedisConfig(
 
-    @Value("\${spring.redis.host}")
-    private val redisHost: String,
+    val redisProperties: RedisProperties
 
-    @Value("\${spring.redis.port}")
-    private val redisPort: Int,
-
-    ) {
+) {
 
     @Bean
-    fun redisConnectionFactory() = LettuceConnectionFactory(redisHost, redisPort)
+    fun redisConnectionFactory() = LettuceConnectionFactory(redisProperties.host, redisProperties.port)
 
     @Bean
     fun redisTemplate(): RedisTemplate<String, Any> {
@@ -36,5 +32,4 @@ class RedisConfig(
             valueSerializer = GenericJackson2JsonRedisSerializer()
         }
     }
-
 }

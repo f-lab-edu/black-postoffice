@@ -3,6 +3,7 @@ package com.flabedu.blackpostoffice.domain.model
 import java.time.LocalDateTime
 
 class User(
+
     val userId: Long = 0L,
 
     val address: String = "",
@@ -17,7 +18,9 @@ class User(
 
     val phone: String = "",
 
-    val role: Role = Role.USER
+    val role: Role = Role.USER,
+
+    val profileImagePath: String? = ""
 
 ) {
     enum class Role {
