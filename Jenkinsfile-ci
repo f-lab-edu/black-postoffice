@@ -1,0 +1,45 @@
+pipeline {
+    agent any
+
+    environment {
+        PATH = "/opt/gradle/gradle-6.8/bin:$PATH"
+        SLACK_CHANNEL = '#jenkins'
+    }
+
+    stages {
+
+        stage('Git Checkout') {
+            steps {
+                checkout scm
+                echo 'Git Checkout Success!'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                sh 'gradle clean build'
+                echo 'Build Success!'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                sh 'gradle test'
+                echo 'Test Success!'
+            }
+        }
+
+    }
+
+  post {
+    success {
+         slackSend (channel: SLACK_CHANNEL, color: '#00FF00', message: "SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+         }
+
+    failure {
+         slackSend (channel: SLACK_CHANNEL, color: '#F01717', message: "FAILURE: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+         }
+    }
+
+}
+
