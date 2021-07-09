@@ -24,7 +24,7 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh 'gradle clean build'
+                sh 'gradle clean build --exclude-task test'
                 echo 'Build Success!'
             }
         }
@@ -32,6 +32,7 @@ pipeline {
         stage('Test') {
             steps {
                 sh 'gradle test'
+                junit '**/build/test-results/test/*.xml'
                 echo 'Test Success!'
             }
         }
