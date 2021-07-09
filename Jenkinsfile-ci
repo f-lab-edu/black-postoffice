@@ -4,13 +4,14 @@ pipeline {
     environment {
         PATH = "/opt/gradle/gradle-6.8/bin:$PATH"
         SLACK_CHANNEL = '#jenkins'
+        TEAM_DIMAIN
     }
 
     stages {
 
         stage('Start') {
             steps {
-                slackSend (channel: SLACK_CHANNEL, color: '#FFFF00', message: "STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+                slackSend (channel: SLACK_CHANNEL, color: '#FFFF00', message: "STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})", teamDomain: 'black-postoffice', tokenCredentialId: 'junghyungil-Slack')
             }
         }
 
@@ -39,11 +40,11 @@ pipeline {
 
   post {
     success {
-         slackSend (channel: SLACK_CHANNEL, color: '#00FF00', message: "SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+         slackSend (channel: SLACK_CHANNEL, color: '#00FF00', message: "SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})", teamDomain: 'black-postoffice', tokenCredentialId: 'junghyungil-Slack')
          }
 
     failure {
-         slackSend (channel: SLACK_CHANNEL, color: '#F01717', message: "FAILURE: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+         slackSend (channel: SLACK_CHANNEL, color: '#F01717', message: "FAILURE: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})", teamDomain: 'black-postoffice', tokenCredentialId: 'junghyungil-Slack')
          }
     }
 
