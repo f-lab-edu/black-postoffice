@@ -9,7 +9,7 @@ import org.springframework.test.context.TestPropertySource
 @SpringBootTest
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 @ConfigurationPropertiesScan("com.flabedu.blackpostoffice.commom.property")
-@TestPropertySource("classpath:application-local.yml")
+@TestPropertySource("classpath:application.yml")
 class BlackPostofficeApplicationTests {
     @Test
     fun contextLoads() {
