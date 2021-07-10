@@ -5,15 +5,15 @@ import org.springframework.boot.context.properties.ConstructorBinding
 
 @ConstructorBinding
 @ConfigurationProperties(prefix = "cloud.aws")
-class AwsProperties(
+class AwsProperties (
 
-    val credentials: CredentialsProperties,
+    val credentials: CredentialsProperties? = null,
 
-    val s3: S3Properties,
+    val s3: S3Properties? = null,
 
-    val region: RegionProperties,
+    val region: RegionProperties? = null,
 
-    val base: BaseProperties
+    val base: BaseProperties? = null
 
 ) {
 
