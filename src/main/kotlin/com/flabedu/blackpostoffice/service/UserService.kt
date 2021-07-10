@@ -24,7 +24,7 @@ class UserService(
     fun saveUser(userSignUpDto: UserSignUpDto) {
 
         duplicateEmailCheck(userSignUpDto.email)
-        println("ci test")
+
         userMapper.join(userSignUpDto.toUserEntity(sha256Encryption.encryption(userSignUpDto.password)))
     }
 
