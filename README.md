@@ -13,11 +13,12 @@
 - [이펙티브 코틀린, 이펙티브 자바를 기반으로](https://github.com/f-lab-edu/black-postoffice/wiki/%EC%9D%B4%ED%8E%99%ED%8B%B0%EB%B8%8C-%EC%BD%94%ED%8B%80%EB%A6%B0,-%EC%9D%B4%ED%8E%99%ED%8B%B0%EB%B8%8C-%EC%9E%90%EB%B0%94%EB%A5%BC-%EA%B8%B0%EB%B0%98%EC%9C%BC%EB%A1%9C)
 
 ### 사용기술
-`kotlin`, `springboot`, `gradle`, `mybatis`, `redis`, `mysql` + 추가 예정
+`kotlin`, `springboot`, `gradle`, `mybatis`, `redis`, `mysql`, `aws s3`, `jenkins`, `naver cloud platform` + 추가 예정  
 
 ### 기능 명세
 
 ### 전체 아키텍처
+
 
 ### 코틀린 사용 이유
 - **코틀린**의 가장 큰 장점은 간결성과 효율성이다. 형식을 맞추기 위한 코드나 무의미하고 반복적인 코드들을 제거해 간결하고

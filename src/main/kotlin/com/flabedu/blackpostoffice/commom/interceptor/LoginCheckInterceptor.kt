@@ -45,5 +45,4 @@ class LoginCheckInterceptor(
     }
 
     private fun validateNotLoginUser() = sessionLoginService.getCurrentUserEmail()
-
 }
