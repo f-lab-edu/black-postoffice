@@ -5,7 +5,7 @@ import org.springframework.boot.context.properties.ConstructorBinding
 
 @ConstructorBinding
 @ConfigurationProperties(prefix = "cloud.aws")
-class AwsProperties (
+class AwsProperties(
 
     val credentials: CredentialsProperties? = null,
 
