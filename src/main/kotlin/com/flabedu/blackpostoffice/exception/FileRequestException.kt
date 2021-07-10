@@ -8,4 +8,3 @@ class FileRequestException : RuntimeException {
 
     constructor(message: String, cause: Throwable) : super(message, cause)
 }
-

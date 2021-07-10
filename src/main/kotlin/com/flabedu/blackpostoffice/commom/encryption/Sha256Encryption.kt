@@ -24,14 +24,13 @@ class Sha256Encryption : Encryption {
         val saltByte = salt.toByteArray()
         val temp = password.toByteArray()
         val bytes = ByteArray(saltByte.size + temp.size)
-        var result = ""
 
         try {
             val messageDigest = MessageDigest.getInstance(SHA_256_ALGORITHM)
+
             messageDigest.update(bytes)
 
             val digest = messageDigest.digest()
-
             val encryptionBuilder = StringBuilder()
 
             for (digestByte in digest) {
@@ -41,13 +40,10 @@ class Sha256Encryption : Encryption {
                         .substring(DIGEST_BYTE_EXTRACT)
                 )
             }
-
-            result = encryptionBuilder.toString()
+            return encryptionBuilder.toString()
         } catch (e: NoSuchAlgorithmException) {
             throw RuntimeException("알고리즘 MD5가 요구되었지만, 현재의 환경에서는 사용 가능하지 않습니다.", e)
         }
-
-        return result
     }
 
     private fun getSalt(): String {
