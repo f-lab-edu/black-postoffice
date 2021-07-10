@@ -34,7 +34,6 @@ pipeline {
         stage('Test') {
             steps {
                 sh 'gradle test'
-                junit '**/build/test-results/test/*.xml'
                 echo 'Test Success!'
             }
         }
