@@ -11,6 +11,12 @@ pipeline {
 
     stages {
 
+        stage('Poll') {
+            steps {
+                checkout scm
+            }
+        }
+
         stage('Start') {
             steps {
                 slackSend (channel: SLACK_CHANNEL, color: '#FFFF00', message: "STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})", teamDomain: TEAM_DOMAIN, tokenCredentialId: TOKEN_CREDENTIAL_ID )
@@ -28,6 +34,13 @@ pipeline {
             steps {
                 sh 'gradle clean build --exclude-task test'
                 echo 'Build Success!'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                sh 'gradle test'
+                echo 'Test Success!'
             }
         }
 
