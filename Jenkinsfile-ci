@@ -31,13 +31,6 @@ pipeline {
             }
         }
 
-        stage('Test') {
-            steps {
-                sh 'gradle test'
-                echo 'Test Success!'
-            }
-        }
-
     }
 
   post {
