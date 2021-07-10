@@ -17,11 +17,11 @@ class AwsProperties(
 
 ) {
 
-    class CredentialsProperties(val accessKey: String = "", val secretKey: String = "")
+    class CredentialsProperties(val accessKey: String, val secretKey: String)
 
-    class S3Properties(val bucket: String = "")
+    class S3Properties(val bucket: String)
 
-    class RegionProperties(val static: String = "")
+    class RegionProperties(val static: String)
 
-    class BaseProperties(val url: String = "")
+    class BaseProperties(val url: String)
 }
