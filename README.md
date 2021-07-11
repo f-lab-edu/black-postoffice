@@ -13,7 +13,7 @@
 - [이펙티브 코틀린, 이펙티브 자바를 기반으로](https://github.com/f-lab-edu/black-postoffice/wiki/%EC%9D%B4%ED%8E%99%ED%8B%B0%EB%B8%8C-%EC%BD%94%ED%8B%80%EB%A6%B0,-%EC%9D%B4%ED%8E%99%ED%8B%B0%EB%B8%8C-%EC%9E%90%EB%B0%94%EB%A5%BC-%EA%B8%B0%EB%B0%98%EC%9C%BC%EB%A1%9C)
 
 ### 사용기술
-![기술 스택](https://user-images.githubusercontent.com/43127088/125194197-3e63ee00-e28b-11eb-8caa-d171a2d5d4ea.PNG)
+![기술 스택](https://user-images.githubusercontent.com/43127088/125194910-4c673e00-e28e-11eb-80c8-1a3bda1be8df.PNG)
 
 추가예정
 
