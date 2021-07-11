@@ -56,7 +56,7 @@
 회원정보 수정
 - [프로필 이미지 AWS S3에 업로드]()
 
-젠킨스 CI 구축
+지속적 통합 - CI를 이용한 애자일 - 젠킨스 CI 구축
 - [지속적 통합의 개념 - 애자일 방법론과 폭포수 모델](https://junghyungil.tistory.com/170)
 - [CI란?, 어떤 CI 도구를 사용할까?](https://junghyungil.tistory.com/167)
 - [젠킨스란? 젠킨스를 이용해 CI 자동화하기, 슬랙 연동](https://junghyungil.tistory.com/168)
