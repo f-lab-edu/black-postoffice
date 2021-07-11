@@ -54,7 +54,7 @@
 - [Redis 연동하기 및 Spring Boot Redis Docs 살펴보기](https://junghyungil.tistory.com/166)
 
 회원정보 수정
-- [프로필 이미지 AWS S3에 업로드]()
+- [프로필 이미지 AWS S3에 업로드](https://junghyungil.tistory.com/171)
 
 지속적 통합 - CI를 이용한 애자일 - 젠킨스 CI 구축
 - [지속적 통합의 개념 - 애자일 방법론과 폭포수 모델](https://junghyungil.tistory.com/170)
