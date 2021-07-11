@@ -36,6 +36,37 @@
 
 추가 예정
 
+### 이슈 및 트러블 슈팅 포스팅
+프로젝트 생성
+- [gradlew (gradle wrapper)란](https://www.notion.so/gradlew-gradle-wrapper-98743215d59743f6ac8057e706ae506c)
+- [implementation와 api(compile)](https://junghyungil.tistory.com/148?category=892281)
+- [kotlin에서 lombok이 필요할까? data Class와 비교하여 고찰](https://junghyungil.tistory.com/157?category=953012)
+
+회원가입
+- [유지보수하기 좋은 코드 및 확장성을 고려한 설계에 관한 고찰](https://junghyungil.tistory.com/158?category=953012)
+- [Profile](https://junghyungil.tistory.com/159?category=892281)
+- [log4j vs Lockback vs log4j2, 프로젝트에 무엇을 적용하는게 좋을까?](https://junghyungil.tistory.com/160?category=892281)
+
+로그인
+- [사용자가 늘어나면 서버를 어떻게 확장해야할까? 스케일 업(Scale-up) vs 스케일 아웃(Scale-out)](https://junghyungil.tistory.com/151?category=952148)
+- [Redis vs memcached vs RDBMS](https://junghyungil.tistory.com/165)
+- [Redis(Remote dictionary server)란?](https://junghyungil.tistory.com/162)
+- [Redis 연동하기 및 Spring Boot Redis Docs 살펴보기](https://junghyungil.tistory.com/166)
+
+회원정보 수정
+- [프로필 이미지 AWS S3에 업로드]() ~작성중
+
+젠킨스 CI 구축
+- [CI란?, 어떤 CI 도구를 사용할까?](https://junghyungil.tistory.com/167)
+- [젠킨스란? 젠킨스를 이용해 CI 자동화하기, 슬랙 연동](https://junghyungil.tistory.com/168)
+- [젠킨스와 슬랙 연동하여 알람받기](https://junghyungil.tistory.com/169)
+
+작성중
+- 작성중
+
+그 외 프로젝트를 하며 공부헀던 것들
+- [그 외](https://junghyungil.tistory.com/119)
+
 ### 코틀린 사용 이유
 - **코틀린**의 가장 큰 장점은 간결성과 효율성이다. 형식을 맞추기 위한 코드나 무의미하고 반복적인 코드들을 제거해 간결하고
   효율적인 문제 해결이 가능합니다. **코틀린**은 문법 자체가 깔끔하기 때문에 간결한 코드 작성을 통해 편리한 유지보수가 가능합니다.
