@@ -54,15 +54,16 @@
 - [Redis 연동하기 및 Spring Boot Redis Docs 살펴보기](https://junghyungil.tistory.com/166)
 
 회원정보 수정
-- [프로필 이미지 AWS S3에 업로드]() ~작성중
+- [프로필 이미지 AWS S3에 업로드]()
 
 젠킨스 CI 구축
+- [지속적 통합의 개념 - 애자일 방법론과 폭포수 모델](https://junghyungil.tistory.com/170)
 - [CI란?, 어떤 CI 도구를 사용할까?](https://junghyungil.tistory.com/167)
 - [젠킨스란? 젠킨스를 이용해 CI 자동화하기, 슬랙 연동](https://junghyungil.tistory.com/168)
 - [젠킨스와 슬랙 연동하여 알람받기](https://junghyungil.tistory.com/169)
 
-작성중
-- 작성중
+추가 작성 예정
+- 추가 작성 예정
 
 그 외 프로젝트를 하며 공부헀던 것들
 - [그 외](https://junghyungil.tistory.com/119)
