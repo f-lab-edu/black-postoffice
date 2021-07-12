@@ -2,7 +2,7 @@
 - 익명으로 편하게 고민, 일상을 공유하는 소셜 네트워크 서비스입니다.
 
 ### WIKI
-해당 프로젝트의 모든 정보는 [WIKI](https://github.com/f-lab-edu/shoe-auction/wiki) 를 참고하실 수 있습니다.
+해당 프로젝트의 모든 정보는 [WIKI](https://github.com/f-lab-edu/black-postoffice/wiki/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EC%86%8C%EA%B0%9C) 를 참고하실 수 있습니다.
 
 - [프로젝트 소개 및 기능정의](https://github.com/f-lab-edu/black-postoffice/wiki/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EC%86%8C%EA%B0%9C)
 - [프로토 타입 - 카카오 오븐을 활용해서 작성하였습니다.](https://github.com/f-lab-edu/black-postoffice/wiki/%ED%94%84%EB%A1%9C%ED%86%A0%ED%83%80%EC%9E%85)
