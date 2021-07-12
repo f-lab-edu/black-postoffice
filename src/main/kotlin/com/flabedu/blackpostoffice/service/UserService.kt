@@ -8,7 +8,6 @@ import com.flabedu.blackpostoffice.controller.dto.UserSignUpDto
 import com.flabedu.blackpostoffice.domain.mapper.UserMapper
 import com.flabedu.blackpostoffice.exception.DuplicateRequestException
 import com.flabedu.blackpostoffice.exception.FileRequestException
-import org.apache.tomcat.util.http.fileupload.impl.FileUploadIOException
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.multipart.MultipartFile

@@ -35,7 +35,7 @@ class AmazonS3Service(
 
         putS3(file, convertFileName)
 
-        return amazonS3Client.getUrl(awsProperties.s3.bucket, convertFileName).toString()
+        return amazonS3Client.getUrl(awsProperties.s3?.bucket, convertFileName).toString()
     }
 
     private fun putS3(file: MultipartFile, convertFileName: String) {
@@ -43,7 +43,7 @@ class AmazonS3Service(
         val key = StringBuilder().append(PROFILE_IMAGE_DIR).append(convertFileName).toString()
 
         try {
-            amazonS3Client.putObject(PutObjectRequest(awsProperties.s3.bucket, key, file.inputStream, metadata(file)))
+            amazonS3Client.putObject(PutObjectRequest(awsProperties.s3?.bucket, key, file.inputStream, metadata(file)))
         } catch (e: IOException) {
             throw FileRequestException("파일 업로드에 실패 하였습니다.", e)
         }
@@ -61,10 +61,10 @@ class AmazonS3Service(
 
         val key =
             StringBuilder().append(PROFILE_IMAGE_DIR)
-                .append(getMyProfileImage.substring(awsProperties.base.url.length)).toString()
+                .append(awsProperties.base?.url?.let { getMyProfileImage.substring(it.length) }).toString()
 
         try {
-            amazonS3Client.deleteObject(DeleteObjectRequest(awsProperties.s3.bucket, key))
+            amazonS3Client.deleteObject(DeleteObjectRequest(awsProperties.s3?.bucket, key))
         } catch (e: IOException) {
             throw FileRequestException("파일 삭제에 실패하였습니다.", e)
         }
