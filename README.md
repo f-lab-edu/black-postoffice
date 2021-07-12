@@ -37,26 +37,18 @@
 추가 예정
 
 ### 이슈 및 트러블 슈팅 포스팅
-프로젝트 생성
+
 - [gradlew (gradle wrapper)란](https://www.notion.so/gradlew-gradle-wrapper-98743215d59743f6ac8057e706ae506c)
 - [implementation와 api(compile)](https://junghyungil.tistory.com/148?category=892281)
 - [kotlin에서 lombok이 필요할까? data Class와 비교하여 고찰](https://junghyungil.tistory.com/157?category=953012)
-
-회원가입
 - [유지보수하기 좋은 코드 및 확장성을 고려한 설계에 관한 고찰](https://junghyungil.tistory.com/158?category=953012)
 - [Profile](https://junghyungil.tistory.com/159?category=892281)
 - [log4j vs Lockback vs log4j2, 프로젝트에 무엇을 적용하는게 좋을까?](https://junghyungil.tistory.com/160?category=892281)
-
-로그인
 - [사용자가 늘어나면 서버를 어떻게 확장해야할까? 스케일 업(Scale-up) vs 스케일 아웃(Scale-out)](https://junghyungil.tistory.com/151?category=952148)
 - [Redis vs memcached vs RDBMS](https://junghyungil.tistory.com/165)
 - [Redis(Remote dictionary server)란?](https://junghyungil.tistory.com/162)
 - [Redis 연동하기 및 Spring Boot Redis Docs 살펴보기](https://junghyungil.tistory.com/166)
-
-회원정보 수정
 - [프로필 이미지 AWS S3에 업로드](https://junghyungil.tistory.com/171)
-
-지속적 통합 - CI를 이용한 애자일 - 젠킨스 CI 구축
 - [지속적 통합의 개념 - 애자일 방법론과 폭포수 모델](https://junghyungil.tistory.com/170)
 - [CI란?, 어떤 CI 도구를 사용할까?](https://junghyungil.tistory.com/167)
 - [젠킨스란? 젠킨스를 이용해 CI 자동화하기, 슬랙 연동](https://junghyungil.tistory.com/168)
