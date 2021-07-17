@@ -26,7 +26,7 @@ class PostController(
     @ResponseStatus(HttpStatus.CREATED)
     @AuthorizedAccessCheck(authority = USER)
     fun createPost(@RequestBody createPostDto: PostDto) {
-        postService.createPost(createPostDto)
+        postService.createMyPost(createPostDto)
     }
 
     @GetMapping

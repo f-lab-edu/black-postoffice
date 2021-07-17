@@ -15,7 +15,7 @@ class PostService(
 ) {
 
     @Transactional
-    fun createPost(createPostDto: PostDto) {
+    fun createMyPost(createPostDto: PostDto) {
         postMapper.createMyPost(createPostDto.toCreatePostEntity(sessionLoginService.getCurrentUserEmail()))
     }
 
