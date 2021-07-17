@@ -68,7 +68,7 @@ internal class PostControllerTest @Autowired constructor(
     @Test
     fun `게시물 작성에 성공할 경우 Http Status Code 201(Created)를 리턴`() {
 
-        doNothing().`when`(postService)?.createPost(postDto)
+        doNothing().`when`(postService)?.createMyPost(postDto)
 
         mockMvc.perform(
             MockMvcRequestBuilders.post("/posts")
