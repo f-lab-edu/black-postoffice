@@ -1,4 +1,4 @@
-package com.flabedu.blackpostoffice.controller.dto
+package com.flabedu.blackpostoffice.controller.dto.user
 
 import javax.validation.constraints.NotBlank
 

@@ -1,7 +1,7 @@
 package com.flabedu.blackpostoffice.controller
 
 import com.flabedu.blackpostoffice.commom.annotation.AuthorizedAccessCheck
-import com.flabedu.blackpostoffice.controller.dto.UserLoginDto
+import com.flabedu.blackpostoffice.controller.dto.user.UserLoginDto
 import com.flabedu.blackpostoffice.domain.model.User.Role.USER
 import com.flabedu.blackpostoffice.service.SessionLoginService
 import org.springframework.web.bind.annotation.PostMapping

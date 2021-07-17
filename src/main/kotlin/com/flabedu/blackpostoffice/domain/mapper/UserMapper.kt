@@ -18,6 +18,8 @@ interface UserMapper {
 
     fun getProfileImage(email: String): String?
 
+    fun getNickName(email: String): String
+
     fun updateUserInfo(user: User)
 
     fun updateNullProfileImage(email: String)

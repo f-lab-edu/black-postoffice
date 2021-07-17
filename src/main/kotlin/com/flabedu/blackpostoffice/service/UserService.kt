@@ -3,8 +3,8 @@ package com.flabedu.blackpostoffice.service
 import com.flabedu.blackpostoffice.commom.encryption.Sha256Encryption
 import com.flabedu.blackpostoffice.commom.utils.constants.JPEG
 import com.flabedu.blackpostoffice.commom.utils.constants.PNG
-import com.flabedu.blackpostoffice.controller.dto.UserInfoUpdateDto
-import com.flabedu.blackpostoffice.controller.dto.UserSignUpDto
+import com.flabedu.blackpostoffice.controller.dto.user.UserInfoUpdateDto
+import com.flabedu.blackpostoffice.controller.dto.user.UserSignUpDto
 import com.flabedu.blackpostoffice.domain.mapper.UserMapper
 import com.flabedu.blackpostoffice.exception.DuplicateRequestException
 import com.flabedu.blackpostoffice.exception.FileRequestException

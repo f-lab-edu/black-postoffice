@@ -3,7 +3,7 @@ package com.flabedu.blackpostoffice.service
 import com.flabedu.blackpostoffice.commom.encryption.Sha256Encryption
 import com.flabedu.blackpostoffice.commom.utils.constants.LOGIN_MY_EMAIL
 import com.flabedu.blackpostoffice.commom.utils.constants.MY_ROLE
-import com.flabedu.blackpostoffice.controller.dto.UserLoginDto
+import com.flabedu.blackpostoffice.controller.dto.user.UserLoginDto
 import com.flabedu.blackpostoffice.domain.mapper.UserMapper
 import com.flabedu.blackpostoffice.domain.model.User
 import com.flabedu.blackpostoffice.domain.model.User.Role.ADMIN

@@ -1,4 +1,4 @@
-package com.flabedu.blackpostoffice.controller.dto
+package com.flabedu.blackpostoffice.controller.dto.user
 
 import com.flabedu.blackpostoffice.domain.model.User
 import javax.validation.constraints.Email

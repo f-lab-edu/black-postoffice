@@ -2,9 +2,9 @@ package com.flabedu.blackpostoffice.controller
 
 import com.fasterxml.jackson.core.JsonProcessingException
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.flabedu.blackpostoffice.controller.dto.UserInfoUpdateDto
-import com.flabedu.blackpostoffice.controller.dto.UserLoginDto
-import com.flabedu.blackpostoffice.controller.dto.UserSignUpDto
+import com.flabedu.blackpostoffice.controller.dto.user.UserInfoUpdateDto
+import com.flabedu.blackpostoffice.controller.dto.user.UserLoginDto
+import com.flabedu.blackpostoffice.controller.dto.user.UserSignUpDto
 import com.flabedu.blackpostoffice.exception.DuplicateRequestException
 import com.flabedu.blackpostoffice.service.SessionLoginService
 import com.flabedu.blackpostoffice.service.UserService

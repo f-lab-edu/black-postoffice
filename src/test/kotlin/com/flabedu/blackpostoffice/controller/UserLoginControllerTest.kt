@@ -2,7 +2,7 @@ package com.flabedu.blackpostoffice.controller
 
 import com.fasterxml.jackson.core.JsonProcessingException
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.flabedu.blackpostoffice.controller.dto.UserLoginDto
+import com.flabedu.blackpostoffice.controller.dto.user.UserLoginDto
 import com.flabedu.blackpostoffice.exception.InvalidRequestException
 import com.flabedu.blackpostoffice.service.SessionLoginService
 import org.hamcrest.Matchers.notNullValue

@@ -37,6 +37,12 @@
         WHERE email = #{email}
     </select>
 
+    <select id="getNickName" parameterType="String" resultType="String">
+        SELECT nick_name
+        FROM user
+        WHERE email = #{email}
+    </select>
+
     <update id="updateUserInfo" parameterType="com.flabedu.blackpostoffice.domain.model.User">
         UPDATE user
         SET profile_image = #{profileImagePath}
