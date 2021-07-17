@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Mapper
 @Mapper
 interface PostMapper {
 
-    fun create(post: Post)
+    fun createMyPost(post: Post)
 
     fun getPosts(email: String, pageNo: Int, pageSize: Int): List<Post>
 

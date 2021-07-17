@@ -3,7 +3,7 @@
 
 <mapper namespace="com.flabedu.blackpostoffice.domain.mapper.PostMapper">
 
-    <insert id="create" parameterType="com.flabedu.blackpostoffice.domain.model.Post" useGeneratedKeys="true"
+    <insert id="createMyPost" parameterType="com.flabedu.blackpostoffice.domain.model.Post" useGeneratedKeys="true"
             keyProperty="postId">
         INSERT INTO post (post_id, email, title, content, created_at)
         VALUES (#{postId}, #{email}, #{title}, #{content}, #{createdAt});
