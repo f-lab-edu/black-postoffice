@@ -9,5 +9,4 @@ class RoutingDataSourceConfig : AbstractRoutingDataSource() {
 
     override fun determineCurrentLookupKey() =
         if (TransactionSynchronizationManager.isCurrentTransactionReadOnly()) SLAVE else MASTER
-
 }
