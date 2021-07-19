@@ -31,16 +31,12 @@ class DatasourceConfig {
     fun routingDataSource(
         @Qualifier("masterDataSource") masterDataSource: DataSource,
         @Qualifier("slaveDataSource") slaveDataSource: DataSource
-
     ) = RoutingDataSourceConfig().apply {
 
-        setTargetDataSources(
-            HashMap<Any, Any>().apply {
-                this[MASTER] = masterDataSource
-                this[SLAVE] = slaveDataSource
-            }
-        )
-
+        setTargetDataSources(HashMap<Any, Any>().apply {
+            this[MASTER] = masterDataSource
+            this[SLAVE] = slaveDataSource
+        })
         setDefaultTargetDataSource(masterDataSource)
     }
 
@@ -59,4 +55,5 @@ class DatasourceConfig {
     fun sqlSessionFactory() = SqlSessionFactoryBean().apply {
         setDataSource(dataSource(routingDataSource(masterDataSource(), slaveDataSource())))
     }.`object`
+
 }
