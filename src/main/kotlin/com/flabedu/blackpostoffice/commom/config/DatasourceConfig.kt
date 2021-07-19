@@ -31,6 +31,7 @@ class DatasourceConfig {
     fun routingDataSource(
         @Qualifier("masterDataSource") masterDataSource: DataSource,
         @Qualifier("slaveDataSource") slaveDataSource: DataSource
+
     ) = RoutingDataSourceConfig().apply {
 
         setTargetDataSources(HashMap<Any, Any>().apply {
