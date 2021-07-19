@@ -11,6 +11,7 @@ import com.flabedu.blackpostoffice.domain.model.User.Role.USER
 import com.flabedu.blackpostoffice.exception.InvalidRequestException
 import com.flabedu.blackpostoffice.exception.UnauthorizedAccessException
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import javax.servlet.http.HttpSession
 
 @Service
@@ -20,6 +21,7 @@ class SessionLoginService(
     private val session: HttpSession,
 ) : LoginService {
 
+    @Transactional(readOnly = true)
     override fun login(userLoginDto: UserLoginDto) {
         invalidLoginCheck(userLoginDto)
         setSessionAttribute(userLoginDto)
