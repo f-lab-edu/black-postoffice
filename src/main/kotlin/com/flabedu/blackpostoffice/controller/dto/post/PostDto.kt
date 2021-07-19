@@ -8,8 +8,8 @@ data class PostDto(
 
     @field:NotBlank(message = "게시글 제목은 필수 입력입니다.")
     @field:Size(max = 20, message = "게시물 제목은 20자 이하로 입력해주세요.")
-    val title: String,
-    val content: String
+    val title: String?,
+    val content: String?
 ) {
 
     fun toCreatePostEntity(email: String) =

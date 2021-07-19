@@ -4,23 +4,23 @@ import java.time.LocalDateTime
 
 class User(
 
-    val userId: Long = 0L,
+    val userId: Long? = null,
 
-    val address: String = "",
+    val address: String? = null,
 
     val createdAt: LocalDateTime = LocalDateTime.now(),
 
-    val email: String = "",
+    val email: String? = null,
 
-    val nickName: String = "",
+    val nickName: String? = null,
 
-    val password: String = "",
+    val password: String? = null,
 
-    val phone: String = "",
+    val phone: String? = null,
 
     val role: Role = Role.USER,
 
-    val profileImagePath: String? = ""
+    val profileImagePath: String? = null
 
 ) {
     enum class Role {

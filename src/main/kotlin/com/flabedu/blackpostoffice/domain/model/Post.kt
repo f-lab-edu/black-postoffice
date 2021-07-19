@@ -4,13 +4,13 @@ import java.time.LocalDateTime
 
 class Post(
 
-    val postId: Long = 0L,
+    val postId: Long? = null,
 
-    val email: String = "",
+    val email: String? = null,
 
-    val title: String = "",
+    val title: String? = null,
 
-    val content: String = "",
+    val content: String? = null,
 
     val createdAt: LocalDateTime = LocalDateTime.now()
 )
