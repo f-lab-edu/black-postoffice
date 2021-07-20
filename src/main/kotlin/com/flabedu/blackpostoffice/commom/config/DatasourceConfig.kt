@@ -21,11 +21,11 @@ class DatasourceConfig {
 
     @Bean
     @ConfigurationProperties(prefix = "spring.datasource.master")
-    fun masterDataSource(): DataSource = DataSourceBuilder.create().build()
+    fun masterDataSource() = DataSourceBuilder.create().build()
 
     @Bean
     @ConfigurationProperties(prefix = "spring.datasource.slave")
-    fun slaveDataSource(): DataSource = DataSourceBuilder.create().build()
+    fun slaveDataSource() = DataSourceBuilder.create().build()
 
     @Bean
     fun routingDataSource(
