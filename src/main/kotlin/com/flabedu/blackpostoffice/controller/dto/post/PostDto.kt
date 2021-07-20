@@ -6,21 +6,23 @@ import javax.validation.constraints.Size
 
 data class PostDto(
 
-    @field:NotBlank(message = "게시글 제목은 필수 입력입니다.")
+    @field:NotBlank(message = "제목을 입력해주세요.")
     @field:Size(max = 20, message = "게시물 제목은 20자 이하로 입력해주세요.")
-    val title: String?,
-    val content: String?
+    val title: String,
+
+    @field:NotBlank(message = "내용을 입력해세요.")
+    val content: String,
 ) {
 
     fun toCreatePostEntity(email: String) =
-        Post(
+        Post.toCreatePostEntity(
             email = email,
             title = title,
             content = content
         )
 
     fun toUpdatePostEntity(postId: Long) =
-        Post(
+        Post.toUpdatePostEntity(
             postId = postId,
             title = title,
             content = content

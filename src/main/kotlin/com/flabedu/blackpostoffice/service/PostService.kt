@@ -16,7 +16,7 @@ class PostService(
 
     @Transactional
     fun createMyPost(createPostDto: PostDto) {
-        postMapper.createMyPost(createPostDto.toCreatePostEntity(sessionLoginService.getCurrentUserEmail()))
+        createPostDto.toCreatePostEntity(sessionLoginService.getCurrentUserEmail())?.let { postMapper.createMyPost(it) }
     }
 
     fun getPosts(email: String, pageNo: Int, pageSize: Int) = PostsDto(
@@ -28,7 +28,7 @@ class PostService(
 
     @Transactional
     fun updateMyPost(postId: Long, updatePostDto: PostDto) {
-        postMapper.updateMyPost(updatePostDto.toUpdatePostEntity(postId))
+        updatePostDto.toUpdatePostEntity(postId)?.let { postMapper.updateMyPost(it) }
     }
 
     @Transactional

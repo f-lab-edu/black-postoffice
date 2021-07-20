@@ -2,15 +2,35 @@ package com.flabedu.blackpostoffice.domain.model
 
 import java.time.LocalDateTime
 
-class Post(
+class Post() {
 
-    val postId: Long? = null,
+    var postId: Long = 0L; private set
 
-    val email: String? = null,
+    lateinit var email: String private set
 
-    val title: String? = null,
+    lateinit var title: String private set
 
-    val content: String? = null,
+    lateinit var content: String private set
 
-    val createdAt: LocalDateTime = LocalDateTime.now()
-)
+    lateinit var createdAt: LocalDateTime
+
+    constructor(email: String, title: String, content: String) : this() {
+        this.email = email
+        this.title = title
+        this.content = content
+        this.createdAt = LocalDateTime.now()
+    }
+
+    constructor(postId: Long, title: String, content: String) : this() {
+        this.postId = postId
+        this.title = title
+        this.content = content
+    }
+
+    companion object {
+
+        fun toCreatePostEntity(email: String, title: String, content: String) = Post(email, title, content)
+
+        fun toUpdatePostEntity(postId: Long, title: String, content: String) = Post(postId, title, content)
+    }
+}
