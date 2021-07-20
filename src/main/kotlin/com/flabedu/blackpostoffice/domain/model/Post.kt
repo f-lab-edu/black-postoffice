@@ -12,7 +12,7 @@ class Post() {
 
     lateinit var content: String private set
 
-    lateinit var createdAt: LocalDateTime
+    lateinit var createdAt: LocalDateTime private set
 
     constructor(email: String, title: String, content: String) : this() {
         this.email = email
