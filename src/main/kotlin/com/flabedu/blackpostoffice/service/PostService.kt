@@ -11,24 +11,24 @@ import org.springframework.transaction.annotation.Transactional
 class PostService(
     private val postMapper: PostMapper,
     private val userMapper: UserMapper,
-    private val sessionLoginService: SessionLoginService
+    private val sessionLoginService: SessionLoginService,
 ) {
 
     @Transactional
     fun createMyPost(createPostDto: PostDto) {
-        createPostDto.toCreatePostEntity(sessionLoginService.getCurrentUserEmail())?.let { postMapper.createMyPost(it) }
+        createPostDto.toCreatePostEntity(sessionLoginService.getCurrentUserEmail()).let { postMapper.createMyPost(it) }
     }
 
     fun getPosts(email: String, pageNo: Int, pageSize: Int) = PostsDto(
         nickName = userMapper.getNickName(email),
         profileImagePath = userMapper.getProfileImage(email),
         posts = postMapper.getPosts(email, pageNo, pageSize)
-            .mapTo(arrayListOf()) { PostDto(title = it.title, content = it.content) }
+            .mapTo(arrayListOf()) { PostDto(title = it.title!!, content = it.content!!) }
     )
 
     @Transactional
     fun updateMyPost(postId: Long, updatePostDto: PostDto) {
-        updatePostDto.toUpdatePostEntity(postId)?.let { postMapper.updateMyPost(it) }
+        updatePostDto.toUpdatePostEntity(postId).let { postMapper.updateMyPost(it) }
     }
 
     @Transactional

@@ -15,14 +15,14 @@ data class PostDto(
 ) {
 
     fun toCreatePostEntity(email: String) =
-        Post.toCreatePostEntity(
+        Post(
             email = email,
             title = title,
             content = content
         )
 
     fun toUpdatePostEntity(postId: Long) =
-        Post.toUpdatePostEntity(
+        Post(
             postId = postId,
             title = title,
             content = content
