@@ -1,8 +1,8 @@
 package com.flabedu.blackpostoffice.controller
 
 import com.flabedu.blackpostoffice.commom.annotation.AuthorizedAccessCheck
+import com.flabedu.blackpostoffice.commom.enumeration.Role.USER
 import com.flabedu.blackpostoffice.model.user.UserSignUp
-import com.flabedu.blackpostoffice.model.user.UserSignUp.Role.USER
 import com.flabedu.blackpostoffice.service.UserService
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.PatchMapping

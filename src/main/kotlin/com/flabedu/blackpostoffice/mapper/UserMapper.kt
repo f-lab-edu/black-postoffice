@@ -1,5 +1,6 @@
 package com.flabedu.blackpostoffice.mapper
 
+import com.flabedu.blackpostoffice.commom.enumeration.Role
 import com.flabedu.blackpostoffice.model.user.UserInfo
 import com.flabedu.blackpostoffice.model.user.UserSignUp
 import org.apache.ibatis.annotations.Insert
@@ -25,7 +26,7 @@ interface UserMapper {
         #{userSignUp.phone}, #{role}, #{userSignUp.profileImagePath});            
         """
     )
-    fun join(userSignUp: UserSignUp, role: UserSignUp.Role)
+    fun join(userSignUp: UserSignUp, role: Role)
 
     @Select(
         """

@@ -1,7 +1,7 @@
 package com.flabedu.blackpostoffice.service
 
 import com.flabedu.blackpostoffice.model.user.UserLogin
-import com.flabedu.blackpostoffice.model.user.UserSignUp.Role
+import com.flabedu.blackpostoffice.commom.enumeration.Role
 
 interface LoginService {
 

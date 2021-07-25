@@ -1,6 +1,7 @@
 package com.flabedu.blackpostoffice.service
 
 import com.flabedu.blackpostoffice.commom.encryption.Sha256Encryption
+import com.flabedu.blackpostoffice.commom.enumeration.Role
 import com.flabedu.blackpostoffice.commom.utils.constants.JPEG
 import com.flabedu.blackpostoffice.commom.utils.constants.PNG
 import com.flabedu.blackpostoffice.exception.DuplicateRequestException
@@ -25,10 +26,7 @@ class UserService(
 
         duplicateEmailCheck(userSignUp.email)
 
-        userMapper.join(
-            userSignUp.toPasswordEncryption(sha256Encryption.encryption(userSignUp.password)),
-            UserSignUp.Role.USER
-        )
+        userMapper.join(userSignUp.toPasswordEncryption(sha256Encryption.encryption(userSignUp.password)), Role.USER)
     }
 
     @Transactional

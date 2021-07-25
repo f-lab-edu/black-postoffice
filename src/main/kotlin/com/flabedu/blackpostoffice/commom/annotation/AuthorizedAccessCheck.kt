@@ -1,7 +1,7 @@
 package com.flabedu.blackpostoffice.commom.annotation
 
-import com.flabedu.blackpostoffice.model.user.UserSignUp.Role
-import com.flabedu.blackpostoffice.model.user.UserSignUp.Role.NONE
+import com.flabedu.blackpostoffice.commom.enumeration.Role
+import com.flabedu.blackpostoffice.commom.enumeration.Role.NONE
 
 @Retention(AnnotationRetention.RUNTIME)
 @Target(AnnotationTarget.FUNCTION)

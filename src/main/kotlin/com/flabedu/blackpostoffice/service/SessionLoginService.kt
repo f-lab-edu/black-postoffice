@@ -1,15 +1,15 @@
 package com.flabedu.blackpostoffice.service
 
 import com.flabedu.blackpostoffice.commom.encryption.Sha256Encryption
+import com.flabedu.blackpostoffice.commom.enumeration.Role
 import com.flabedu.blackpostoffice.commom.utils.constants.LOGIN_MY_EMAIL
 import com.flabedu.blackpostoffice.commom.utils.constants.MY_ROLE
 import com.flabedu.blackpostoffice.exception.InvalidRequestException
 import com.flabedu.blackpostoffice.exception.UnauthorizedAccessException
 import com.flabedu.blackpostoffice.mapper.UserMapper
 import com.flabedu.blackpostoffice.model.user.UserLogin
-import com.flabedu.blackpostoffice.model.user.UserSignUp
-import com.flabedu.blackpostoffice.model.user.UserSignUp.Role.ADMIN
-import com.flabedu.blackpostoffice.model.user.UserSignUp.Role.USER
+import com.flabedu.blackpostoffice.commom.enumeration.Role.USER
+import com.flabedu.blackpostoffice.commom.enumeration.Role.ADMIN
 import org.springframework.stereotype.Service
 import javax.servlet.http.HttpSession
 
@@ -40,7 +40,7 @@ class SessionLoginService(
     override fun getCurrentUserEmail() =
         (session.getAttribute(LOGIN_MY_EMAIL) ?: throw UnauthorizedAccessException("로그인 후에 이용 가능합니다.")) as String
 
-    override fun getCurrentUserRole() = session.getAttribute(MY_ROLE) as UserSignUp.Role
+    override fun getCurrentUserRole() = session.getAttribute(MY_ROLE) as Role
 
     private fun setSessionAttribute(userLogin: UserLogin) {
         val userRole = userMapper.getUserRoleByEmail(userLogin.email)

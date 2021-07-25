@@ -28,10 +28,7 @@ data class UserSignUp(
 
     val profileImagePath: String?,
 
-) {
-    enum class Role {
-        NONE, USER, ADMIN
-    }
+    ) {
 
     fun toPasswordEncryption(password: String) =
         UserSignUp(
