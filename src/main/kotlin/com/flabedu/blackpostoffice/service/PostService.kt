@@ -1,9 +1,9 @@
 package com.flabedu.blackpostoffice.service
 
-import com.flabedu.blackpostoffice.controller.dto.post.PostDto
-import com.flabedu.blackpostoffice.controller.dto.post.PostsDto
-import com.flabedu.blackpostoffice.domain.mapper.PostMapper
-import com.flabedu.blackpostoffice.domain.mapper.UserMapper
+import com.flabedu.blackpostoffice.mapper.PostMapper
+import com.flabedu.blackpostoffice.mapper.UserMapper
+import com.flabedu.blackpostoffice.model.post.Post
+import com.flabedu.blackpostoffice.model.post.Posts
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -15,20 +15,20 @@ class PostService(
 ) {
 
     @Transactional
-    fun createMyPost(createPostDto: PostDto) {
-        createPostDto.toCreatePostEntity(sessionLoginService.getCurrentUserEmail()).let { postMapper.createMyPost(it) }
+    fun createMyPost(createPost: Post) {
+        postMapper.createMyPost(sessionLoginService.getCurrentUserEmail(), createPost)
     }
 
-    fun getPosts(email: String, pageNo: Int, pageSize: Int) = PostsDto(
+    fun getPosts(email: String, pageNo: Int, pageSize: Int) = Posts(
         nickName = userMapper.getNickName(email),
         profileImagePath = userMapper.getProfileImage(email),
         posts = postMapper.getPosts(email, pageNo, pageSize)
-            .mapTo(arrayListOf()) { PostDto(title = it.title!!, content = it.content!!) }
+            .mapTo(arrayListOf()) { Post(title = it.title, content = it.content) }
     )
 
     @Transactional
-    fun updateMyPost(postId: Long, updatePostDto: PostDto) {
-        updatePostDto.toUpdatePostEntity(postId).let { postMapper.updateMyPost(it) }
+    fun updateMyPost(postId: Long, updatePost: Post) {
+        postMapper.updateMyPost(postId, updatePost)
     }
 
     @Transactional

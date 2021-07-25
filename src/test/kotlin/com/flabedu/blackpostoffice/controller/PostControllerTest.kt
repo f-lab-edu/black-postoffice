@@ -2,8 +2,8 @@ package com.flabedu.blackpostoffice.controller
 
 import com.fasterxml.jackson.core.JsonProcessingException
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.flabedu.blackpostoffice.controller.dto.post.PostDto
-import com.flabedu.blackpostoffice.controller.dto.post.PostsDto
+import com.flabedu.blackpostoffice.model.post.Post
+import com.flabedu.blackpostoffice.model.post.Posts
 import com.flabedu.blackpostoffice.service.PostService
 import com.flabedu.blackpostoffice.service.SessionLoginService
 import org.junit.jupiter.api.BeforeEach
@@ -38,21 +38,21 @@ internal class PostControllerTest @Autowired constructor(
     @MockBean
     lateinit var sessionLoginService: SessionLoginService
 
-    private lateinit var postDto: PostDto
-    private var postList: MutableList<PostDto> = arrayListOf()
-    private lateinit var postsDto: PostsDto
+    private lateinit var post: Post
+    private var postList: MutableList<Post> = arrayListOf()
+    private lateinit var posts: Posts
 
     @BeforeEach
     fun setUp() {
 
-        postDto = PostDto(
+        post = Post(
             title = "제목",
             content = "내용"
         )
 
-        postList.add(postDto)
+        postList.add(post)
 
-        postsDto = PostsDto(
+        posts = Posts(
             nickName = "닉네임",
             profileImagePath = null,
             posts = postList
@@ -68,12 +68,12 @@ internal class PostControllerTest @Autowired constructor(
     @Test
     fun `게시물 작성에 성공할 경우 Http Status Code 201(Created)를 리턴`() {
 
-        doNothing().`when`(postService)?.createMyPost(postDto)
+        doNothing().`when`(postService)?.createMyPost(post)
 
         mockMvc.perform(
             MockMvcRequestBuilders.post("/posts")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(toJsonString(postDto))
+                .content(toJsonString(post))
         )
 
             .andExpect(MockMvcResultMatchers.status().isCreated)
@@ -82,12 +82,12 @@ internal class PostControllerTest @Autowired constructor(
     @Test
     fun `게시물 수정에 성공할 경우 Http Status Code 200(Ok) 반환`() {
 
-        doNothing().`when`(postService)?.updateMyPost(1, postDto)
+        doNothing().`when`(postService)?.updateMyPost(1, post)
 
         mockMvc.perform(
             MockMvcRequestBuilders.patch("/posts/1")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(toJsonString(postDto))
+                .content(toJsonString(post))
         )
 
             .andExpect(MockMvcResultMatchers.status().isOk)
@@ -96,12 +96,12 @@ internal class PostControllerTest @Autowired constructor(
     @Test
     fun `게시물 조회에 성공할 경우 Http Status Code 200(Ok) 반환`() {
 
-        given(postService.getPosts("test@gmail.com", 0, 10)).willReturn(postsDto)
+        given(postService.getPosts("test@gmail.com", 0, 10)).willReturn(posts)
 
         mockMvc.perform(
             MockMvcRequestBuilders.get("/posts?email=test@gmail.com&pageNo=0&pageSize=10")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(toJsonString(postsDto))
+                .content(toJsonString(posts))
         )
 
             .andExpect(MockMvcResultMatchers.status().isOk)

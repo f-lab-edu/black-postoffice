@@ -1,6 +1,7 @@
-package com.flabedu.blackpostoffice.domain.mapper
+package com.flabedu.blackpostoffice.mapper
 
-import com.flabedu.blackpostoffice.domain.model.User
+import com.flabedu.blackpostoffice.model.user.UserInfo
+import com.flabedu.blackpostoffice.model.user.UserSignUp
 import org.apache.ibatis.annotations.Insert
 import org.apache.ibatis.annotations.Mapper
 import org.apache.ibatis.annotations.Select
@@ -19,12 +20,12 @@ interface UserMapper {
 
     @Insert(
         """
-        INSERT INTO user (user_id, address, created_at, email, nick_name, password, phone, user_role, profile_image)
-        VALUES (#{userId}, #{address}, #{createdAt}, #{email}, #{nickName}, #{password}, #{phone}, #{role},
-                #{profileImagePath});            
+        INSERT INTO user (address, created_at, email, nick_name, password, phone, user_role, profile_image)
+        VALUES (#{userSignUp.address}, now(), #{userSignUp.email}, #{userSignUp.nickName}, #{userSignUp.password}, 
+        #{userSignUp.phone}, #{role}, #{userSignUp.profileImagePath});            
         """
     )
-    fun join(user: User)
+    fun join(userSignUp: UserSignUp, role: UserSignUp.Role)
 
     @Select(
         """
@@ -33,7 +34,7 @@ interface UserMapper {
         WHERE email = #{email}            
         """
     )
-    fun getUserByEmail(email: String): User?
+    fun getUserByEmail(email: String): UserInfo?
 
     @Select(
         """
@@ -78,7 +79,7 @@ interface UserMapper {
         WHERE email = #{email}            
         """
     )
-    fun updateUserInfo(user: User)
+    fun updateUserInfo(email: String, profileImagePath: String)
 
     @Update(
         """

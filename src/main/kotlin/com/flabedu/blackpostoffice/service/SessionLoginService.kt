@@ -3,13 +3,13 @@ package com.flabedu.blackpostoffice.service
 import com.flabedu.blackpostoffice.commom.encryption.Sha256Encryption
 import com.flabedu.blackpostoffice.commom.utils.constants.LOGIN_MY_EMAIL
 import com.flabedu.blackpostoffice.commom.utils.constants.MY_ROLE
-import com.flabedu.blackpostoffice.controller.dto.user.UserLoginDto
-import com.flabedu.blackpostoffice.domain.mapper.UserMapper
-import com.flabedu.blackpostoffice.domain.model.User
-import com.flabedu.blackpostoffice.domain.model.User.Role.ADMIN
-import com.flabedu.blackpostoffice.domain.model.User.Role.USER
 import com.flabedu.blackpostoffice.exception.InvalidRequestException
 import com.flabedu.blackpostoffice.exception.UnauthorizedAccessException
+import com.flabedu.blackpostoffice.mapper.UserMapper
+import com.flabedu.blackpostoffice.model.user.UserLogin
+import com.flabedu.blackpostoffice.model.user.UserSignUp
+import com.flabedu.blackpostoffice.model.user.UserSignUp.Role.ADMIN
+import com.flabedu.blackpostoffice.model.user.UserSignUp.Role.USER
 import org.springframework.stereotype.Service
 import javax.servlet.http.HttpSession
 
@@ -20,15 +20,15 @@ class SessionLoginService(
     private val session: HttpSession,
 ) : LoginService {
 
-    override fun login(userLoginDto: UserLoginDto) {
-        invalidLoginCheck(userLoginDto)
-        setSessionAttribute(userLoginDto)
+    override fun login(userLogin: UserLogin) {
+        invalidLoginCheck(userLogin)
+        setSessionAttribute(userLogin)
     }
 
-    override fun invalidLoginCheck(userLoginDto: UserLoginDto) {
-        val loginCheckEmail = userMapper.getUserByEmail(userLoginDto.email)
-        val loginCheckPassword = sha256Encryption.encryption(userLoginDto.password)
-        val myPassword = userMapper.getPasswordByEmail(userLoginDto.email)
+    override fun invalidLoginCheck(userLogin: UserLogin) {
+        val loginCheckEmail = userMapper.getUserByEmail(userLogin.email)
+        val loginCheckPassword = sha256Encryption.encryption(userLogin.password)
+        val myPassword = userMapper.getPasswordByEmail(userLogin.email)
 
         if (loginCheckEmail == null || (loginCheckPassword != myPassword)) {
             throw InvalidRequestException("아이디가 존재하지 않거나 비밀번호가 일치하지 않습니다.")
@@ -40,12 +40,12 @@ class SessionLoginService(
     override fun getCurrentUserEmail() =
         (session.getAttribute(LOGIN_MY_EMAIL) ?: throw UnauthorizedAccessException("로그인 후에 이용 가능합니다.")) as String
 
-    override fun getCurrentUserRole() = session.getAttribute(MY_ROLE) as User.Role
+    override fun getCurrentUserRole() = session.getAttribute(MY_ROLE) as UserSignUp.Role
 
-    private fun setSessionAttribute(userLoginDto: UserLoginDto) {
-        val userRole = userMapper.getUserRoleByEmail(userLoginDto.email)
+    private fun setSessionAttribute(userLogin: UserLogin) {
+        val userRole = userMapper.getUserRoleByEmail(userLogin.email)
 
-        session.setAttribute(LOGIN_MY_EMAIL, userLoginDto.email)
+        session.setAttribute(LOGIN_MY_EMAIL, userLogin.email)
 
         when (userRole) {
             USER.name -> session.setAttribute(MY_ROLE, USER)

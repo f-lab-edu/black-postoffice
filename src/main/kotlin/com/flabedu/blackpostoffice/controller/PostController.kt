@@ -1,8 +1,8 @@
 package com.flabedu.blackpostoffice.controller
 
 import com.flabedu.blackpostoffice.commom.annotation.AuthorizedAccessCheck
-import com.flabedu.blackpostoffice.controller.dto.post.PostDto
-import com.flabedu.blackpostoffice.domain.model.User.Role.USER
+import com.flabedu.blackpostoffice.model.post.Post
+import com.flabedu.blackpostoffice.model.user.UserSignUp.Role.USER
 import com.flabedu.blackpostoffice.service.PostService
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.DeleteMapping
@@ -25,8 +25,8 @@ class PostController(
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @AuthorizedAccessCheck(authority = USER)
-    fun createPost(@RequestBody createPostDto: PostDto) {
-        postService.createMyPost(createPostDto)
+    fun createPost(@RequestBody createPost: Post) {
+        postService.createMyPost(createPost)
     }
 
     @GetMapping
@@ -36,8 +36,8 @@ class PostController(
 
     @PatchMapping("/{postId}")
     @AuthorizedAccessCheck(authority = USER)
-    fun updateMyPost(@PathVariable postId: Long, @RequestBody postDto: PostDto) {
-        postService.updateMyPost(postId, postDto)
+    fun updateMyPost(@PathVariable postId: Long, @RequestBody post: Post) {
+        postService.updateMyPost(postId, post)
     }
 
     @DeleteMapping("/{postId}")

@@ -1,6 +1,6 @@
-package com.flabedu.blackpostoffice.domain.mapper
+package com.flabedu.blackpostoffice.mapper
 
-import com.flabedu.blackpostoffice.domain.model.Post
+import com.flabedu.blackpostoffice.model.post.Post
 import org.apache.ibatis.annotations.Delete
 import org.apache.ibatis.annotations.Insert
 import org.apache.ibatis.annotations.Mapper
@@ -12,11 +12,11 @@ interface PostMapper {
 
     @Insert(
         """
-        INSERT INTO post (post_id, email, title, content, created_at)
-        VALUES (#{postId}, #{email}, #{title}, #{content}, #{createdAt});
+        INSERT INTO post (email, title, content, created_at)
+        VALUES (#{email}, #{createPost.title}, #{createPost.content}, now());
         """
     )
-    fun createMyPost(post: Post)
+    fun createMyPost(email: String, createPost: Post)
 
     @Select(
         """
@@ -34,11 +34,11 @@ interface PostMapper {
     @Update(
         """
         UPDATE post
-        SET content = #{content}, title = #{title}
+        SET content = #{updatePost.content}, title = #{updatePost.title}
         WHERE post_id = #{postId}            
         """
     )
-    fun updateMyPost(post: Post)
+    fun updateMyPost(postId: Long, updatePost: Post)
 
     @Delete(
         """
@@ -46,5 +46,5 @@ interface PostMapper {
         WHERE post_id = #{postId}
         """
     )
-    fun deleteMyPost(post: Long)
+    fun deleteMyPost(postId: Long)
 }

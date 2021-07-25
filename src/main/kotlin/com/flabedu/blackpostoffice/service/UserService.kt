@@ -3,11 +3,11 @@ package com.flabedu.blackpostoffice.service
 import com.flabedu.blackpostoffice.commom.encryption.Sha256Encryption
 import com.flabedu.blackpostoffice.commom.utils.constants.JPEG
 import com.flabedu.blackpostoffice.commom.utils.constants.PNG
-import com.flabedu.blackpostoffice.controller.dto.user.UserInfoUpdateDto
-import com.flabedu.blackpostoffice.controller.dto.user.UserSignUpDto
-import com.flabedu.blackpostoffice.domain.mapper.UserMapper
 import com.flabedu.blackpostoffice.exception.DuplicateRequestException
 import com.flabedu.blackpostoffice.exception.FileRequestException
+import com.flabedu.blackpostoffice.mapper.UserMapper
+import com.flabedu.blackpostoffice.model.user.UserInfoUpdate
+import com.flabedu.blackpostoffice.model.user.UserSignUp
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.multipart.MultipartFile
@@ -17,15 +17,18 @@ class UserService(
     private val userMapper: UserMapper,
     private val sha256Encryption: Sha256Encryption,
     private val amazonS3Service: AmazonS3Service,
-    private val sessionLoginService: SessionLoginService
+    private val sessionLoginService: SessionLoginService,
 ) {
 
     @Transactional
-    fun saveUser(userSignUpDto: UserSignUpDto) {
+    fun saveUser(userSignUp: UserSignUp) {
 
-        duplicateEmailCheck(userSignUpDto.email)
+        duplicateEmailCheck(userSignUp.email)
 
-        userMapper.join(userSignUpDto.toUserEntity(sha256Encryption.encryption(userSignUpDto.password)))
+        userMapper.join(
+            userSignUp.toPasswordEncryption(sha256Encryption.encryption(userSignUp.password)),
+            UserSignUp.Role.USER
+        )
     }
 
     @Transactional
@@ -34,25 +37,23 @@ class UserService(
     @Transactional
     fun deleteProfileImage() {
 
-        val getCurrentUserEmail = sessionLoginService.getCurrentUserEmail()
-        val getMyProfileImage = userMapper.getProfileImage(getCurrentUserEmail)
-
-        if (getMyProfileImage != null) {
-            userMapper.updateNullProfileImage(getCurrentUserEmail)
-            amazonS3Service.deleteProfileImage(getMyProfileImage)
+        if (getMyProfileImage(sessionLoginService.getCurrentUserEmail()) != null) {
+            userMapper.updateNullProfileImage(sessionLoginService.getCurrentUserEmail())
+            amazonS3Service.deleteProfileImage(getMyProfileImage(sessionLoginService.getCurrentUserEmail()))
         }
     }
+
+    fun getMyProfileImage(getCurrentUserEmail: String) = userMapper.getProfileImage(getCurrentUserEmail)
 
     private fun profileImageUpdate(multipartFile: MultipartFile) {
 
         imageTypeCheck(multipartFile)
 
-        val getCurrentUserEmail = sessionLoginService.getCurrentUserEmail()
-        val userInfoUpdateDto = UserInfoUpdateDto(multipartFile)
-        val uploadProfileImage = amazonS3Service.updateProfileImage(userInfoUpdateDto.profileImagePath)
+        val uploadProfileImagePath = amazonS3Service.updateProfileImage(UserInfoUpdate(multipartFile).profileImagePath)
 
         deleteProfileImage()
-        userMapper.updateUserInfo(userInfoUpdateDto.toUserInfoUpdate(getCurrentUserEmail, uploadProfileImage))
+
+        userMapper.updateUserInfo(sessionLoginService.getCurrentUserEmail(), uploadProfileImagePath)
     }
 
     private fun imageTypeCheck(multipartFile: MultipartFile) {
