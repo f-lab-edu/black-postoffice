@@ -34,14 +34,14 @@ class UserService(
     @Transactional
     fun deleteProfileImage() {
 
-        val getCurrentUserEmail = sessionLoginService.getCurrentUserEmail()
-        val getMyProfileImage = userMapper.getProfileImage(getCurrentUserEmail)
-
-        if (getMyProfileImage != null) {
-            userMapper.updateNullProfileImage(getCurrentUserEmail)
-            amazonS3Service.deleteProfileImage(getMyProfileImage)
+        if (getMyProfileImage(sessionLoginService.getCurrentUserEmail()) != null) {
+            userMapper.updateNullProfileImage(sessionLoginService.getCurrentUserEmail())
+            amazonS3Service.deleteProfileImage(getMyProfileImage(sessionLoginService.getCurrentUserEmail()))
         }
     }
+
+    @Transactional(readOnly = true)
+    fun getMyProfileImage(getCurrentUserEmail: String) = userMapper.getProfileImage(getCurrentUserEmail)
 
     private fun profileImageUpdate(multipartFile: MultipartFile) {
 
@@ -52,6 +52,7 @@ class UserService(
         val uploadProfileImage = amazonS3Service.updateProfileImage(userInfoUpdateDto.profileImagePath)
 
         deleteProfileImage()
+
         userMapper.updateUserInfo(userInfoUpdateDto.toUserInfoUpdate(getCurrentUserEmail, uploadProfileImage))
     }
 
