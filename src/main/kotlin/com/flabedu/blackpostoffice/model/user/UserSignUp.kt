@@ -28,7 +28,7 @@ data class UserSignUp(
 
     val profileImagePath: String?,
 
-    ) {
+) {
 
     fun toPasswordEncryption(password: String) =
         UserSignUp(

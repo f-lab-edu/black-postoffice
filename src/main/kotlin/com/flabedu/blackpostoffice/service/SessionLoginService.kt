@@ -2,14 +2,14 @@ package com.flabedu.blackpostoffice.service
 
 import com.flabedu.blackpostoffice.commom.encryption.Sha256Encryption
 import com.flabedu.blackpostoffice.commom.enumeration.Role
+import com.flabedu.blackpostoffice.commom.enumeration.Role.ADMIN
+import com.flabedu.blackpostoffice.commom.enumeration.Role.USER
 import com.flabedu.blackpostoffice.commom.utils.constants.LOGIN_MY_EMAIL
 import com.flabedu.blackpostoffice.commom.utils.constants.MY_ROLE
 import com.flabedu.blackpostoffice.exception.InvalidRequestException
 import com.flabedu.blackpostoffice.exception.UnauthorizedAccessException
 import com.flabedu.blackpostoffice.mapper.UserMapper
 import com.flabedu.blackpostoffice.model.user.UserLogin
-import com.flabedu.blackpostoffice.commom.enumeration.Role.USER
-import com.flabedu.blackpostoffice.commom.enumeration.Role.ADMIN
 import org.springframework.stereotype.Service
 import javax.servlet.http.HttpSession
 
