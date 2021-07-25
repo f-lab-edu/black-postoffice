@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.flabedu.blackpostoffice.exception.DuplicateRequestException
 import com.flabedu.blackpostoffice.model.user.UserInfoUpdate
 import com.flabedu.blackpostoffice.model.user.UserLogin
+import com.flabedu.blackpostoffice.model.user.UserSignUp
 import com.flabedu.blackpostoffice.service.SessionLoginService
 import com.flabedu.blackpostoffice.service.UserService
 import org.junit.jupiter.api.BeforeEach
