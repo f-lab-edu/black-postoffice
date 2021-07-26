@@ -23,14 +23,14 @@ interface UserMapper {
         """
         INSERT INTO user (address, created_at, email, nick_name, password, phone, user_role, profile_image)
         VALUES (#{userSignUp.address}, now(), #{userSignUp.email}, #{userSignUp.nickName}, #{userSignUp.password}, 
-        #{userSignUp.phone}, #{role}, #{userSignUp.profileImagePath});            
+        #{userSignUp.phone}, #{role}, null);            
         """
     )
     fun join(userSignUp: UserSignUp, role: Role)
 
     @Select(
         """
-        SELECT address, email, nick_name, password, phone
+        SELECT address, email, nick_name, password, phone, profile_image
         FROM user
         WHERE email = #{email}            
         """

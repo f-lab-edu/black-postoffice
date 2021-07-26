@@ -10,13 +10,30 @@ import com.flabedu.blackpostoffice.service.SessionLoginService
 import com.flabedu.blackpostoffice.service.UserService
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.Mockito.doNothing
 import org.mockito.Mockito.doThrow
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.boot.test.mock.mockito.MockBean
+import org.springframework.http.HttpHeaders
 import org.springframework.http.MediaType
 import org.springframework.mock.web.MockMultipartFile
+import org.springframework.restdocs.RestDocumentationContextProvider
+import org.springframework.restdocs.RestDocumentationExtension
+import org.springframework.restdocs.headers.HeaderDocumentation.headerWithName
+import org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders
+import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document
+import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration
+import org.springframework.restdocs.operation.preprocess.Preprocessors.modifyUris
+import org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest
+import org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse
+import org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint
+import org.springframework.restdocs.payload.JsonFieldType
+import org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath
+import org.springframework.restdocs.payload.PayloadDocumentation.requestFields
+import org.springframework.restdocs.request.RequestDocumentation.partWithName
+import org.springframework.restdocs.request.RequestDocumentation.requestParts
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMultipartHttpServletRequestBuilder
@@ -27,13 +44,15 @@ import org.springframework.test.web.servlet.setup.DefaultMockMvcBuilder
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import org.springframework.web.context.WebApplicationContext
 import org.springframework.web.filter.CharacterEncodingFilter
+import kotlin.jvm.Throws
 
+@ExtendWith(RestDocumentationExtension::class)
 @WebMvcTest(UserController::class)
 @ActiveProfiles("test")
 internal class UserControllerTest @Autowired constructor(
     private val objectMapper: ObjectMapper,
     private val webApplicationContext: WebApplicationContext,
-    private var mockMvc: MockMvc
+    private var mockMvc: MockMvc,
 ) {
 
     @MockBean
@@ -49,7 +68,7 @@ internal class UserControllerTest @Autowired constructor(
     lateinit var userLogin: UserLogin
 
     @BeforeEach
-    fun setUp() {
+    fun setUp(restDocumentation: RestDocumentationContextProvider) {
 
         userLogin = UserLogin(
             email = "test10@gmail.com",
@@ -62,7 +81,6 @@ internal class UserControllerTest @Autowired constructor(
             nickName = "형일",
             address = "서울",
             phone = "010-1234-1234",
-            profileImagePath = ""
         )
 
         userInfoUpdate = UserInfoUpdate(
@@ -72,6 +90,7 @@ internal class UserControllerTest @Autowired constructor(
         this.mockMvc = MockMvcBuilders
             .webAppContextSetup(webApplicationContext)
             .alwaysDo<DefaultMockMvcBuilder>(MockMvcResultHandlers.print())
+            .apply<DefaultMockMvcBuilder>(documentationConfiguration(restDocumentation))
             .addFilter<DefaultMockMvcBuilder>(CharacterEncodingFilter("UTF-8", true))
             .build()
     }
@@ -88,6 +107,21 @@ internal class UserControllerTest @Autowired constructor(
         )
 
             .andExpect(status().isCreated)
+            .andDo(
+                document(
+                    "users/create/successful", getDocumentRequest(), getDocumentResponse(),
+
+                    requestHeaders(headerWithName(HttpHeaders.CONTENT_TYPE).description("Content-type")),
+
+                    requestFields(
+                        fieldWithPath("email").type(JsonFieldType.STRING).description("이메일"),
+                        fieldWithPath("password").type(JsonFieldType.STRING).description("비밀번호"),
+                        fieldWithPath("nickName").type(JsonFieldType.STRING).description("프로필로 사용할 닉네임"),
+                        fieldWithPath("address").type(JsonFieldType.STRING).description("주소"),
+                        fieldWithPath("phone").type(JsonFieldType.STRING).description("휴대폰 번호")
+                    )
+                )
+            )
     }
 
     @Test
@@ -102,6 +136,21 @@ internal class UserControllerTest @Autowired constructor(
         )
 
             .andExpect(status().isConflict)
+            .andDo(
+                document(
+                    "users/create/fail", getDocumentRequest(), getDocumentResponse(),
+
+                    requestHeaders(headerWithName(HttpHeaders.CONTENT_TYPE).description("Content-type")),
+
+                    requestFields(
+                        fieldWithPath("email").type(JsonFieldType.STRING).description("이메일"),
+                        fieldWithPath("password").type(JsonFieldType.STRING).description("비밀번호"),
+                        fieldWithPath("nickName").type(JsonFieldType.STRING).description("프로필로 사용할 닉네임"),
+                        fieldWithPath("address").type(JsonFieldType.STRING).description("주소"),
+                        fieldWithPath("phone").type(JsonFieldType.STRING).description("휴대폰 번호")
+                    )
+                )
+            )
     }
 
     @Test
@@ -122,6 +171,15 @@ internal class UserControllerTest @Autowired constructor(
         )
             .andDo { println() }
             .andExpect(status().isOk)
+            .andDo(
+                document(
+                    "users/my-info/update/successful", getDocumentRequest(), getDocumentResponse(),
+
+                    requestHeaders(headerWithName(HttpHeaders.CONTENT_TYPE).description("multipartFile")),
+
+                    requestParts(partWithName("profileImage").description("수정할 프로필 사진 이미지"))
+                )
+            )
     }
 
     @Test
@@ -134,7 +192,21 @@ internal class UserControllerTest @Autowired constructor(
                 .contentType(MediaType.APPLICATION_JSON)
         )
             .andExpect(status().isOk)
+            .andDo(
+                document(
+                    "users/profile-image/delete", getDocumentRequest(), getDocumentResponse(),
+
+                    requestHeaders(headerWithName(HttpHeaders.CONTENT_TYPE).description("Content-type")),
+
+                    requestParts(partWithName("profileImagePath").description("삭제할 프로필 이미지 경로").optional())
+                )
+            )
     }
+
+    fun getDocumentRequest() =
+        preprocessRequest(modifyUris().scheme("http").host("localhost").port(8080), prettyPrint())
+
+    fun getDocumentResponse() = preprocessResponse(prettyPrint())
 
     private fun multipartFile() =
         MockMultipartFile("profileImage", "profileImage", "image/png", "profileImage".toByteArray())

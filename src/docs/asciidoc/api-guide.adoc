@@ -1,0 +1,236 @@
+= Black-PostOffice API Docs
+Junghyungile<junghyungile@gmail.com>
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 4
+:sectlinks:
+:operation-curl-request-title: Example request
+:operation-http-response-title: Example response
+
+[[overview_http_verbs]]
+== HTTP Methods
+
+클라이언트와 서버 사이에 이루어지는 요청(Request)과 응답(Response) 데이터를 전송하는 방식.
+
+|===
+| Method | Content
+
+| `GET`
+| 요청받은 URI의 정보를 검색하여 응답한다.
+
+| `POST`
+| 요청된 자원을 생성(CREATE) 한다.
+
+| `PUT`
+| 요청된 자원을 수정(UPDATE)한다. 리소스의 모든 것을 업데이트 한다.
+
+| `PATCH`
+| PUT과 유사하게 요청된 자원을 수정(UPATE) 할 때 사용한다. 리소스의 일부를 업데이트 한다.
+
+| `DELETE`
+| 요청된 자원을 삭제할 것을 요청한다.
+|===
+
+[[overview_http_status_codes]]
+== HTTP status codes
+
+모든 HTTP 응답 코드는 5개의 클래스(분류)로 구분된다. 상태 코드의 첫 번째 숫자는 응답의 클래스를 정의한다. 첫자리에 대한 5가지 값들은 다음과 같다:
+
+1xx (정보): 요청을 받았으며 프로세스를 계속한다
+
+2xx (성공): 요청을 성공적으로 받았으며 인식했고 수용하였다
+
+3xx (리다이렉션): 요청 완료를 위해 추가 작업 조치가 필요하다
+
+4xx (클라이언트 오류): 요청의 문법이 잘못되었거나 요청을 처리할 수 없다
+
+5xx (서버 오류): 서버가 명백히 유효한 요청에 대해 충족을 실패했다
+
+|===
+| Status code | Usage
+
+| `200 OK`
+| 요청이 성공적으로 되었습니다.
+
+| `201 Created`
+| 요청이 성공적이었으며 그 결과로 새로운 리소스가 생성되었습니다. 이 응답은 일반적으로 POST 요청 또는 일부 PUT 요청 이후에 따라옵니다.
+
+| `400 Bad Request`
+| 이 응답은 잘못된 문법으로 인하여 서버가 요청을 이해할 수 없음을 의미합니다.
+
+| `401 Unauthorized`
+| 이 응답은 "인증 되지 않음(unauthenticated)"을 의미합니다. 서버는 로그인이 필요한 페이지에 대해 이 요청을 제공할 수 있습니다.
+
+| `409 Conflict`
+| 서버가 요청을 수행하는 중에 충돌이 발생했습니다. 서버는 응답할 때 충돌에 대한 정보를 포함해야 합니다.
+|===
+
+== USER API
+
+== 1. 회원가입
+
+=== 1-1 회원가입 성공
+
+**curl**
+include::{snippets}/users/create/successful/curl-request.adoc[]
+
+**요청 필드**
+include::{snippets}/users/create/successful/request-fields.adoc[]
+
+**요청 예시**
+include::{snippets}/users/create/successful/http-request.adoc[]
+
+**응답 예시**
+include::{snippets}/users/create/successful/http-response.adoc[]
+
+=== 1-2 중복된 이메일로 회원가입 실패
+
+**curl**
+include::{snippets}/users/create/fail/curl-request.adoc[]
+
+**요청 필드**
+include::{snippets}/users/create/fail/request-fields.adoc[]
+
+**요청 예시**
+include::{snippets}/users/create/fail/http-request.adoc[]
+
+**응답 예시**
+include::{snippets}/users/create/fail/http-response.adoc[]
+
+== 2. 로그인
+
+=== 2-1 로그인 성공
+
+**curl**
+include::{snippets}/users/login/successful/curl-request.adoc[]
+
+**요청 필드**
+include::{snippets}/users/login/successful/request-fields.adoc[]
+
+**요청 예시**
+include::{snippets}/users/login/successful/http-request.adoc[]
+
+**응답 예시**
+include::{snippets}/users/login/successful/http-response.adoc[]
+
+=== 2-2 로그인 실패
+
+**curl**
+include::{snippets}/users/login/fail/curl-request.adoc[]
+
+**요청 필드**
+include::{snippets}/users/login/fail/request-fields.adoc[]
+
+**요청 예시**
+include::{snippets}/users/login/fail/http-request.adoc[]
+
+**응답 예시**
+include::{snippets}/users/login/fail/http-response.adoc[]
+
+== 3. 로그아웃
+
+=== 3-1 로그아웃 성공
+
+**curl**
+include::{snippets}/users/logout/successful/curl-request.adoc[]
+
+**요청 예시**
+include::{snippets}/users/logout/successful/http-request.adoc[]
+
+**응답 예시**
+include::{snippets}/users/logout/successful/http-response.adoc[]
+
+== 4. 회원정보
+
+=== 4-1 회원정보 수정
+
+**curl**
+include::{snippets}/users/my-info/update/successful/curl-request.adoc[]
+
+**요청 예시**
+include::{snippets}/users/my-info/update/successful/http-request.adoc[]
+
+**응답 예시**
+include::{snippets}/users/my-info/update/successful/http-response.adoc[]
+
+=== 4-2 프로필 사진 삭제
+
+**curl**
+include::{snippets}/users/profile-image/delete/curl-request.adoc[]
+
+**요청 예시**
+include::{snippets}/users/profile-image/delete/http-request.adoc[]
+
+**응답 예시**
+include::{snippets}/users/profile-image/delete/http-response.adoc[]
+
+== POSTS API
+
+== 1. 게시물
+
+=== 1-1 게시물 작성
+
+**curl**
+include::{snippets}/posts/create/successful/curl-request.adoc[]
+
+**요청 필드**
+include::{snippets}/posts/create/successful/request-fields.adoc[]
+
+**요청 예시**
+include::{snippets}/posts/create/successful/http-request.adoc[]
+
+**응답 예시**
+include::{snippets}/posts/create/successful/http-response.adoc[]
+
+=== 1-2 게시물 수정
+
+**curl**
+include::{snippets}/posts/update/successful/curl-request.adoc[]
+
+**path-parameters**
+include::{snippets}/posts/update/successful/path-parameters.adoc[]
+
+**요청 예시**
+include::{snippets}/posts/update/successful/http-request.adoc[]
+
+**응답 예시**
+include::{snippets}/posts/update/successful/http-response.adoc[]
+
+=== 1-3 게시물 조회
+
+**curl**
+include::{snippets}/posts/get/successful/curl-request.adoc[]
+
+**요청 파라미터**
+include::{snippets}/posts/get/successful/request-parameters.adoc[]
+
+**요청 예시**
+include::{snippets}/posts/get/successful/http-request.adoc[]
+
+**응답 필드**
+include::{snippets}/posts/get/successful/response-fields.adoc[]
+
+**응답 예시**
+include::{snippets}/posts/get/successful/http-response.adoc[]
+
+=== 1-4 게시물 삭제
+
+**curl**
+include::{snippets}/posts/delete/successful/curl-request.adoc[]
+
+**path-parameters**
+
+include::{snippets}/posts/delete/successful/path-parameters.adoc[]
+
+**요청 예시**
+
+include::{snippets}/posts/delete/successful/http-request.adoc[]
+
+**응답 예시**
+
+include::{snippets}/posts/delete/successful/http-response.adoc[]
+
+
+
