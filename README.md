@@ -17,6 +17,9 @@
 
 추가예정
 
+### API 문서
+- [RestDocs를 적용하여 API 문서화를 진행하였습니다.](https://hyung1jung.github.io/)
+
 ### 기능
 - 회원가입
 - 로그인
