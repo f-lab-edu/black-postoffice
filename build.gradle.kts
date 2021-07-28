@@ -47,28 +47,25 @@ dependencies {
 
 val snippetsDir by extra { file("build/generated-snippets") }
 
-tasks {
+tasks.test {
+    outputs.dir(snippetsDir)
+    useJUnitPlatform()
+}
 
-    withType<KotlinCompile> {
-        kotlinOptions {
-            freeCompilerArgs = listOf("-Xjsr305=strict")
-            jvmTarget = "11"
-        }
-    }
+tasks.asciidoctor {
+    inputs.dir(snippetsDir)
+    dependsOn(tasks.test)
+}
 
-    withType<Test> {
-        outputs.dir(snippetsDir)
-        useJUnitPlatform()
-    }
+tasks.bootJar {
+    dependsOn(tasks.asciidoctor)
+    from("${tasks.asciidoctor.get().outputDir}/html5")
+        .into("static/docs")
+}
 
-    asciidoctor {
-        inputs.dir(snippetsDir)
-        dependsOn(test)
-    }
-
-    bootJar {
-        dependsOn(asciidoctor)
-        from("${asciidoctor.get().outputDir}/html5")
-            .into("static/docs")
+tasks.withType<KotlinCompile> {
+    kotlinOptions {
+        freeCompilerArgs = listOf("-Xjsr305=strict")
+        jvmTarget = "11"
     }
 }
