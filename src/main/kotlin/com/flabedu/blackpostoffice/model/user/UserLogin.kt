@@ -1,8 +1,8 @@
-package com.flabedu.blackpostoffice.controller.dto
+package com.flabedu.blackpostoffice.model.user
 
 import javax.validation.constraints.NotBlank
 
-data class UserLoginDto(
+data class UserLogin(
 
     @field:NotBlank(message = "이메일은 필수 입력입니다.")
     val email: String,

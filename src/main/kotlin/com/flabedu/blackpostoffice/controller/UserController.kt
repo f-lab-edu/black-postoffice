@@ -1,8 +1,8 @@
 package com.flabedu.blackpostoffice.controller
 
 import com.flabedu.blackpostoffice.commom.annotation.AuthorizedAccessCheck
-import com.flabedu.blackpostoffice.controller.dto.UserSignUpDto
-import com.flabedu.blackpostoffice.domain.model.User.Role.USER
+import com.flabedu.blackpostoffice.commom.enumeration.Role.USER
+import com.flabedu.blackpostoffice.model.user.UserSignUp
 import com.flabedu.blackpostoffice.service.UserService
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.PatchMapping
@@ -24,8 +24,8 @@ class UserController(
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun createUser(@Valid @RequestBody userSignUpDto: UserSignUpDto) {
-        userService.saveUser(userSignUpDto)
+    fun createUser(@Valid @RequestBody userSignUp: UserSignUp) {
+        userService.saveUser(userSignUp)
     }
 
     @AuthorizedAccessCheck(authority = USER)

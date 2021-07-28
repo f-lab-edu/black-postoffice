@@ -2,8 +2,8 @@ package com.flabedu.blackpostoffice.controller
 
 import com.fasterxml.jackson.core.JsonProcessingException
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.flabedu.blackpostoffice.controller.dto.UserLoginDto
 import com.flabedu.blackpostoffice.exception.InvalidRequestException
+import com.flabedu.blackpostoffice.model.user.UserLogin
 import com.flabedu.blackpostoffice.service.SessionLoginService
 import org.hamcrest.Matchers.notNullValue
 import org.hamcrest.Matchers.nullValue
@@ -40,14 +40,14 @@ internal class UserLoginControllerTest @Autowired constructor(
 
     lateinit var session: MockHttpSession
 
-    lateinit var userLoginDto: UserLoginDto
+    lateinit var userLogin: UserLogin
 
     @BeforeEach
     fun setUp() {
 
         session = MockHttpSession()
 
-        userLoginDto = UserLoginDto(
+        userLogin = UserLogin(
             email = "test10@gmail.com",
             password = "1234test@@"
         )
@@ -62,14 +62,14 @@ internal class UserLoginControllerTest @Autowired constructor(
     @Test
     fun `로그인 성공`() {
 
-        session.setAttribute("email", userLoginDto.email)
+        session.setAttribute("email", userLogin.email)
 
-        doNothing().`when`(sessionLoginService).login(userLoginDto)
+        doNothing().`when`(sessionLoginService).login(userLogin)
 
         mockMvc.perform(
             MockMvcRequestBuilders.post("/users/login")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(toJsonString(userLoginDto))
+                .content(toJsonString(userLogin))
                 .session(session)
         )
 
@@ -80,12 +80,12 @@ internal class UserLoginControllerTest @Autowired constructor(
     @Test
     fun `가입되지 않은 이메일로 또는 일치하지 않는 비밀번호로 인해 로그인 실패`() {
 
-        Mockito.doThrow(InvalidRequestException("아이디가 존재하지 않거나 비밀번호가 일치하지 않습니다.")).`when`(sessionLoginService).login(userLoginDto)
+        Mockito.doThrow(InvalidRequestException("아이디가 존재하지 않거나 비밀번호가 일치하지 않습니다.")).`when`(sessionLoginService).login(userLogin)
 
         mockMvc.perform(
             MockMvcRequestBuilders.post("/users/login")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(toJsonString(userLoginDto))
+                .content(toJsonString(userLogin))
         )
 
             .andExpect(status().isUnauthorized)
@@ -96,7 +96,7 @@ internal class UserLoginControllerTest @Autowired constructor(
 
         doNothing().`when`(sessionLoginService).logout()
 
-        session.setAttribute("email", userLoginDto.email)
+        session.setAttribute("email", userLogin.email)
 
         mockMvc.perform(
             MockMvcRequestBuilders.post("/users/logout")
@@ -110,7 +110,7 @@ internal class UserLoginControllerTest @Autowired constructor(
     }
 
     @Throws(JsonProcessingException::class)
-    private fun toJsonString(userLoginDto: UserLoginDto): String {
-        return objectMapper.writeValueAsString(userLoginDto)
+    private fun toJsonString(userLogin: UserLogin): String {
+        return objectMapper.writeValueAsString(userLogin)
     }
 }

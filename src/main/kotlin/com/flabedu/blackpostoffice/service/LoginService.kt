@@ -1,17 +1,17 @@
 package com.flabedu.blackpostoffice.service
 
-import com.flabedu.blackpostoffice.controller.dto.UserLoginDto
-import com.flabedu.blackpostoffice.domain.model.User
+import com.flabedu.blackpostoffice.commom.enumeration.Role
+import com.flabedu.blackpostoffice.model.user.UserLogin
 
 interface LoginService {
 
-    fun login(userLoginDto: UserLoginDto)
+    fun login(userLogin: UserLogin)
 
-    fun invalidLoginCheck(userLoginDto: UserLoginDto)
+    fun invalidLoginCheck(userLogin: UserLogin)
 
     fun getCurrentUserEmail(): String
 
-    fun getCurrentUserRole(): User.Role
+    fun getCurrentUserRole(): Role
 
     fun logout()
 }

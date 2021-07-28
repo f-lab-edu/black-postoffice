@@ -2,10 +2,10 @@ package com.flabedu.blackpostoffice.controller
 
 import com.fasterxml.jackson.core.JsonProcessingException
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.flabedu.blackpostoffice.controller.dto.UserInfoUpdateDto
-import com.flabedu.blackpostoffice.controller.dto.UserLoginDto
-import com.flabedu.blackpostoffice.controller.dto.UserSignUpDto
 import com.flabedu.blackpostoffice.exception.DuplicateRequestException
+import com.flabedu.blackpostoffice.model.user.UserInfoUpdate
+import com.flabedu.blackpostoffice.model.user.UserLogin
+import com.flabedu.blackpostoffice.model.user.UserSignUp
 import com.flabedu.blackpostoffice.service.SessionLoginService
 import com.flabedu.blackpostoffice.service.UserService
 import org.junit.jupiter.api.BeforeEach
@@ -42,21 +42,21 @@ internal class UserControllerTest @Autowired constructor(
     @MockBean
     lateinit var sessionLoginService: SessionLoginService
 
-    lateinit var userSignUpDto: UserSignUpDto
+    lateinit var userSignUp: UserSignUp
 
-    lateinit var userInfoUpdateDto: UserInfoUpdateDto
+    lateinit var userInfoUpdate: UserInfoUpdate
 
-    lateinit var userLoginDto: UserLoginDto
+    lateinit var userLogin: UserLogin
 
     @BeforeEach
     fun setUp() {
 
-        userLoginDto = UserLoginDto(
+        userLogin = UserLogin(
             email = "test10@gmail.com",
             password = "1234test@@"
         )
 
-        userSignUpDto = UserSignUpDto(
+        userSignUp = UserSignUp(
             email = "1234test@gmail.com",
             password = "1234test@@",
             nickName = "형일",
@@ -65,7 +65,7 @@ internal class UserControllerTest @Autowired constructor(
             profileImagePath = ""
         )
 
-        userInfoUpdateDto = UserInfoUpdateDto(
+        userInfoUpdate = UserInfoUpdate(
             profileImagePath = multipartFile()
         )
 
@@ -79,12 +79,12 @@ internal class UserControllerTest @Autowired constructor(
     @Test
     fun `회원가입 성공`() {
 
-        doNothing().`when`(userService)?.saveUser(userSignUpDto)
+        doNothing().`when`(userService)?.saveUser(userSignUp)
 
         mockMvc.perform(
             MockMvcRequestBuilders.post("/users")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(toJsonString(userSignUpDto))
+                .content(toJsonString(userSignUp))
         )
 
             .andExpect(status().isCreated)
@@ -93,12 +93,12 @@ internal class UserControllerTest @Autowired constructor(
     @Test
     fun `중복된 이메일로 회원가입 실패`() {
 
-        doThrow(DuplicateRequestException("이미 존재하는 이메일 입니다.")).`when`(userService).saveUser(userSignUpDto)
+        doThrow(DuplicateRequestException("이미 존재하는 이메일 입니다.")).`when`(userService).saveUser(userSignUp)
 
         mockMvc.perform(
             MockMvcRequestBuilders.post("/users")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(toJsonString(userSignUpDto))
+                .content(toJsonString(userSignUp))
         )
 
             .andExpect(status().isConflict)
@@ -117,7 +117,7 @@ internal class UserControllerTest @Autowired constructor(
 
         mockMvc.perform(
             builder
-                .file(userInfoUpdateDto.profileImagePath as MockMultipartFile)
+                .file(userInfoUpdate.profileImagePath as MockMultipartFile)
                 .contentType(MediaType.APPLICATION_JSON)
         )
             .andDo { println() }
@@ -140,7 +140,7 @@ internal class UserControllerTest @Autowired constructor(
         MockMultipartFile("profileImage", "profileImage", "image/png", "profileImage".toByteArray())
 
     @Throws(JsonProcessingException::class)
-    private fun toJsonString(userSignUpDto: UserSignUpDto): String {
-        return objectMapper.writeValueAsString(userSignUpDto)
+    private fun toJsonString(userSignUp: UserSignUp): String {
+        return objectMapper.writeValueAsString(userSignUp)
     }
 }

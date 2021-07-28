@@ -1,8 +1,8 @@
 package com.flabedu.blackpostoffice.controller
 
 import com.flabedu.blackpostoffice.commom.annotation.AuthorizedAccessCheck
-import com.flabedu.blackpostoffice.controller.dto.UserLoginDto
-import com.flabedu.blackpostoffice.domain.model.User.Role.USER
+import com.flabedu.blackpostoffice.commom.enumeration.Role.USER
+import com.flabedu.blackpostoffice.model.user.UserLogin
 import com.flabedu.blackpostoffice.service.SessionLoginService
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -17,8 +17,8 @@ class UserLoginController(
 ) {
 
     @PostMapping("/login")
-    fun login(@Valid @RequestBody userLoginDto: UserLoginDto) {
-        sessionLoginService.login(userLoginDto)
+    fun login(@Valid @RequestBody userLogin: UserLogin) {
+        sessionLoginService.login(userLogin)
     }
 
     @AuthorizedAccessCheck(authority = USER)
