@@ -45,24 +45,24 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
-//val snippetsDir by extra { file("build/generated-snippets") }
+val snippetsDir by extra { file("build/generated-snippets") }
 
-//tasks.test {
-//    outputs.dir(snippetsDir)
-//    useJUnitPlatform()
-//}
+tasks.test {
+    outputs.dir(snippetsDir)
+    useJUnitPlatform()
+}
 
-//tasks.asciidoctor {
-//    inputs.dir(snippetsDir)
-//    dependsOn(tasks.test)
-//}
-//
-//tasks.bootJar {
-//    dependsOn(tasks.asciidoctor)
-//    from("${tasks.asciidoctor.get().outputDir}/html5")
-//        .into("static/docs")
-//}
-//
+tasks.asciidoctor {
+    inputs.dir(snippetsDir)
+    dependsOn(tasks.test)
+}
+
+tasks.bootJar {
+    dependsOn(tasks.asciidoctor)
+    from("${tasks.asciidoctor.get().outputDir}/html5")
+        .into("static/docs")
+}
+
 tasks.withType<KotlinCompile> {
     kotlinOptions {
         freeCompilerArgs = listOf("-Xjsr305=strict")
