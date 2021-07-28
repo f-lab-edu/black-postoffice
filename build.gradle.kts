@@ -47,10 +47,6 @@ dependencies {
 
 val snippetsDir by extra { file("build/generated-snippets") }
 
-ext {
-    set("snippetsDir", file("build/generated-snippets"))
-}
-
 tasks {
 
     withType<KotlinCompile> {
