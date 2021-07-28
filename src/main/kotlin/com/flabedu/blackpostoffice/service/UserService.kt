@@ -41,6 +41,7 @@ class UserService(
         }
     }
 
+    @Transactional(readOnly = true)
     fun getMyProfileImage(getCurrentUserEmail: String) = userMapper.getProfileImage(getCurrentUserEmail)
 
     private fun profileImageUpdate(multipartFile: MultipartFile) {
