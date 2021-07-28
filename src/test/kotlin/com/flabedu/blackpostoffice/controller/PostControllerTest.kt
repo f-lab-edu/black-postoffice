@@ -176,7 +176,7 @@ internal class PostControllerTest @Autowired constructor(
                         fieldWithPath("nickName").type(JsonFieldType.STRING).description("조회한 게시글을 작성한 사용자의 닉네임"),
                         fieldWithPath("profileImagePath").type(JsonFieldType.NULL).description("조회한 게시글을 작성한 사용자의 프로필 사진"),
                         fieldWithPath("posts.[].title").type(JsonFieldType.STRING).description("조회한 게시물의 제목"),
-                        fieldWithPath("posts.[].content").type(JsonFieldType.STRING).description("조회한 게시물의 내용.")
+                        fieldWithPath("posts.[].content").type(JsonFieldType.STRING).description("조회한 게시물의 내용")
                     )
                 )
             )
