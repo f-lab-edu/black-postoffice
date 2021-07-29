@@ -25,7 +25,7 @@ class SessionLoginService(
     override fun login(userLogin: UserLogin) {
         invalidLoginCheck(userLogin)
         setSessionAttribute(userLogin)
-    }    
+    }
 
     override fun invalidLoginCheck(userLogin: UserLogin) {
         val loginCheckEmail = userMapper.getUserByEmail(userLogin.email)
