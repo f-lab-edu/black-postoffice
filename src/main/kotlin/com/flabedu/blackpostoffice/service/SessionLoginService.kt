@@ -26,6 +26,7 @@ class SessionLoginService(
     }
 
     override fun invalidLoginCheck(userLogin: UserLogin) {
+
         val loginCheckEmail = userMapper.getUserByEmail(userLogin.email)
         val loginCheckPassword = sha256Encryption.encryption(userLogin.password)
         val myPassword = userMapper.getPasswordByEmail(userLogin.email)
