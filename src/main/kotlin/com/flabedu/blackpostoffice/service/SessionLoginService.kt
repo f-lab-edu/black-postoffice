@@ -26,12 +26,11 @@ class SessionLoginService(
     }
 
     override fun invalidLoginCheck(userLogin: UserLogin) {
-
         val loginCheckEmail = userMapper.getUserByEmail(userLogin.email)
         val loginCheckPassword = sha256Encryption.encryption(userLogin.password)
         val myPassword = userMapper.getPasswordByEmail(userLogin.email)
 
-        if (loginCheckEmail == null || loginCheckPassword != myPassword) {
+        if (loginCheckEmail == null || (loginCheckPassword != myPassword)) {
             throw InvalidRequestException("아이디가 존재하지 않거나 비밀번호가 일치하지 않습니다.")
         }
     }
