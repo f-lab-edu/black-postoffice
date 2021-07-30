@@ -8,12 +8,30 @@ import com.flabedu.blackpostoffice.service.PostService
 import com.flabedu.blackpostoffice.service.SessionLoginService
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.BDDMockito.given
 import org.mockito.Mockito.doNothing
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.boot.test.mock.mockito.MockBean
+import org.springframework.http.HttpHeaders
 import org.springframework.http.MediaType
+import org.springframework.restdocs.RestDocumentationContextProvider
+import org.springframework.restdocs.RestDocumentationExtension
+import org.springframework.restdocs.headers.HeaderDocumentation
+import org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders
+import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation
+import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document
+import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete
+import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.patch
+import org.springframework.restdocs.operation.preprocess.Preprocessors
+import org.springframework.restdocs.payload.JsonFieldType
+import org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath
+import org.springframework.restdocs.payload.PayloadDocumentation.requestFields
+import org.springframework.restdocs.payload.PayloadDocumentation.responseFields
+import org.springframework.restdocs.request.RequestDocumentation.parameterWithName
+import org.springframework.restdocs.request.RequestDocumentation.pathParameters
+import org.springframework.restdocs.request.RequestDocumentation.requestParameters
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
@@ -24,12 +42,13 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import org.springframework.web.context.WebApplicationContext
 import org.springframework.web.filter.CharacterEncodingFilter
 
+@ExtendWith(RestDocumentationExtension::class)
 @WebMvcTest(PostController::class)
 @ActiveProfiles("test")
 internal class PostControllerTest @Autowired constructor(
     private val objectMapper: ObjectMapper,
     private val webApplicationContext: WebApplicationContext,
-    private var mockMvc: MockMvc
+    private var mockMvc: MockMvc,
 ) {
 
     @MockBean
@@ -43,7 +62,7 @@ internal class PostControllerTest @Autowired constructor(
     private lateinit var posts: Posts
 
     @BeforeEach
-    fun setUp() {
+    fun setUp(restDocumentation: RestDocumentationContextProvider) {
 
         post = Post(
             title = "제목",
@@ -61,6 +80,7 @@ internal class PostControllerTest @Autowired constructor(
         this.mockMvc = MockMvcBuilders
             .webAppContextSetup(webApplicationContext)
             .alwaysDo<DefaultMockMvcBuilder>(MockMvcResultHandlers.print())
+            .apply<DefaultMockMvcBuilder>(MockMvcRestDocumentation.documentationConfiguration(restDocumentation))
             .addFilter<DefaultMockMvcBuilder>(CharacterEncodingFilter("UTF-8", true))
             .build()
     }
@@ -77,6 +97,21 @@ internal class PostControllerTest @Autowired constructor(
         )
 
             .andExpect(MockMvcResultMatchers.status().isCreated)
+            .andDo(
+                document(
+                    "posts/create/successful", getDocumentRequest(), getDocumentResponse(),
+
+                    requestHeaders(
+                        HeaderDocumentation.headerWithName(HttpHeaders.CONTENT_TYPE)
+                            .description("Content-type")
+                    ),
+
+                    requestFields(
+                        fieldWithPath("title").type(JsonFieldType.STRING).description("게시물 제목"),
+                        fieldWithPath("content").type(JsonFieldType.STRING).description("게시물 내용"),
+                    )
+                )
+            )
     }
 
     @Test
@@ -85,12 +120,29 @@ internal class PostControllerTest @Autowired constructor(
         doNothing().`when`(postService)?.updateMyPost(1, post)
 
         mockMvc.perform(
-            MockMvcRequestBuilders.patch("/posts/1")
+            patch("/posts/{id}", 1)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(toJsonString(post))
         )
 
             .andExpect(MockMvcResultMatchers.status().isOk)
+            .andDo(
+                document(
+                    "posts/update/successful", getDocumentRequest(), getDocumentResponse(),
+
+                    pathParameters(parameterWithName("id").description("수정할 게시글의 번호")),
+
+                    requestHeaders(
+                        HeaderDocumentation.headerWithName(HttpHeaders.CONTENT_TYPE)
+                            .description("Content-type")
+                    ),
+
+                    requestFields(
+                        fieldWithPath("title").type(JsonFieldType.STRING).description("게시물 제목 수정"),
+                        fieldWithPath("content").type(JsonFieldType.STRING).description("게시물 내용 수정"),
+                    )
+                )
+            )
     }
 
     @Test
@@ -105,6 +157,29 @@ internal class PostControllerTest @Autowired constructor(
         )
 
             .andExpect(MockMvcResultMatchers.status().isOk)
+            .andDo(
+                document(
+                    "posts/get/successful", getDocumentRequest(), getDocumentResponse(),
+
+                    requestHeaders(
+                        HeaderDocumentation.headerWithName(HttpHeaders.CONTENT_TYPE)
+                            .description("Content-type")
+                    ),
+
+                    requestParameters(
+                        parameterWithName("email").description("조회할 게시글을 작성한 사용자 이메일").optional(),
+                        parameterWithName("pageNo").description("조회할 게시글의 페이지").optional(),
+                        parameterWithName("pageSize").description("조회할 게시글의 페이지당 게시글 수").optional()
+                    ),
+
+                    responseFields(
+                        fieldWithPath("nickName").type(JsonFieldType.STRING).description("조회한 게시글을 작성한 사용자의 닉네임"),
+                        fieldWithPath("profileImagePath").type(JsonFieldType.NULL).description("조회한 게시글을 작성한 사용자의 프로필 사진"),
+                        fieldWithPath("posts.[].title").type(JsonFieldType.STRING).description("조회한 게시물의 제목"),
+                        fieldWithPath("posts.[].content").type(JsonFieldType.STRING).description("조회한 게시물의 내용")
+                    )
+                )
+            )
     }
 
     @Test
@@ -113,11 +188,28 @@ internal class PostControllerTest @Autowired constructor(
         doNothing().`when`(postService)?.deleteMyPost(1)
 
         mockMvc.perform(
-            MockMvcRequestBuilders.delete("/posts/1")
+            delete("/posts/{id}", 1)
                 .contentType(MediaType.APPLICATION_JSON)
         )
             .andExpect(MockMvcResultMatchers.status().isOk)
+            .andDo(
+                document(
+                    "posts/delete/successful",
+
+                    pathParameters(
+                        parameterWithName("id").description("삭제할 게시물의 번호")
+                    )
+                )
+            )
     }
+
+    fun getDocumentRequest() =
+        Preprocessors.preprocessRequest(
+            Preprocessors.modifyUris().scheme("http").host("localhost").port(8080),
+            Preprocessors.prettyPrint()
+        )
+
+    fun getDocumentResponse() = Preprocessors.preprocessResponse(Preprocessors.prettyPrint())
 
     @Throws(JsonProcessingException::class)
     private fun toJsonString(userSignUpDto: Any): String {

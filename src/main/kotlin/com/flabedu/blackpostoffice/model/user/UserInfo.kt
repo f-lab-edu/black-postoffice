@@ -12,6 +12,6 @@ data class UserInfo(
 
     val phone: String,
 
-    val profileImagePath: String?
+    val profileImagePath: String?,
 
 )

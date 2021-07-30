@@ -4,6 +4,7 @@ plugins {
     id("org.springframework.boot") version "2.5.0"
     id("io.spring.dependency-management") version "1.0.11.RELEASE"
     id("org.jlleitschuh.gradle.ktlint") version "10.1.0"
+    id("org.asciidoctor.convert") version "1.5.9.2"
     kotlin("jvm") version "1.5.10"
     kotlin("plugin.spring") version "1.5.10"
 }
@@ -34,6 +35,9 @@ dependencies {
     implementation("org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.3")
     implementation("com.amazonaws:aws-java-sdk-s3:1.12.17")
 
+    testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
+    asciidoctor("org.springframework.restdocs:spring-restdocs-asciidoctor")
+
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 
     runtimeOnly("mysql:mysql-connector-java")
@@ -41,13 +45,27 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
+val snippetsDir by extra { file("build/generated-snippets") }
+
+tasks.test {
+    outputs.dir(snippetsDir)
+    useJUnitPlatform()
+}
+
+tasks.asciidoctor {
+    inputs.dir(snippetsDir)
+    dependsOn(tasks.test)
+}
+
+tasks.bootJar {
+    dependsOn(tasks.asciidoctor)
+    from("${tasks.asciidoctor.get().outputDir}/html5")
+        .into("static/docs")
+}
+
 tasks.withType<KotlinCompile> {
     kotlinOptions {
         freeCompilerArgs = listOf("-Xjsr305=strict")
         jvmTarget = "11"
     }
-}
-
-tasks.withType<Test> {
-    useJUnitPlatform()
 }
