@@ -4,7 +4,7 @@ plugins {
     id("org.springframework.boot") version "2.5.0"
     id("io.spring.dependency-management") version "1.0.11.RELEASE"
     id("org.jlleitschuh.gradle.ktlint") version "10.1.0"
-    id("org.asciidoctor.convert") version "1.5.9.2"
+    id("org.asciidoctor.convert") version "1.5.8.1"
     kotlin("jvm") version "1.5.10"
     kotlin("plugin.spring") version "1.5.10"
 }
@@ -59,8 +59,9 @@ tasks.asciidoctor {
 
 tasks.bootJar {
     dependsOn(tasks.asciidoctor)
-    from("${tasks.asciidoctor.get().outputDir}/html5")
-        .into("static/docs")
+    from("${tasks.asciidoctor.get().outputDir}/html5") {
+        into("static/docs")
+    }
 }
 
 tasks.getByName<Jar>("jar") {
