@@ -2,6 +2,7 @@ package com.flabedu.blackpostoffice.commom.config
 
 import com.flabedu.blackpostoffice.commom.utils.constants.MASTER
 import com.flabedu.blackpostoffice.commom.utils.constants.SLAVE
+import com.zaxxer.hikari.HikariDataSource
 import org.mybatis.spring.SqlSessionFactoryBean
 import org.mybatis.spring.SqlSessionTemplate
 import org.springframework.beans.factory.annotation.Qualifier
@@ -20,17 +21,17 @@ import javax.sql.DataSource
 class DatasourceConfig {
 
     @Bean
-    @ConfigurationProperties(prefix = "spring.datasource.master")
-    fun masterDataSource() = DataSourceBuilder.create().build()
+    @ConfigurationProperties(prefix = "spring.datasource.hikari.master")
+    fun masterDataSource() = DataSourceBuilder.create().type(HikariDataSource::class.java).build()
 
     @Bean
-    @ConfigurationProperties(prefix = "spring.datasource.slave")
-    fun slaveDataSource() = DataSourceBuilder.create().build()
+    @ConfigurationProperties(prefix = "spring.datasource.hikari.slave")
+    fun slaveDataSource() = DataSourceBuilder.create().type(HikariDataSource::class.java).build()
 
     @Bean
     fun routingDataSource(
         @Qualifier("masterDataSource") masterDataSource: DataSource,
-        @Qualifier("slaveDataSource") slaveDataSource: DataSource
+        @Qualifier("slaveDataSource") slaveDataSource: DataSource,
 
     ) = RoutingDataSourceConfig().apply {
 
