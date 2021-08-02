@@ -2,7 +2,7 @@
 - 익명으로 편하게 고민, 일상을 공유하는 소셜 네트워크 서비스입니다.
 
 ### WIKI
-해당 프로젝트의 모든 정보는 [WIKI](https://github.com/f-lab-edu/black-postoffice/wiki/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EC%86%8C%EA%B0%9C) 를 참고하실 수 있습니다.
+해당 프로젝트의 모든 정보는 [WIKI](https://github.com/f-lab-edu/black-postoffice/wiki) 를 참고하실 수 있습니다.
 
 - [1. 프로젝트 소개](https://github.com/f-lab-edu/black-postoffice/wiki/1.-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EC%86%8C%EA%B0%9C)
 - [2. 이슈 및 트러블 슈팅 포스팅](https://github.com/f-lab-edu/black-postoffice/wiki/2.-Issue%EB%B0%8F-trouble-shooting-Posting)
