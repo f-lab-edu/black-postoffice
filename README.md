@@ -4,75 +4,21 @@
 ### WIKI
 해당 프로젝트의 모든 정보는 [WIKI](https://github.com/f-lab-edu/black-postoffice/wiki/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EC%86%8C%EA%B0%9C) 를 참고하실 수 있습니다.
 
-- [프로젝트 소개 및 기능정의](https://github.com/f-lab-edu/black-postoffice/wiki/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EC%86%8C%EA%B0%9C)
-- [프로토 타입 - 카카오 오븐을 활용해서 작성하였습니다.](https://github.com/f-lab-edu/black-postoffice/wiki/%ED%94%84%EB%A1%9C%ED%86%A0%ED%83%80%EC%9E%85)
-- [ERD](https://github.com/f-lab-edu/black-postoffice/wiki/ERD)
-- [issue, pull Request, commit Template](https://github.com/f-lab-edu/black-postoffice/wiki/issue,-pull-Request,-commit-Template)
-- [브렌치 관리 전략](https://github.com/f-lab-edu/black-postoffice/wiki/%EB%B8%8C%EB%A0%8C%EC%B9%98-%EA%B4%80%EB%A6%AC-%EC%A0%84%EB%9E%B5)
-- [Issue및 trouble shooting Posting](https://github.com/f-lab-edu/black-postoffice/wiki/Issue%EB%B0%8F-trouble-shooting-Posting)
-- [이펙티브 코틀린, 이펙티브 자바를 기반으로](https://github.com/f-lab-edu/black-postoffice/wiki/%EC%9D%B4%ED%8E%99%ED%8B%B0%EB%B8%8C-%EC%BD%94%ED%8B%80%EB%A6%B0,-%EC%9D%B4%ED%8E%99%ED%8B%B0%EB%B8%8C-%EC%9E%90%EB%B0%94%EB%A5%BC-%EA%B8%B0%EB%B0%98%EC%9C%BC%EB%A1%9C)
-
-### 사용기술
-![기술 스택](https://user-images.githubusercontent.com/43127088/125194910-4c673e00-e28e-11eb-80c8-1a3bda1be8df.PNG)
-
-추가예정
+- [1. 프로젝트 소개](https://github.com/f-lab-edu/black-postoffice/wiki/1.-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EC%86%8C%EA%B0%9C)
+- [2. 이슈 및 트러블 슈팅 포스팅](https://github.com/f-lab-edu/black-postoffice/wiki/2.-Issue%EB%B0%8F-trouble-shooting-Posting)
+- [3. 프로토타입](https://github.com/f-lab-edu/black-postoffice/wiki/3.-%ED%94%84%EB%A1%9C%ED%86%A0%ED%83%80%EC%9E%85)
+- [4. 이슈, 풀리퀘스트, 커밋 템플릿](https://github.com/f-lab-edu/black-postoffice/wiki/4.-issue,-pr,-commit-Template)
+- [5. 브렌치 관리 전략](https://github.com/f-lab-edu/black-postoffice/wiki/5.-%EB%B8%8C%EB%A0%8C%EC%B9%98-%EA%B4%80%EB%A6%AC-%EC%A0%84%EB%9E%B5)
+- [6. 이펙티브 코틀린](https://github.com/f-lab-edu/black-postoffice/wiki/6.-%EC%9D%B4%ED%8E%99%ED%8B%B0%EB%B8%8C-%EC%BD%94%ED%8B%80%EB%A6%B0)
 
 ### API 문서
 - [RestDocs를 적용하여 API 문서화를 진행하였습니다.](https://hyung1jung.github.io/)
 
-### 기능
-- 회원가입
-- 로그인
-- 사용자 역할(비사용자, 사용자, 관리자)에 따른 접근 제한
-- 로그아웃
-- 회원탈퇴
-- 회원 정보 수정 - 프로필 사진 등록, 삭제 / 비밀번호 수정 / 닉네임 수정  / 주소 수정
-- 자신의 피드에 글 작성
-- 특정 유저 사용자
-- 전체 사용자 글 최신순으로 조회
-- 댓글, 대댓글 작성
-- 팔로잉, 팔로잉 취소, 팔로우
-- 1대1 대화 신청시 결제 기능
+### 현재까지의 사용기술 
+![기술 스택](https://user-images.githubusercontent.com/43127088/125194910-4c673e00-e28e-11eb-80c8-1a3bda1be8df.PNG)
 
-기능에 관한 자세한 설명은 [여기](https://github.com/f-lab-edu/black-postoffice/wiki/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EC%86%8C%EA%B0%9C) 를 참고해주세요.
-
-### 전체 아키텍처
-
-추가 예정
-
-### 이슈 및 트러블 슈팅 포스팅
-
-- [gradlew (gradle wrapper)란](https://www.notion.so/gradlew-gradle-wrapper-98743215d59743f6ac8057e706ae506c)
-- [implementation와 api(compile)](https://junghyungil.tistory.com/148?category=892281)
-- [kotlin에서 lombok이 필요할까? data Class와 비교하여 고찰](https://junghyungil.tistory.com/157?category=953012)
-- [유지보수하기 좋은 코드 및 확장성을 고려한 설계에 관한 고찰](https://junghyungil.tistory.com/158?category=953012)
-- [Profile](https://junghyungil.tistory.com/159?category=892281)
-- [log4j vs Lockback vs log4j2, 프로젝트에 무엇을 적용하는게 좋을까?](https://junghyungil.tistory.com/160?category=892281)
-- [사용자가 늘어나면 서버를 어떻게 확장해야할까? 스케일 업(Scale-up) vs 스케일 아웃(Scale-out)](https://junghyungil.tistory.com/151?category=952148)
-- [Redis vs memcached vs RDBMS](https://junghyungil.tistory.com/165)
-- [Redis(Remote dictionary server)란?](https://junghyungil.tistory.com/162)
-- [Redis 연동하기 및 Spring Boot Redis Docs 살펴보기](https://junghyungil.tistory.com/166)
-- [프로필 이미지 AWS S3에 업로드](https://junghyungil.tistory.com/171)
-- [지속적 통합의 개념 - 애자일 방법론과 폭포수 모델](https://junghyungil.tistory.com/170)
-- [CI란?, 어떤 CI 도구를 사용할까?](https://junghyungil.tistory.com/167)
-- [젠킨스란? 젠킨스를 이용해 CI 자동화하기, 슬랙 연동](https://junghyungil.tistory.com/168)
-- [젠킨스와 슬랙 연동하여 알람받기](https://junghyungil.tistory.com/169)
-- [트레픽 분산을 위해 MySQL Replication와 Master/Slave DataSource 동적 라우팅 설정](https://junghyungil.tistory.com/174)
-
-추가 작성 예정
-
-그 외 프로젝트를 하며 공부헀던 것들
-- [그 외](https://github.com/Hyung1Jung/LearnKit)
-
-### 코틀린 사용 이유
-- 자바에서는 형식을 맞추기 위해 무의미하고 반복적인 코드를 작성하게 되어 항상 코드가 비대해지기 마련이었습니다.  
-  저는 이 문제를 해결하기 위해 코틀린을 사용하였습니다.
-- 코틀린은 타입 추론과 더불어 자체적으로 함수형 프로그래밍을 지원해주기 때문에 자바에 비해 훨씬 코드를 간결하게 작성할 수
-  있었으며 개발 생산성과 유지 보수성 면에서도 훨씬 좋은 성과를 거두었습니다.
-- 또한 코틀린은 별도의 표기가 없는 경우 널 값을 허용하지 않기 때문에 자바에서 흔히 발생하는 널 포인터 예외를 피할 수 있었습니다.
-  이는 널 포인터 때문에 프로그램이 중단되는 현상을 방지하는 성과를 거둘 수 있었습니다.
-
-- [이펙티브 자바의 내용들을 코틀린에서는 어떻게 적용할지에 관해 정리한 글](https://github.com/f-lab-edu/black-postoffice/wiki/%EC%9D%B4%ED%8E%99%ED%8B%B0%EB%B8%8C-%EC%9E%90%EB%B0%94%EC%9D%98-%EB%82%B4%EC%9A%A9%EB%93%A4%EC%9D%84-%EC%BD%94%ED%8B%80%EB%A6%B0%EC%97%90%EC%84%9C%EB%8A%94-%EC%96%B4%EB%96%BB%EA%B2%8C-%EC%A0%81%EC%9A%A9%ED%95%A0%EC%A7%80%EC%97%90-%EA%B4%80%ED%95%B4-%EC%A0%95%EB%A6%AC%ED%95%9C-%EA%B8%80)
+### 현재까지의 서버 구조도
+![서버 구조도](https://user-images.githubusercontent.com/43127088/127910532-169fb9e6-9679-465e-aa33-0010c3f10d50.png)
 
 ### 프로젝트 주요 관심사
 - 여러 기술들의 트레이드 오프를 고려한 후, 어떤 기술을 도입하는 것이 가장 서비스에 가장 적합할까?
@@ -81,3 +27,11 @@
 - 대용량 트래픽의 상황에서 지속적인 서버 개선을 위해 어떻게 성능을 튜닝할까?
 - 위의 관심사들을 기반으로 고민한 이슈들을 [기술블로그](https://junghyungil.tistory.com/category/Black-postOffice) 에 작성하고 팀 내 공유하여 함께 성장해가는 개발 문화 추구  
 
+### 코틀린 사용 이유
+- 자바에서는 형식을 맞추기 위해 무의미하고 반복적인 코드를 작성하게 되어 항상 코드가 비대해지기 마련이었습니다. 저는 이 문제를 해결하기 위해 코틀린을 사용하였습니다.
+- 코틀린은 타입 추론과 더불어 자체적으로 함수형 프로그래밍을 지원해주기 때문에 자바에 비해 훨씬 코드를 간결하게 작성할 수
+  있었으며 개발 생산성과 유지 보수성 면에서도 훨씬 좋은 성과를 거두었습니다.
+- 또한 코틀린은 별도의 표기가 없는 경우 널 값을 허용하지 않기 때문에 자바에서 흔히 발생하는 널 포인터 예외를 피할 수 있었습니다.
+  이는 널 포인터 때문에 프로그램이 중단되는 현상을 방지하는 성과를 거둘 수 있었습니다.
+  
+긴 글 읽어주셔서 감사합니다.
