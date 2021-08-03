@@ -38,12 +38,6 @@ pipeline {
             }
         }
 
-        stage('Deploy') {
-            steps {
-                sh 'ssh root@49.50.160.125 sh /root/deploy/deploy.sh'
-            }
-        }
-
     }
 
   post {
