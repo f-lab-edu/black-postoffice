@@ -43,7 +43,6 @@ pipeline {
             steps {
                  script {
                      sh "ssh root@49.50.173.51 sh /root/deploy/deploy.sh"
-                     sh "ssh -o StrictHostKeyChecking=no root@49.50.160.125 sh /root/deploy/deploy.sh"
                  }
             }
 
