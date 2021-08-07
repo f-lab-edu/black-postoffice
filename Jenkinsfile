@@ -44,7 +44,7 @@ pipeline {
                       continueOnError: false, failOnError: true,
                       publishers: [
                           sshPublisherDesc(
-                              configName: "black-postoffice-was",
+                              configName: "black-postoffice-reverse-proxy",
                               verbose: true,
                               transfers: [
                                   sshTransfer(
