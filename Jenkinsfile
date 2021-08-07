@@ -41,6 +41,11 @@ pipeline {
         }
 
       stage('Deploy') {
+
+            when {
+                branch 'develop'
+            }
+
               steps([$class: 'BapSshPromotionPublisherPlugin']) {
                   sshPublisher(
                       continueOnError: false, failOnError: true,
