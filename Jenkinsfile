@@ -1,5 +1,3 @@
-def mainBranch = false
-
 pipeline {
     agent any
 
