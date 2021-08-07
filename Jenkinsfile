@@ -50,7 +50,7 @@ pipeline {
                               verbose: true,
                               transfers: [
                                   sshTransfer(
-                                      execCommand: "sh deploy.sh"
+                                      execCommand: "sh /root/deploy/deploy.sh"
                                   )
                               ]
                           )
