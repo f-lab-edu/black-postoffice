@@ -38,28 +38,6 @@ pipeline {
             }
         }
 
-      stage('Deploy') {
-              steps([$class: 'BapSshPromotionPublisherPlugin']) {
-                  sshPublisher(
-                      continueOnError: false, failOnError: true,
-                      publishers: [
-                          sshPublisherDesc(
-                              configName: "black-postoffice-reverse-proxy",
-                              verbose: true,
-                              transfers: [
-                                  sshTransfer(
-                                      sourceFiles: "",
-                                      removePrefix: "",
-                                      remoteDirectory: "",
-                                      execCommand: "sh deploy.sh"
-                                  )
-                              ]
-                          )
-                      ]
-                  )
-              }
-          }
-
     }
 
   post {
