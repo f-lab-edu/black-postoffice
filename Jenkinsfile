@@ -38,15 +38,27 @@ pipeline {
             }
         }
 
-        stage('Deploy') {
-
-            steps {
-                 script {
-                     sh "ssh root@49.50.173.51 sh /root/deploy/deploy.sh"
-                 }
-            }
-
-        }
+      stage('Deploy') {
+              steps([$class: 'BapSshPromotionPublisherPlugin']) {
+                  sshPublisher(
+                      continueOnError: false, failOnError: true,
+                      publishers: [
+                          sshPublisherDesc(
+                              configName: "black-postoffice-was",
+                              verbose: true,
+                              transfers: [
+                                  sshTransfer(
+                                      sourceFiles: "",
+                                      removePrefix: "",
+                                      remoteDirectory: "",
+                                      execCommand: "sh deploy.sh"
+                                  )
+                              ]
+                          )
+                      ]
+                  )
+              }
+          }
 
     }
 
