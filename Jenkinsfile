@@ -1,3 +1,5 @@
+def mainBranch = false
+
 pipeline {
     agent any
 
@@ -37,6 +39,25 @@ pipeline {
                 echo 'Test Success!'
             }
         }
+
+      stage('Deploy') {
+              steps([$class: 'BapSshPromotionPublisherPlugin']) {
+                  sshPublisher(
+                      continueOnError: false, failOnError: true,
+                      publishers: [
+                          sshPublisherDesc(
+                              configName: "black-postoffice-reverse-proxy",
+                              verbose: true,
+                              transfers: [
+                                  sshTransfer(
+                                      execCommand: "sh deploy.sh"
+                                  )
+                              ]
+                          )
+                      ]
+                  )
+              }
+          }
 
     }
 
