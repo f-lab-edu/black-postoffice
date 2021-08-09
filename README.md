@@ -14,18 +14,18 @@
 ### API 문서
 - [RestDocs를 적용하여 API 문서화를 진행하였습니다.](https://hyung1jung.github.io/)
 
-### 현재까지의 사용기술 
+### 현재까지의 사용기술
 ![기술 스택](https://user-images.githubusercontent.com/43127088/125194910-4c673e00-e28e-11eb-80c8-1a3bda1be8df.PNG)
 
 ### 현재까지의 서버 구조도
-![서버 구조도](https://user-images.githubusercontent.com/43127088/127910532-169fb9e6-9679-465e-aa33-0010c3f10d50.png)
+![서버 구조도](https://user-images.githubusercontent.com/43127088/128609328-f679ba29-50bd-47af-a544-0da869261de7.png)
 
 ### 프로젝트 주요 관심사
 - 여러 기술들의 트레이드 오프를 고려한 후, 어떤 기술을 도입하는 것이 가장 서비스에 가장 적합할까?
 - 다른 개발자가 내 코드를 보았다고 가정할 때, 어떻게 코드를 작성하는 것이 이해하기 쉬운 코드이며 유지보수에 용이한 코드일까?
 - 꾸준히, 깊은 이론 학습을 통해 내가 작성한 코드를 어떻게 더 좋은 코드로 만들까?
 - 대용량 트래픽의 상황에서 지속적인 서버 개선을 위해 어떻게 성능을 튜닝할까?
-- 위의 관심사들을 기반으로 고민한 이슈들을 [기술블로그](https://junghyungil.tistory.com/category/Black-postOffice) 에 작성하고 팀 내 공유하여 함께 성장해가는 개발 문화 추구  
+- 위의 관심사들을 기반으로 고민한 이슈들을 [기술블로그](https://junghyungil.tistory.com/category/Black-postOffice) 에 작성하고 팀 내 공유하여 함께 성장해가는 개발 문화 추구
 
 ### 코틀린 사용 이유
 - 자바에서는 형식을 맞추기 위해 무의미하고 반복적인 코드를 작성하게 되어 항상 코드가 비대해지기 마련이었습니다. 저는 이 문제를 해결하기 위해 코틀린을 사용하였습니다.
