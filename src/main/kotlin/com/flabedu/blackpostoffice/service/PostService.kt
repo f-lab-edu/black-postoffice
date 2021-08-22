@@ -19,6 +19,7 @@ class PostService(
         postMapper.createMyPost(sessionLoginService.getCurrentUserEmail(), createPost)
     }
 
+    @Transactional(readOnly = true)
     fun getPosts(email: String, pageNo: Int, pageSize: Int) = Posts(
         nickName = userMapper.getNickName(email),
         profileImagePath = userMapper.getProfileImage(email),

@@ -25,8 +25,8 @@ interface PostMapper {
                  JOIN (SELECT post_id
                        FROM post
                        WHERE email = #{email}
-                       ORDER BY created_at DESC LIMIT #{pageSize}
-                       OFFSET #{pageNo}) as temp on temp.post_id = i.post_id
+                       ORDER BY post_id DESC LIMIT #{pageSize}
+                       OFFSET #{pageNo}) as temp on temp.post_id = i.post_id 
         """
     )
     fun getPosts(email: String, pageNo: Int, pageSize: Int): List<Post>
