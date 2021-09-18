@@ -21,13 +21,16 @@ import org.springframework.restdocs.RestDocumentationContextProvider
 import org.springframework.restdocs.RestDocumentationExtension
 import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation
 import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document
-import org.springframework.restdocs.operation.preprocess.Preprocessors
+import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post
+import org.springframework.restdocs.operation.preprocess.Preprocessors.modifyUris
+import org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest
+import org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse
+import org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint
 import org.springframework.restdocs.payload.JsonFieldType
 import org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath
 import org.springframework.restdocs.payload.PayloadDocumentation.requestFields
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.request
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
@@ -78,7 +81,7 @@ internal class UserLoginControllerTest @Autowired constructor(
         doNothing().`when`(sessionLoginService).login(userLogin)
 
         mockMvc.perform(
-            MockMvcRequestBuilders.post("/users/login")
+            post("/users/login")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(toJsonString(userLogin))
                 .session(session)
@@ -104,7 +107,7 @@ internal class UserLoginControllerTest @Autowired constructor(
             .login(userLogin)
 
         mockMvc.perform(
-            MockMvcRequestBuilders.post("/users/login")
+            post("/users/login")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(toJsonString(userLogin))
         )
@@ -130,7 +133,7 @@ internal class UserLoginControllerTest @Autowired constructor(
         session.setAttribute("email", userLogin.email)
 
         mockMvc.perform(
-            MockMvcRequestBuilders.post("/users/logout")
+            post("/users/logout")
                 .contentType(MediaType.APPLICATION_JSON)
                 .session(session)
         )
@@ -142,15 +145,12 @@ internal class UserLoginControllerTest @Autowired constructor(
     }
 
     fun getDocumentRequest() =
-        Preprocessors.preprocessRequest(
-            Preprocessors.modifyUris().scheme("http").host("localhost").port(8080),
-            Preprocessors.prettyPrint()
-        )
+        preprocessRequest(modifyUris().scheme("http").host("localhost").port(8080), prettyPrint())
 
-    fun getDocumentResponse() = Preprocessors.preprocessResponse(Preprocessors.prettyPrint())
+    fun getDocumentResponse() = preprocessResponse(prettyPrint())
 
     @Throws(JsonProcessingException::class)
-    private fun toJsonString(userLogin: UserLogin): String {
-        return objectMapper.writeValueAsString(userLogin)
+    private fun toJsonString(dto: Any): String {
+        return objectMapper.writeValueAsString(dto)
     }
 }
