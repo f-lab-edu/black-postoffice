@@ -18,7 +18,7 @@
 ![기술 스택](https://user-images.githubusercontent.com/43127088/125194910-4c673e00-e28e-11eb-80c8-1a3bda1be8df.PNG)
 
 ### 현재까지의 서버 구조도
-![Untitled Diagram drawio (2)](https://user-images.githubusercontent.com/43127088/133897837-7f89fd9b-1761-4fcf-8ed7-a70aca1214a3.png)
+![Untitled Diagram drawio (3)](https://user-images.githubusercontent.com/43127088/133906885-62d889e1-7cf3-45eb-b5b1-3b7292747ed7.png)
 
 ### 현재까지의 디렉토리 구조
 ```bash
