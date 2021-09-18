@@ -18,7 +18,39 @@
 ![기술 스택](https://user-images.githubusercontent.com/43127088/125194910-4c673e00-e28e-11eb-80c8-1a3bda1be8df.PNG)
 
 ### 현재까지의 서버 구조도
-![서버 구조도](https://user-images.githubusercontent.com/43127088/128609328-f679ba29-50bd-47af-a544-0da869261de7.png)
+![Untitled Diagram drawio (4)](https://user-images.githubusercontent.com/43127088/133907589-ab8c0f12-9e79-423a-9248-a4dba9b92e4b.png)
+
+### 현재까지의 디렉토리 구조
+```bash
+└─ src
+   ├─ docs                                       Rest Docs API 자동화 관련
+      ├─ api-guide.adoc
+      ├─ api-html.adoc
+      
+   ├─ main
+      ├─ kotlin
+         ├─ com.flabedu.blackpostoffice
+            ├─ commom                             공통으로 사용하는 파일들
+               ├─ annotation                        - 사용자 권한 체크등 관련된 어노테이션            
+               ├─ config                            - Redis, MySQL Replication, S3등 설정 파일 관련 
+               ├─ encryption                        - 비밀번호 암호화등 관련
+               ├─ enumeration                       - 사용자 권한 부여등 Enum Class
+               ├─ interceptor                       - 스프링 인터셉터를 통해 중복 코드를 제거하기 위한 것과 관련
+               ├─ property                          - yml파일을 객체에 매핑하여 property로 사용
+               ├─ utils.constants                   - 공통 상수 관련
+            ├─ controller                         Model과 View의 연결하는 제어 로직을 담당
+            ├─ exception                          예외처리 관련
+               ├─ dto                               - 예외처리 관련 데이터 교환을 위해 사용
+               ├─ handler                           - 전역적으로 예외를 다루는 핸들러                          
+             ├─ mapper                            Mybatis 매핑XML에 기재된 SQL을 호출하기 위한 인터페이스
+             ├─ model                             비즈니스 로직과 사용되는 데이터를 다루는 영역
+             ├─ service                           비즈니스 로직을 수행
+             
+   ├─ test                                        테스트 코드 관련
+      ├─ kotlin
+         ├─ com.flabedu.blackpostoffice
+            ├─ ...                     
+```
 
 ### 프로젝트 주요 관심사
 - 여러 기술들의 트레이드 오프를 고려한 후, 어떤 기술을 도입하는 것이 가장 서비스에 가장 적합할까?
