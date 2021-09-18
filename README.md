@@ -18,7 +18,7 @@
 ![기술 스택](https://user-images.githubusercontent.com/43127088/125194910-4c673e00-e28e-11eb-80c8-1a3bda1be8df.PNG)
 
 ### 현재까지의 서버 구조도
-![서버 구조도](https://user-images.githubusercontent.com/43127088/128609328-f679ba29-50bd-47af-a544-0da869261de7.png)
+![서버 구조도](![Untitled Diagram drawio (2)](https://user-images.githubusercontent.com/43127088/133897837-7f89fd9b-1761-4fcf-8ed7-a70aca1214a3.png)
 
 ### 프로젝트 주요 관심사
 - 여러 기술들의 트레이드 오프를 고려한 후, 어떤 기술을 도입하는 것이 가장 서비스에 가장 적합할까?
