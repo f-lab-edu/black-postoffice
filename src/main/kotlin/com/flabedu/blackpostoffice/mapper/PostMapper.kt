@@ -33,7 +33,7 @@ interface PostMapper {
 
     @Select(
         """
-        SELECT email, title, content
+        SELECT title, content
         FROM post as i
                  JOIN (SELECT post_id
                        FROM post
