@@ -62,9 +62,6 @@ internal class PostControllerTest @Autowired constructor(
     @MockBean
     lateinit var sessionLoginService: SessionLoginService
 
-    @MockBean
-    lateinit var userMapper: UserMapper
-
     private lateinit var post: Post
     private var postList: MutableList<Post> = arrayListOf()
     private lateinit var posts: Posts
