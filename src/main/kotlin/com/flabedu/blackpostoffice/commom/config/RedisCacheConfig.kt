@@ -27,7 +27,8 @@ class RedisCacheConfig(val cacheProperties: RedisCacheProperties) {
         RedisCacheManager.RedisCacheManagerBuilder.fromConnectionFactory(redisCacheConnectionFactory())
             .cacheDefaults(redisCacheDefaultConfiguration()).build()
 
-    private fun objectMapper() = ObjectMapper().apply {
+    @Bean
+    fun objectMapper() = ObjectMapper().apply {
 
         val ptv = BasicPolymorphicTypeValidator.builder().allowIfSubType(Any::class.java).build()
 
@@ -35,7 +36,8 @@ class RedisCacheConfig(val cacheProperties: RedisCacheProperties) {
         activateDefaultTyping(ptv, ObjectMapper.DefaultTyping.NON_FINAL)
     }
 
-    private fun redisCacheDefaultConfiguration() = RedisCacheConfiguration.defaultCacheConfig()
+    @Bean
+    fun redisCacheDefaultConfiguration() = RedisCacheConfiguration.defaultCacheConfig()
         .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(StringRedisSerializer()))
         .serializeValuesWith(
             RedisSerializationContext.SerializationPair.fromSerializer(
