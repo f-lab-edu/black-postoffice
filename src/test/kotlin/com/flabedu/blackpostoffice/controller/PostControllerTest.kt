@@ -2,7 +2,6 @@ package com.flabedu.blackpostoffice.controller
 
 import com.fasterxml.jackson.core.JsonProcessingException
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.flabedu.blackpostoffice.mapper.UserMapper
 import com.flabedu.blackpostoffice.model.post.Post
 import com.flabedu.blackpostoffice.model.post.Posts
 import com.flabedu.blackpostoffice.service.PostService
