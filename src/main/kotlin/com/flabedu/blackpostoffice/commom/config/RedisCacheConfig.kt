@@ -36,8 +36,7 @@ class RedisCacheConfig(val cacheProperties: RedisCacheProperties) {
         activateDefaultTyping(ptv, ObjectMapper.DefaultTyping.NON_FINAL)
     }
 
-    @Bean
-    fun redisCacheDefaultConfiguration() = RedisCacheConfiguration.defaultCacheConfig()
+    private fun redisCacheDefaultConfiguration() = RedisCacheConfiguration.defaultCacheConfig()
         .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(StringRedisSerializer()))
         .serializeValuesWith(
             RedisSerializationContext.SerializationPair.fromSerializer(
