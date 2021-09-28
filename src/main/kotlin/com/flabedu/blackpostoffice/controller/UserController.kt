@@ -28,14 +28,16 @@ class UserController(
         userService.saveUser(userSignUp)
     }
 
-    @AuthorizedAccessCheck(authority = USER)
     @PatchMapping("/my-info")
+    @ResponseStatus(HttpStatus.CREATED)
+    @AuthorizedAccessCheck(authority = USER)
     fun userInfoUpdate(@RequestPart("profileImage") multipartFile: MultipartFile) {
         userService.userInfoUpdate(multipartFile)
     }
 
-    @AuthorizedAccessCheck(authority = USER)
     @PutMapping("/profile-image")
+    @ResponseStatus(HttpStatus.OK)
+    @AuthorizedAccessCheck(authority = USER)
     fun deleteProfileImage() {
         userService.deleteProfileImage()
     }

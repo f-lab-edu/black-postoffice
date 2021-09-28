@@ -29,7 +29,19 @@ interface PostMapper {
                        OFFSET #{pageNo}) as temp on temp.post_id = i.post_id 
         """
     )
-    fun getPosts(email: String, pageNo: Int, pageSize: Int): List<Post>
+    fun getUserPosts(email: String, pageNo: Int, pageSize: Int): List<Post>
+
+    @Select(
+        """
+        SELECT title, content
+        FROM post as i
+                 JOIN (SELECT post_id
+                       FROM post
+                       ORDER BY post_id DESC LIMIT #{pageSize}
+                       OFFSET #{pageNo}) as temp on temp.post_id = i.post_id 
+        """
+    )
+    fun getUsersPosts(pageNo: Int, pageSize: Int): List<Post>
 
     @Update(
         """

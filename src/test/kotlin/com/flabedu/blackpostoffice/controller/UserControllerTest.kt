@@ -25,6 +25,8 @@ import org.springframework.restdocs.headers.HeaderDocumentation.headerWithName
 import org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders
 import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document
 import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration
+import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post
+import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.put
 import org.springframework.restdocs.operation.preprocess.Preprocessors.modifyUris
 import org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest
 import org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse
@@ -101,7 +103,7 @@ internal class UserControllerTest @Autowired constructor(
         doNothing().`when`(userService)?.saveUser(userSignUp)
 
         mockMvc.perform(
-            MockMvcRequestBuilders.post("/users")
+            post("/users")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(toJsonString(userSignUp))
         )
@@ -130,7 +132,7 @@ internal class UserControllerTest @Autowired constructor(
         doThrow(DuplicateRequestException("이미 존재하는 이메일 입니다.")).`when`(userService).saveUser(userSignUp)
 
         mockMvc.perform(
-            MockMvcRequestBuilders.post("/users")
+            post("/users")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(toJsonString(userSignUp))
         )
@@ -157,6 +159,7 @@ internal class UserControllerTest @Autowired constructor(
     fun `회원정보 수정 성공`() {
 
         val builder: MockMultipartHttpServletRequestBuilder = MockMvcRequestBuilders.multipart("/users/my-info")
+
         builder.with { request ->
             request.method = "PATCH"
             request
@@ -170,7 +173,7 @@ internal class UserControllerTest @Autowired constructor(
                 .contentType(MediaType.APPLICATION_JSON)
         )
             .andDo { println() }
-            .andExpect(status().isOk)
+            .andExpect(status().isCreated)
             .andDo(
                 document(
                     "users/my-info/update/successful", getDocumentRequest(), getDocumentResponse(),
@@ -188,7 +191,7 @@ internal class UserControllerTest @Autowired constructor(
         doNothing().`when`(userService)?.deleteProfileImage()
 
         mockMvc.perform(
-            MockMvcRequestBuilders.put("/users/profile-image")
+            put("/users/profile-image")
                 .contentType(MediaType.APPLICATION_JSON)
         )
             .andExpect(status().isOk)
@@ -212,7 +215,7 @@ internal class UserControllerTest @Autowired constructor(
         MockMultipartFile("profileImage", "profileImage", "image/png", "profileImage".toByteArray())
 
     @Throws(JsonProcessingException::class)
-    private fun toJsonString(userSignUp: UserSignUp): String {
-        return objectMapper.writeValueAsString(userSignUp)
+    private fun toJsonString(dto: Any): String {
+        return objectMapper.writeValueAsString(dto)
     }
 }

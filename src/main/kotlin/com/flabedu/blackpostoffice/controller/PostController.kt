@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/posts")
 class PostController(
-    private val postService: PostService
+    private val postService: PostService,
 ) {
 
     @PostMapping
@@ -30,17 +30,26 @@ class PostController(
     }
 
     @GetMapping
+    @ResponseStatus(HttpStatus.OK)
     @AuthorizedAccessCheck(authority = USER)
-    fun getPosts(@RequestParam email: String, @RequestParam pageNo: Int, @RequestParam pageSize: Int) =
-        postService.getPosts(email, pageNo, pageSize)
+    fun getUserPosts(@RequestParam email: String, @RequestParam pageNo: Int, @RequestParam pageSize: Int) =
+        postService.getUserPosts(email, pageNo, pageSize)
+
+    @GetMapping("/users")
+    @ResponseStatus(HttpStatus.OK)
+    @AuthorizedAccessCheck(authority = USER)
+    fun getUsersPosts(@RequestParam pageNo: Int, @RequestParam pageSize: Int) =
+        postService.getUsersPosts(pageNo, pageSize)
 
     @PatchMapping("/{postId}")
+    @ResponseStatus(HttpStatus.CREATED)
     @AuthorizedAccessCheck(authority = USER)
     fun updateMyPost(@PathVariable postId: Long, @RequestBody post: Post) {
         postService.updateMyPost(postId, post)
     }
 
     @DeleteMapping("/{postId}")
+    @ResponseStatus(HttpStatus.OK)
     @AuthorizedAccessCheck(authority = USER)
     fun deleteMyPost(@PathVariable postId: Long) {
         postService.deleteMyPost(postId)

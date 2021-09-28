@@ -18,13 +18,18 @@ import org.springframework.http.HttpHeaders
 import org.springframework.http.MediaType
 import org.springframework.restdocs.RestDocumentationContextProvider
 import org.springframework.restdocs.RestDocumentationExtension
-import org.springframework.restdocs.headers.HeaderDocumentation
+import org.springframework.restdocs.headers.HeaderDocumentation.headerWithName
 import org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders
 import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation
 import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete
+import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.patch
-import org.springframework.restdocs.operation.preprocess.Preprocessors
+import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post
+import org.springframework.restdocs.operation.preprocess.Preprocessors.modifyUris
+import org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest
+import org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse
+import org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint
 import org.springframework.restdocs.payload.JsonFieldType
 import org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath
 import org.springframework.restdocs.payload.PayloadDocumentation.requestFields
@@ -34,9 +39,8 @@ import org.springframework.restdocs.request.RequestDocumentation.pathParameters
 import org.springframework.restdocs.request.RequestDocumentation.requestParameters
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import org.springframework.test.web.servlet.setup.DefaultMockMvcBuilder
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import org.springframework.web.context.WebApplicationContext
@@ -91,19 +95,18 @@ internal class PostControllerTest @Autowired constructor(
         doNothing().`when`(postService)?.createMyPost(post)
 
         mockMvc.perform(
-            MockMvcRequestBuilders.post("/posts")
+            post("/posts")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(toJsonString(post))
         )
 
-            .andExpect(MockMvcResultMatchers.status().isCreated)
+            .andExpect(status().isCreated)
             .andDo(
                 document(
                     "posts/create/successful", getDocumentRequest(), getDocumentResponse(),
 
                     requestHeaders(
-                        HeaderDocumentation.headerWithName(HttpHeaders.CONTENT_TYPE)
-                            .description("Content-type")
+                        headerWithName(HttpHeaders.CONTENT_TYPE).description("Content-type")
                     ),
 
                     requestFields(
@@ -125,17 +128,14 @@ internal class PostControllerTest @Autowired constructor(
                 .content(toJsonString(post))
         )
 
-            .andExpect(MockMvcResultMatchers.status().isOk)
+            .andExpect(status().isCreated)
             .andDo(
                 document(
                     "posts/update/successful", getDocumentRequest(), getDocumentResponse(),
 
                     pathParameters(parameterWithName("id").description("수정할 게시글의 번호")),
 
-                    requestHeaders(
-                        HeaderDocumentation.headerWithName(HttpHeaders.CONTENT_TYPE)
-                            .description("Content-type")
-                    ),
+                    requestHeaders(headerWithName(HttpHeaders.CONTENT_TYPE).description("Content-type")),
 
                     requestFields(
                         fieldWithPath("title").type(JsonFieldType.STRING).description("게시물 제목 수정"),
@@ -146,23 +146,22 @@ internal class PostControllerTest @Autowired constructor(
     }
 
     @Test
-    fun `게시물 조회에 성공할 경우 Http Status Code 200(Ok) 반환`() {
+    fun `특정 사용자 게시물 조회에 성공할 경우 Http Status Code 200(Ok) 반환`() {
 
-        given(postService.getPosts("test@gmail.com", 0, 10)).willReturn(posts)
+        given(postService.getUserPosts("test@gmail.com", 0, 10)).willReturn(posts)
 
         mockMvc.perform(
-            MockMvcRequestBuilders.get("/posts?email=test@gmail.com&pageNo=0&pageSize=10")
+            get("/posts?email=test@gmail.com&pageNo=0&pageSize=10")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(toJsonString(posts))
         )
 
-            .andExpect(MockMvcResultMatchers.status().isOk)
+            .andExpect(status().isOk)
             .andDo(
                 document(
                     "posts/get/successful", getDocumentRequest(), getDocumentResponse(),
 
                     requestHeaders(
-                        HeaderDocumentation.headerWithName(HttpHeaders.CONTENT_TYPE)
+                        headerWithName(HttpHeaders.CONTENT_TYPE)
                             .description("Content-type")
                     ),
 
@@ -174,9 +173,43 @@ internal class PostControllerTest @Autowired constructor(
 
                     responseFields(
                         fieldWithPath("nickName").type(JsonFieldType.STRING).description("조회한 게시글을 작성한 사용자의 닉네임"),
-                        fieldWithPath("profileImagePath").type(JsonFieldType.NULL).description("조회한 게시글을 작성한 사용자의 프로필 사진"),
+                        fieldWithPath("profileImagePath").type(JsonFieldType.NULL)
+                            .description("조회한 게시글을 작성한 사용자의 프로필 사진"),
                         fieldWithPath("posts.[].title").type(JsonFieldType.STRING).description("조회한 게시물의 제목"),
                         fieldWithPath("posts.[].content").type(JsonFieldType.STRING).description("조회한 게시물의 내용")
+                    )
+                )
+            )
+    }
+
+    @Test
+    fun `전체 사용자 게시물 조회에 성공할 경우 Http Status Code 200(Ok) 반환`() {
+
+        given(postService.getUsersPosts(0, 10)).willReturn(postList)
+
+        mockMvc.perform(
+            get("/posts/users?pageNo=0&pageSize=10")
+                .contentType(MediaType.APPLICATION_JSON)
+        )
+
+            .andExpect(status().isOk)
+            .andDo(
+                document(
+                    "posts/get/users/successful", getDocumentRequest(), getDocumentResponse(),
+
+                    requestHeaders(
+                        headerWithName(HttpHeaders.CONTENT_TYPE)
+                            .description("Content-type")
+                    ),
+
+                    requestParameters(
+                        parameterWithName("pageNo").description("조회할 게시글의 페이지").optional(),
+                        parameterWithName("pageSize").description("조회할 게시글의 페이지당 게시글 수").optional()
+                    ),
+
+                    responseFields(
+                        fieldWithPath("[].title").type(JsonFieldType.STRING).description("조회한 게시물의 제목"),
+                        fieldWithPath("[].content").type(JsonFieldType.STRING).description("조회한 게시물의 내용")
                     )
                 )
             )
@@ -191,7 +224,7 @@ internal class PostControllerTest @Autowired constructor(
             delete("/posts/{id}", 1)
                 .contentType(MediaType.APPLICATION_JSON)
         )
-            .andExpect(MockMvcResultMatchers.status().isOk)
+            .andExpect(status().isOk)
             .andDo(
                 document(
                     "posts/delete/successful",
@@ -204,15 +237,12 @@ internal class PostControllerTest @Autowired constructor(
     }
 
     fun getDocumentRequest() =
-        Preprocessors.preprocessRequest(
-            Preprocessors.modifyUris().scheme("http").host("localhost").port(8080),
-            Preprocessors.prettyPrint()
-        )
+        preprocessRequest(modifyUris().scheme("http").host("localhost").port(8080), prettyPrint())
 
-    fun getDocumentResponse() = Preprocessors.preprocessResponse(Preprocessors.prettyPrint())
+    fun getDocumentResponse() = preprocessResponse(prettyPrint())
 
     @Throws(JsonProcessingException::class)
-    private fun toJsonString(userSignUpDto: Any): String {
-        return objectMapper.writeValueAsString(userSignUpDto)
+    private fun toJsonString(dto: Any): String {
+        return objectMapper.writeValueAsString(dto)
     }
 }

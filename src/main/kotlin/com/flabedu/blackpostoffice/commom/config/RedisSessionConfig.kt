@@ -3,6 +3,7 @@ package com.flabedu.blackpostoffice.commom.config
 import com.flabedu.blackpostoffice.commom.property.RedisProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.context.annotation.Primary
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory
 import org.springframework.data.redis.core.RedisTemplate
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer
@@ -11,17 +12,14 @@ import org.springframework.session.data.redis.config.annotation.web.http.EnableR
 
 @Configuration
 @EnableRedisHttpSession
-class RedisConfig(
-
-    val redisProperties: RedisProperties
-
-) {
+class RedisSessionConfig(val redisProperties: RedisProperties) {
 
     @Bean
+    @Primary
     fun redisConnectionFactory() = LettuceConnectionFactory(redisProperties.host, redisProperties.port)
 
-    @Bean
-    fun redisTemplate(): RedisTemplate<String, Any> {
+    @Bean("sessionRedisTemplate")
+    fun sessionRedisTemplate(): RedisTemplate<String, Any> {
 
         val redisTemplate = RedisTemplate<String, Any>()
 

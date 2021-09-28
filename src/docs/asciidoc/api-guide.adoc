@@ -12,41 +12,41 @@ Junghyungile<junghyungile@gmail.com>
 [[overview_http_verbs]]
 == HTTP Methods
 
-클라이언트와 서버 사이에 이루어지는 요청(Request)과 응답(Response) 데이터를 전송하는 방식.
+클라이언트와 서버 사이에 이루어지는 요청(Request)과 응답(Response) 데이터를 전송하는 방식입니다.
 
 |===
 | Method | Content
 
 | `GET`
-| 요청받은 URI의 정보를 검색하여 응답한다.
+| 요청받은 URI의 정보를 검색하여 응답합니다.
 
 | `POST`
-| 요청된 자원을 생성(CREATE) 한다.
+| 요청된 자원을 생성(CREATE) 합니다.
 
 | `PUT`
-| 요청된 자원을 수정(UPDATE)한다. 리소스의 모든 것을 업데이트 한다.
+| 요청된 자원을 수정(UPDATE)한다. 리소스의 모든 것을 업데이트 합니다..
 
 | `PATCH`
-| PUT과 유사하게 요청된 자원을 수정(UPATE) 할 때 사용한다. 리소스의 일부를 업데이트 한다.
+| PUT과 유사하게 요청된 자원을 수정(UPATE) 할 때 사용한다. 리소스의 일부를 업데이트 합니다.
 
 | `DELETE`
-| 요청된 자원을 삭제할 것을 요청한다.
+| 요청된 자원을 삭제할 것을 요청합니다.
 |===
 
 [[overview_http_status_codes]]
 == HTTP status codes
 
-모든 HTTP 응답 코드는 5개의 클래스(분류)로 구분된다. 상태 코드의 첫 번째 숫자는 응답의 클래스를 정의한다. 첫자리에 대한 5가지 값들은 다음과 같다:
+모든 HTTP 응답 코드는 5개의 클래스(분류)로 구분된다. 상태 코드의 첫 번째 숫자는 응답의 클래스를 정의한다. 첫자리에 대한 5가지 값들은 다음과 같습니다:
 
-1xx (정보): 요청을 받았으며 프로세스를 계속한다
+1xx (정보): 요청을 받았으며 프로세스를 계속합니다.
 
-2xx (성공): 요청을 성공적으로 받았으며 인식했고 수용하였다
+2xx (성공): 요청을 성공적으로 받았으며 인식했고 수용합니다.
 
-3xx (리다이렉션): 요청 완료를 위해 추가 작업 조치가 필요하다
+3xx (리다이렉션): 요청 완료를 위해 추가 작업 조치가 필요합니다.
 
-4xx (클라이언트 오류): 요청의 문법이 잘못되었거나 요청을 처리할 수 없다
+4xx (클라이언트 오류): 요청의 문법이 잘못되었거나 요청을 처리할 수 없습니다.
 
-5xx (서버 오류): 서버가 명백히 유효한 요청에 대해 충족을 실패했다
+5xx (서버 오류): 서버가 명백히 유효한 요청에 대해 충족을 실패습니다.
 
 |===
 | Status code | Usage
@@ -198,7 +198,7 @@ include::{snippets}/posts/update/successful/http-request.adoc[]
 **응답 예시**
 include::{snippets}/posts/update/successful/http-response.adoc[]
 
-=== 1-3 게시물 조회
+=== 1-3 특정 회원 게시물 조회
 
 **curl**
 include::{snippets}/posts/get/successful/curl-request.adoc[]
@@ -215,7 +215,24 @@ include::{snippets}/posts/get/successful/response-fields.adoc[]
 **응답 예시**
 include::{snippets}/posts/get/successful/http-response.adoc[]
 
-=== 1-4 게시물 삭제
+=== 1-4 전체 회원 게시물 조회
+
+**curl**
+include::{snippets}/posts/get/users/successful/curl-request.adoc[]
+
+**요청 파라미터**
+include::{snippets}/posts/get/users/successful/request-parameters.adoc[]
+
+**요청 예시**
+include::{snippets}/posts/get/users/successful/http-request.adoc[]
+
+**응답 필드**
+include::{snippets}/posts/get/users/successful/response-fields.adoc[]
+
+**응답 예시**
+include::{snippets}/posts/get/users/successful/http-response.adoc[]
+
+=== 1-5 게시물 삭제
 
 **curl**
 include::{snippets}/posts/delete/successful/curl-request.adoc[]
